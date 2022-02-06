@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为 UserMapper 接口方法提供sql语句配置 -->
+<mapper namespace="com.example.fei.mapper.UserMapper">
+    <resultMap type="com.example.fei.domain.User" id="UserResult">
+        <!--
+            fei_tip: 映射关系
+            <result property="实体类中字段" column="数据库表字段"/>
+         -->
+        <result property="foo" column="name_foo"/>
+    </resultMap>
+
+    <resultMap type="com.example.fei.domain.User" id="UserResult2">
+        <result property="foo" column="name_foo"/>
+    </resultMap>
+
+    <!-- 查询一条数据 -->
+    <select id="selectUser" resultType="com.example.fei.domain.User" parameterType="long">
+        SELECT * FROM user WHERE id = 1
+    </select>
+
+    <select id="selectUser2" resultMap="UserResult" parameterType="long">
+        SELECT * FROM user WHERE id = #{userId}
+    </select>
+
+    <!-- fei_tip: resultMap可以映射集合 resultType不可以  , 可以看 foo 这个字段 -->
+    <!-- <select id="selectUser4" resultType="User"> -->
+    <select id="selectUser4" resultType="com.example.fei.domain.User">
+    <!-- <select id="selectUser4" resultMap="UserResult2"> -->
+        <if test="false">
+            -- SELECT * FROM user WHERE id = #{id} AND username = #{username} -- 加上判断不执行这条 SQL
+        </if>
+        SELECT * FROM user WHERE id = #{id} AND username = #{username}
+    </select>
+
+    <select id="selectUser5" resultMap="UserResult2">
+        SELECT * FROM user WHERE id = #{id} AND username = #{username}
+    </select>
+
+    <!-- ************************************************************************* -->
+    <!-- ************************************************************************* -->
+    <!-- ************************************************************************* -->
+    <!--  考虑单写 sql 使用 <include refid="selectRoleVo"/> 引入单写sql -->
+    <!-- 连表查询  SELECT * FROM user WHERE id = #{userId} -->
+    <resultMap id="UserResultJoin" type="com.example.fei.domain.User2">
+        <id property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+
+        <result property="rolename" column="rolename"/>
+    </resultMap>
+    <select id="selectUser6" resultMap="UserResultJoin" parameterType="long">
+        SELECT username, rolename
+        FROM user
+                 LEFT JOIN user_fei ON user.id = user_fei.user_id
+        WHERE user.id = 1
+    </select>
+
+    <sql id="refSelectUser">
+        select * from user
+    </sql>
+    <select id="selectUser7" resultType="com.example.fei.domain.User" parameterType="long">
+        <include refid="refSelectUser"/>
+        WHERE id = 1
+    </select>
+
+
+</mapper>
+
+

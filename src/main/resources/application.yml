@@ -1,0 +1,44 @@
+# 项目相关配置
+fei:
+  # 名称
+  name: 大飞
+  # 版本
+  version: 1.0.0
+
+# 数据库配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/ry
+    username: root
+    password: root
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.example.fei.domain
+  #typeAliasesPackage: com.example.fei.web.mapper
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  # 加载全局的配置文件
+  #config-location: classpath:mybatis/mybatis-config.xml
+  # 输出 MyBatis 中的 SQL
+  #configuration:
+  #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 控制台输出SQL
+logging:
+  level:
+    com.example.fei.mapper: DEBUG
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: fei_Secret_123456
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+
+
