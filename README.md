@@ -23,6 +23,11 @@ yarn lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### 环境说明
+```wiki
+node14.18.0
+```
+
 ### 飞 --------------
 ```shell
 ### vue-cli 手册

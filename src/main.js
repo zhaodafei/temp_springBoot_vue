@@ -1,22 +1,23 @@
 import { createApp } from 'vue'
+import dayjs from "dayjs";
 
 import '@/assets/style/index.scss'
-// import Antd from 'ant-design-vue';
-// import 'ant-design-vue/dist/antd.css'
-import 'element-plus/dist/index.css'
-import ElementPlus from 'element-plus'
-import zhCn  from 'element-plus/lib/locale/lang/zh-cn'
+import {iconInstall, zhCn, ElementPlus} from "./utils/element.js"
+import {axiosInstall} from "./utils/axios_instance.js"
 
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
-
-// createApp(App).use(store).use(router).use(ElementPlus).mount('#app')
-
 const app = createApp(App);
 
-app.use(ElementPlus,{ size: 'small', zIndex: 3000, locale: zhCn});
+app.config.globalProperties.$dayjs = dayjs
+
+app.use(ElementPlus,{ size: 'default', zIndex: 3000, locale: zhCn});
+app.use(iconInstall);
+
+app.use(axiosInstall);
+
 app.use(store);
 app.use(router);
 app.mount('#app');

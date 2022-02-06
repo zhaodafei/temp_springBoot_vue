@@ -15,3 +15,21 @@ p{word-wrap:break-word;}
 
 .clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
 .clearfix { *zoom:1; }
+
+:root {
+  --main-bg-color: #f6f7f8;
+  --main-cardBg-color: #fff;
+  --main-font-color: #1a1b1c;
+}
+
+
+body{
+  line-height: 1.6;
+  font-size: 14px;
+  background-color: var(--main-bg-color);
+}
+
+.el-table--small {
+  font-size: 14px !important;
+}
+

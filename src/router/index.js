@@ -1,50 +1,62 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
-import foo from '../views/foo.vue'
-import bar from '../views/bar.vue'
+import foo from '../views/zTest/foo.vue'
+import bar from '../views/zTest/bar.vue'
+import goodsIndex from '../views/fGoods/index.vue'
+import billList from '../views/fGoods/billList.vue'
+import login from '../views/login'
 
-// const routes = [ // <router-link to="/">Home</router-link> |<router-link to="/about">About</router-link>
-//   {
-//     path: '/',
-//     name: 'Home',
-//     component: Home
-//   },
-//   {
-//     path: '/about',
-//     name: 'About',
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-//   }
-// ]
+import Layout from '@/layout'
 
-const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Layout',
-  //   redirect: "/redirect"
-  // },
+// 测试页面路由
+const testRoutes = [
   {
-    path: '/',
-    name: 'redirect',
-    component: Home,
-    children: [
-      {
-        path: '/foo',
-        component: foo
-      },
-      {
-        path: '/bar',
-        component: bar
-      }
-    ]
+    path: 'foo',
+    name: 'foo',
+    component: foo
+  },
+  {
+    path: 'bar',
+    name: 'bar',
+    component: bar
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    component: () => import(/* webpackChunkName: "about" */ '../views/zTest/About.vue')
+  },
+]
+
+// 正式路由
+const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: login
+  },
+  {
+    path: '',
+    component: Layout,
+    redirect: 'home',
+    children: [
+        ...testRoutes,
+      {
+        path: 'home',
+        name: 'home',
+        component: Home
+      },
+      {
+        path: 'goods-index',
+        name: 'goods-index',
+        component: goodsIndex
+      },
+      {
+        path: 'bill-list',
+        name: 'bill-list',
+        component: billList
+      },
+    ]
+  },
 ]
 
 const router = createRouter({
