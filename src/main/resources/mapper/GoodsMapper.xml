@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fei.mapper.GoodsMapper">
+    <resultMap type="com.example.fei.domain.Goods" id="GoodsResult">
+        <!-- 非数据库字段 *********************************** -->
+        <result property="allCount"     column="allCount"     />
+
+        <!-- 数据库字段 ************************************* -->
+        <!-- <id     property="id"    column="id"  /> -->
+        <result property="goodsName"    column="goodsName"  />
+        <result property="unitPrice"    column="unitPrice"  />
+        <result property="goodsNumber"  column="goodsNumber"     />
+        <result property="startTime"    column="startTime"     />
+        <result property="endTime"      column="endTime"     />
+        <result property="countPrice"   column="countPrice"     />
+
+    </resultMap>
+
+    <sql id="sqlSelectGoods">
+        SELECT * FROM goods
+    </sql>
+
+    <!-- 查询一条数据 -->
+    <select id="selectGoods" resultMap="GoodsResult" parameterType="long">
+        <include refid="sqlSelectGoods"/>
+        WHERE id = #{id}
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectGoodsList" resultMap="GoodsResult" parameterType="long">
+        <include refid="sqlSelectGoods"/>
+    </select>
+
+    <select id="selectBudget" resultMap="GoodsResult">
+        SELECT SUM(countPrice) as allCount FROM goods
+        where consumeTime>#{startTime} and  #{endTime} > consumeTime
+    </select>
+
+    <!-- 更新逗号分隔字符串 String ids = "1,2,3" -->
+    <update id="delGoods" parameterType="com.example.fei.domain.Goods">
+        UPDATE goods
+        <set>
+            delNum=delNum+1
+        </set>
+        where id in
+        <foreach item="item" index="index" collection="ids.split(',')"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <insert id="insertGoods" parameterType="com.example.fei.domain.Goods">
+        insert into goods(
+            <if test="goodsName != null and goodsName != ''">goodsName,</if>
+            <if test="unitPrice != null and unitPrice != ''">unitPrice,</if>
+            <if test="goodsNumber != null and goodsNumber != ''">goodsNumber,</if>
+            <if test="countPrice != null and countPrice != ''">countPrice,</if>
+            <if test="consumeWay != null and consumeWay != ''">consumeWay,</if>
+            <if test="goodsNumType != null and goodsNumType != ''">goodsNumType,</if>
+            <if test="goodsComment != null and goodsComment != ''">goodsComment,</if>
+            <if test="consumeTime != null and consumeTime != ''">consumeTime,</if>
+            createdTime,
+            create_time,
+            update_time
+        )values(
+            <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
+            <if test="unitPrice != null and unitPrice != ''">#{unitPrice},</if>
+            <if test="goodsNumber != null and goodsNumber != ''">#{goodsNumber},</if>
+            <if test="countPrice != null and countPrice != ''">#{countPrice},</if>
+            <if test="consumeWay != null and consumeWay != ''">#{consumeWay},</if>
+            <if test="goodsNumType != null and goodsNumType != ''">#{goodsNumType},</if>
+            <if test="goodsComment != null and goodsComment != ''">#{goodsComment},</if>
+            <if test="consumeTime != null and consumeTime != ''">#{consumeTime},</if>
+            sysdate(),
+            sysdate(),
+            sysdate()
+        )
+    </insert>
+</mapper>
+
+

@@ -11,9 +11,6 @@ public class User {
     private String email;
     private String mobile;
 
-    // fei_tip: 自定义数据库映射字段,在 UserMapper 中写对应映射关系
-    private String foo;
-
     public long getId() {
         return id;
     }
@@ -52,14 +49,6 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getFoo() {
-        return foo;
-    }
-
-    public void setFoo(String foo) {
-        this.foo = foo;
     }
 
 }

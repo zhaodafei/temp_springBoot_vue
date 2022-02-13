@@ -3,7 +3,6 @@ package com.example.fei.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.fei.common.core.AjaxResult;
 import com.example.fei.domain.User;
-import com.example.fei.domain.User2;
 import com.example.fei.service.TokenService;
 import com.example.fei.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+public class FeiTestController {
     @Autowired
     private UserService userService;
 
     /**
      * 测试接口
      */
-    @RequestMapping("/detail")
+    @RequestMapping("/test/detail")
     public AjaxResult detail()
     {
         AjaxResult ajax = AjaxResult.success("success");
@@ -35,4 +32,5 @@ public class UserController {
 
         return ajax;
     }
+
 }

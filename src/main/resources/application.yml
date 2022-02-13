@@ -9,7 +9,7 @@ fei:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/ry
+    url: jdbc:mysql://localhost:3306/test
     username: root
     password: root
 

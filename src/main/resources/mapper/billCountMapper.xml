@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fei.mapper.BillCountMapper">
+
+    <resultMap type="com.example.fei.domain.BillCount" id="BillResult">
+        <id     property="id"           column="id"  />
+        <result property="startTime"    column="startTime"  />
+        <result property="endTime"     column="endTime"  />
+        <result property="consumeWay"  column="consumeWay"     />
+        <result property="allCount"    column="allCount"     />
+        <result property="delNum"      column="delNum"     />
+    </resultMap>
+
+    <sql id="sqlSelectBill">
+        SELECT * FROM bill_count
+    </sql>
+
+    <select id="selectBillList" resultMap="BillResult" parameterType="long">
+        <include refid="sqlSelectBill"/>
+    </select>
+
+    <update id="delBill" parameterType="com.example.fei.domain.BillCount">
+        UPDATE bill_count
+        <set>
+            delNum=delNum+1
+        </set>
+        where id in
+        <foreach item="item" index="index" collection="ids.split(',')"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <insert id="insertBill" parameterType="com.example.fei.domain.BillCount">
+        insert into bill_count(
+            <if test="startTime != null and startTime != ''">startTime,</if>
+            <if test="endTime != null and endTime != ''">endTime,</if>
+            <if test="consumeWay != null and consumeWay != ''">consumeWay,</if>
+            <if test="allCount != null and allCount != ''">allCount,</if>
+            createdTime,
+            updatedTime
+        )values (
+            <if test="startTime != null and startTime != ''">#{startTime},</if>
+            <if test="endTime != null and endTime != ''">#{endTime},</if>
+            <if test="consumeWay != null and consumeWay != ''">#{consumeWay},</if>
+            <if test="allCount != null and allCount != ''">#{allCount},</if>
+            sysdate(),
+            sysdate()
+        )
+    </insert>
+</mapper>

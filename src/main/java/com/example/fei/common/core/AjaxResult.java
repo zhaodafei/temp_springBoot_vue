@@ -9,7 +9,7 @@ public class AjaxResult extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     /** 状态码 */
-    public static final String CODE_TAG = "code";
+    public static final String CODE_TAG = "error";
 
     /** 返回内容 */
     public static final String MSG_TAG = "msg";

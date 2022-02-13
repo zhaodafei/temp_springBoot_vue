@@ -1,6 +1,7 @@
 package com.example.fei.common.core.controller;
 
 import com.example.fei.common.constant.HttpStatus;
+import com.example.fei.common.core.AjaxResult;
 import com.example.fei.common.core.page.PageDomain;
 import com.example.fei.common.core.page.TableDataInfo;
 import com.example.fei.common.core.page.TableSupport;
@@ -33,6 +34,10 @@ public class BaseController {
         }
     }
 
+    /**
+     * 响应请求分页数据
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected TableDataInfo getDataTable(List<?> list) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.SUCCESS);
@@ -42,4 +47,11 @@ public class BaseController {
         return rspData;
     }
 
+    protected AjaxResult toAjax(int rows) {
+        return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+    }
+
+    public String getUserInfo() {
+        return "获取用户信息"; // todo: 获取用户信息
+    }
 }

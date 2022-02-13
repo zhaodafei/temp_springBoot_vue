@@ -14,7 +14,7 @@ import java.util.Date;
 
 
 /**
- * 参考资料:
+ * 参考资料:\
  *    https://github.com/jwtk/jjwt
  *    https://stormpath.com/blog/jwt-java-create-verify
  */
