@@ -1,6 +1,6 @@
 let interfacesGoods = {
   // 免登录接口测试
-  getBookDetail: 'user/detail',
+  getTestDetail: 'user/detail',
 
 
   //  *********** 商品管理 ***********

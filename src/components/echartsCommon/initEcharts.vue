@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" ref="myChart" :style="{ height: height, width: width }"/>
+  <div :id="id" ref="refsChart" :style="{ height: height, width: width }"/>
 </template>
 
 <script setup>
@@ -10,14 +10,14 @@ const ECharts = require("echarts");
 
 const app = getCurrentInstance().appContext.config.globalProperties;
 
-const chart = ref(null);
-const myChart = ref(null);
+let myChart = null; // 这个不能监听
+const refsChart = ref(null);
 const defaultOptions = {
-  title: {
-    text: '暂无数据',
-    left: 'center',
-    top: '45%',
-  },
+  // title: {
+  //   text: '暂无数据',
+  //   left: 'center',
+  //   top: '45%',
+  // },
   graphic: {
     type: 'text',
     left: 'center',
@@ -39,11 +39,10 @@ const defaultOptions = {
   ]
 }
 
-
 defineProps({
   id: {
     type: String,
-    default: 'myChart'
+    default: 'refsChart'
   },
   width: {
     type: String,
@@ -53,14 +52,10 @@ defineProps({
     type: String,
     default: '100%'
   },
-  options: {
-    type: Object,
-    default: ()=>({})
-  }
-})
-
-onMounted(()=>{
-  initChart(defaultOptions);
+  // options: {
+  //   type: Object,
+  //   default: ()=>({})
+  // }
 })
 
 const initMap = (mapName = 'china') => {
@@ -72,33 +67,30 @@ const initMap = (mapName = 'china') => {
 }
 
 const initChart = () => {
-  chart.value = ECharts.init(myChart.value);
-  chart.value.setOption(defaultOptions, true);
+  myChart = ECharts.init(refsChart.value);
+  myChart.setOption(defaultOptions, true);
 }
 
 // 构建图
 const drawChart = (options) => {
-  chart.value.setOption(options, true)
+  myChart.setOption(options, true)
 }
 
 // 销毁
 const disposeChart = () => {
-  chart.value.dispose();
-  chart.value = null;
+  myChart.dispose();
+  myChart = null;
 }
 
-const bar = (options) => {
-  console.log("我是子组件",options);
-  // console.log(chart.value);
-  // chart.value.setOption(options)
-}
+onMounted(()=>{
+  initChart(defaultOptions);
+})
 
 // 暴露出去的属性,方便父组件调用
 defineExpose({
   initMap,
   drawChart,
-  disposeChart,
-  bar
+  disposeChart
 })
 
 </script>

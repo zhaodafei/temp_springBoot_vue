@@ -31,7 +31,7 @@
           </el-menu-item>
           <el-menu-item index="3002">
             <el-icon><Document /></el-icon>
-            <span>字典管理</span>
+            <span><router-link to="/dict-list">字典管理</router-link></span>
           </el-menu-item>
           <el-menu-item index="3002">
             <el-icon><Edit /></el-icon>

@@ -55,3 +55,10 @@ https://element-plus.gitee.io/zh-CN/component/button.html
 https://next.antdv.com/docs/vue/introduce-cn
 
 ```
+
+### 项目思路
+首页:  消息通知
+首页:  用户登录情况
+首页:  快速菜单栏(UI平均方框现在)
+
+    

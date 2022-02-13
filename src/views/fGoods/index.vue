@@ -1,5 +1,16 @@
 <template>
 <div>
+  <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
+    <el-form-item label="商品名称" prop="goodsName">
+      <el-input v-model="queryParams.goodsName" placeholder="商品名称" ></el-input>
+    </el-form-item>
+
+    <el-form-item>
+      <el-button type="primary" @click="handleQuery">查询</el-button>
+      <el-button @click="resetQuery">重置</el-button>
+    </el-form-item>
+  </el-form>
+
   <el-row :gutter="10">
     <el-col :span="1.5">
       <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
@@ -9,6 +20,9 @@
     </el-col>
     <el-col :span="1.5">
       <el-button type="danger" plain icon="Delete">删除</el-button>
+    </el-col>
+    <el-col :span="1.5">
+      <el-button type="success" plain icon="View" @click="handleDetail">详细</el-button>
     </el-col>
   </el-row>
 
@@ -68,11 +82,29 @@ import apiGoods from '@/api/goods.js'
 // currentPage: 1;
 const app = getCurrentInstance().appContext.config.globalProperties;
 
+// 搜索
+const refsQueryForm = ref() // 表单 ref 对象
+const queryParams = reactive({
+  pageNum: 1,
+  pageSize: 10,
+  goodsName: '',
+});
+
+const handleQuery = () => {
+  queryParams.pageNum = 1;
+  getList();
+}
+
+const resetQuery = () => {
+  refsQueryForm.value.resetFields();
+  handleQuery();
+}
+
 // 表格
 const tableData = ref([]);
 const total = ref(0);
-const page = ref(1);
-const pageSize = ref(15);
+// const page = ref(1);
+// const pageSize = ref(15);
 const latestData = reactive({
   consumeTime: "0000-00-00"
 });
@@ -82,7 +114,12 @@ onMounted(() => {
 });
 
 const getList = () => {
-  let params = {page: page.value, per_page: pageSize.value};
+  // let params = {page: page.value, per_page: pageSize.value};
+  let params = {
+    page: queryParams.pageNum,
+    per_page: queryParams.pageSize,
+    goodsName: queryParams.goodsName
+  };
   app.$get(apiGoods.getGoodsList, params).then(res => {
     tableData.value = res.data;
     total.value = res.page_count;
@@ -96,7 +133,7 @@ const getList = () => {
 }
 
 const handleCurrentChange = (val) => {
-  page.value = val;
+  queryParams.pageNum = val;
   getList();
 }
 
@@ -117,6 +154,12 @@ const handleAdd = () => {
   title.value = "商品添加";
   isShow.value = true;
   iniForm();
+}
+
+const handleDetail = () => {
+  app.$get(apiGoods.getTestDetail).then(res=>{
+    console.log(res);
+  })
 }
 
 const defaultDate = (date) => {
@@ -145,6 +188,7 @@ const submitForm = () => {
   app.$post(apiGoods.goodsAdd, params).then(res => {
     if (res.error === 0) {
       app.$message.success("添加成功");
+      getList();
     } else {
       app.$message.error("添加失败");
     }

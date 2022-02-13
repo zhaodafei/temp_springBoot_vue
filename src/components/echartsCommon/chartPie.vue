@@ -1,10 +1,10 @@
 <template>
-  <InitEcharts ref="myChartMapPie" :options="options"></InitEcharts>
+  <InitEcharts ref="refsChartPie" style="width: 600px; height: 300px;background-color: #ff6b81"></InitEcharts>
 </template>
 
 <script setup>
 import InitEcharts from "./initEcharts";
-import {onMounted, ref, watch, watchEffect} from "vue";
+import {onMounted, ref, watchEffect} from "vue";
 
 const props = defineProps({
   cdata:{
@@ -13,35 +13,28 @@ const props = defineProps({
   }
 })
 
-
-
-const myChartMapPie = ref();
-const options = ref({});
+const refsChartPie = ref(null);
 const defaultData = {
   seriesTitle: "",
   seriesData: [
-    { value: 1048, name: 'Search Engine' },
-    { value: 735, name: 'Direct' },
-    { value: 580, name: 'Email' },
-    { value: 484, name: 'Union Ads' },
-    { value: 300, name: 'Video Ads' }
+    { value: 108, name: 'demo1' },
+    { value: 735, name: 'demo2' },
+    { value: 580, name: 'demo3' },
+    { value: 484, name: 'demo4' },
+    { value: 300, name: 'demo5' }
   ]
 };
 
-onMounted(()=>{
-  // console.log(props.cdata);
-  // drawPie()
-})
 
-
-// todo:监听执行后 initEcharts 中的 drawChart 会一直循环
 const drawPie = (newDataObj) => {
-  console.log("ok___",newDataObj);
+  if (!refsChartPie.value) { // 防止 watchEffect 监听出现 undefined
+    return false;
+  }
+
   let seriesTitle = '';
   let seriesData= []
 
   try {
-    console.log("ok");
     seriesTitle = newDataObj.seriesTitle;
     seriesData = newDataObj.seriesData;
   }catch (e) { // 数据异常,便于开发调试
@@ -49,7 +42,6 @@ const drawPie = (newDataObj) => {
     seriesData = defaultData.seriesData;
   }
 
-  // options.value = {
   let options = {
     title: {
       text: seriesTitle,
@@ -88,38 +80,16 @@ const drawPie = (newDataObj) => {
     ]
   };
 
-  console.log(myChartMapPie.value);
-  console.log(options);
-  if (myChartMapPie.value) { // 防止 watchEffect 监听出现 undefined
-    // myChartMapPie.value.drawChart(options.value);
-    // myChartMapPie.value.drawChart(options);
-    myChartMapPie.value.bar(options);
-  }
+  refsChartPie.value.drawChart(options);
 
 }
 
+watchEffect(() => {
+  drawPie(props.cdata)
+}); // {flush: "post"}
 
-
-const fei = () => {
-  console.log("不调用我??????");
-}
-
-// const stop = watchEffect(() => {
-//   console.log("????", props.cdata);
-//   fei();
-//
-//   // drawPie(props.cdata)
-//
-//   if (myChartMapPie.value) {
-//     console.log("--------",myChartMapPie.value);
-//     drawPie(props.cdata)
-//   }
-//   // onInvalidate(() => {
-//     console.log("????执行多少次");
-//     // stop();
-//   // })
-//
-//
-// },) // {flush:"post"}
+onMounted(()=>{
+  // drawPie()
+})
 
 </script>

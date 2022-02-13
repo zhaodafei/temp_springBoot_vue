@@ -1,10 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Home from '../views/Home.vue'
-import foo from '../views/zTest/foo.vue'
-import bar from '../views/zTest/bar.vue'
-import goodsIndex from '../views/fGoods/index.vue'
-import billList from '../views/fGoods/billList.vue'
-import login from '../views/login'
+import Home from '@/views/Home.vue'
+import foo from '@/views/zTest/foo.vue'
+import bar from '@/views/zTest/bar.vue'
+import goodsIndex from '@/views/fGoods/index.vue'
+import billList from '@/views/fGoods/billList.vue'
+import login from '@/views/login'
+import dict from '@/views/fSystem/dictIndex'
 
 import Layout from '@/layout'
 
@@ -54,6 +55,11 @@ const routes = [
         path: 'bill-list',
         name: 'bill-list',
         component: billList
+      },
+      {
+        path: 'dict-list',
+        name: 'dict-list',
+        component: dict
       },
     ]
   },
