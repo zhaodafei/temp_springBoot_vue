@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fei.mapper.DictTypeMapper">
+    <resultMap type="com.example.fei.domain.DictType" id="DictTypeResult">
+        <id     property="dictId"     column="dict_id"     />
+        <result property="dictName"   column="dict_name"   />
+        <result property="dictType"   column="dict_type"   />
+        <result property="status"     column="status"      />
+        <!-- <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" /> -->
+    </resultMap>
+
+    <sql id="selectDictType">
+        select * from dict_type
+    </sql>
+
+    <select id="selectDictTypeList" parameterType="com.example.fei.domain.DictType" resultMap="DictTypeResult">
+        <include refid="selectDictType"/>
+        <where>
+            <if test="dictName != null and dictName != ''">
+                AND dict_name like concat('%', #{dictName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDictTypeDetail" parameterType="Long" resultMap="DictTypeResult">
+        <include refid="selectDictType"/>
+        where dict_id = #{dictId}
+    </select>
+
+    <update id="delDictType" parameterType="com.example.fei.domain.DictType">
+        UPDATE dict_type
+        <set>
+            status=status+1
+        </set>
+        where id in
+        <foreach item="item" index="index" collection="dictIds.split(',')"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateDictType" parameterType="com.example.fei.domain.DictType">
+        update dict_type
+        <set>
+            <if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
+            <if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where dict_id = #{dictId}
+    </update>
+
+    <insert id="insertDictType" parameterType="com.example.fei.domain.DictType">
+        insert into dict_type(
+        <if test="dictName != null and dictName != ''">dict_name,</if>
+        <if test="dictType != null and dictType != ''">dict_type,</if>
+        <if test="status != null">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time
+        )values(
+        <if test="dictName != null and dictName != ''">#{dictName},</if>
+        <if test="dictType != null and dictType != ''">#{dictType},</if>
+        <if test="status != null">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate()
+        )
+    </insert>
+</mapper>
