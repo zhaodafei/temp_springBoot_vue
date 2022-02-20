@@ -23,6 +23,20 @@
             <if test="dictName != null and dictName != ''">
                 AND dict_name like concat('%', #{dictName}, '%')
             </if>
+            <if test="dictType != null and dictType != ''">
+                AND dict_type like concat('%', #{dictType}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                <choose>
+                    <when test="status == 0">
+                        AND status = 0
+                    </when>
+                    <otherwise>
+                        AND status >= #{status}
+                    </otherwise>
+                </choose>
+            </if>
+
         </where>
     </select>
 
@@ -36,7 +50,7 @@
         <set>
             status=status+1
         </set>
-        where id in
+        where dict_id in
         <foreach item="item" index="index" collection="dictIds.split(',')"  open="(" separator="," close=")">
             #{item}
         </foreach>

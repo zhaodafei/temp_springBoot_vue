@@ -8,13 +8,14 @@
         <result property="allCount"     column="allCount"     />
 
         <!-- 数据库字段 ************************************* -->
-        <!-- <id     property="id"    column="id"  /> -->
+        <result     property="id"    column="id"  />
         <result property="goodsName"    column="goodsName"  />
         <result property="unitPrice"    column="unitPrice"  />
         <result property="goodsNumber"  column="goodsNumber"     />
         <result property="startTime"    column="startTime"     />
         <result property="endTime"      column="endTime"     />
         <result property="countPrice"   column="countPrice"     />
+        <result property="delNum"       column="delNum"     />
 
     </resultMap>
 
@@ -31,6 +32,25 @@
     <!-- 分页查询 -->
     <select id="selectGoodsList" resultMap="GoodsResult" parameterType="long">
         <include refid="sqlSelectGoods"/>
+        <where>
+            <if test="goodsName != null and goodsName != ''">
+                AND goodsName like concat('%', #{goodsName}, '%')
+            </if>
+
+            <if test="delNum != null and delNum != ''">
+                <choose>
+                    <when test="delNum == 0">
+                        AND delNum = 0
+                    </when>
+                    <otherwise>
+                        AND delNum >= #{delNum}
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+
+        ORDER BY id DESC
+
     </select>
 
     <select id="selectBudget" resultMap="GoodsResult">

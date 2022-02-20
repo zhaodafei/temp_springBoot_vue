@@ -11,7 +11,7 @@ public interface DictDataMapper {
 
     public DictData selectDictDataById(String dictCode);
 
-    public int delDictType(String dictCodes);
+    public int updateByDictCode(String dictCodes); // updateByDictCode
 
     public int updateDictData(DictData dictData);
 

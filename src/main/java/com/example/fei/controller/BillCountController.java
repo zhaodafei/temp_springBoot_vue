@@ -10,6 +10,7 @@ import com.example.fei.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class BillCountController extends BaseController {
         Goods goodsBudget = goodsService.selectBudget(goods);
 
         AjaxResult ajax = AjaxResult.success("success");
-        ajax.put("allCount", goodsBudget.getAllCount());
+        ajax.put("allCount", goodsBudget != null ? goodsBudget.getAllCount() : 0);
         ajax.put("consumeWay", "字典参数开发中"); // todo: 字典参数开发中
         return ajax;
     }
@@ -52,7 +53,7 @@ public class BillCountController extends BaseController {
         billCount.setStartTime(goods.getStartTime());
         billCount.setEndTime(goods.getEndTime());
         billCount.setConsumeWay("所有");  // todo: 字典参数开发中
-        billCount.setAllCount(goodsBudget.getAllCount());
+        billCount.setAllCount(goodsBudget != null ? goodsBudget.getAllCount() : BigDecimal.valueOf(0));
 
         return toAjax(billCountService.insertBill(billCount));
     }

@@ -30,7 +30,7 @@ public class DictDataServiceImpl implements DictDataService {
 
     @Override
     public int delDictType(String dictCodes) {
-        return dictDataMapper.delDictType(dictCodes);
+        return dictDataMapper.updateByDictCode(dictCodes);
     }
 
     @Override
