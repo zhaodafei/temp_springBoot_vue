@@ -6,7 +6,8 @@ import Qs from 'qs'
 const axios_instance = axios.create({
   timeout: 300000,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    // 'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json;charset=utf-8'
   },
   // 使用代理,在 vue.config.js 中配置
   baseURL: process.env.VUE_APP_BASE_URL
@@ -88,7 +89,8 @@ export function get(url, params = {}) {
 export function post(url, data = {}) {
   return new Promise((resolve, reject) => {
     axios_instance.post(url,
-        Qs.stringify(data, {arrayFormat: 'indices'})
+        // Qs.stringify(data, {arrayFormat: 'indices'})
+        data
     ).then(response => {
       resolve(response.data);
     }, err => {

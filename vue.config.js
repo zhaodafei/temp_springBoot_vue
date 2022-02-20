@@ -1,5 +1,6 @@
 module.exports = {
   lintOnSave: false,
+  publicPath: process.env.NODE_ENV === "production" ? "./." : "/",
   devServer: {
     host: '0.0.0.0',
     port: 8090,
@@ -16,5 +17,26 @@ module.exports = {
         // }
       }
     },
+  },
+  css: {
+    // 开启 CSS source maps?
+    sourceMap: false,
+  },
+  configureWebpack:{
+    performance: { // 关闭性能提示, 以后可以优化
+      hints: false,
+    },
+    optimization:{
+      minimize:true,
+      splitChunks:{
+        chunks: 'all',
+      }
+    }
+  },
+  chainWebpack:(config)=>{
+    config.plugin('html').tap(option => {
+      option[0].title = "大飞" // 默认 页面中使用 <%= htmlWebpackPlugin.options.title %>
+      return option;
+    })
   }
 }

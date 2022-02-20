@@ -1,5 +1,22 @@
 <template>
 <div>
+  <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
+
+    <el-form-item label="查询时间" prop="searchTime">
+      <el-date-picker v-model="form.searchTime"
+                      type="daterange"
+                      start-placeholder="开始时间"
+                      end-placeholder="结束时间"
+                      range-separator="To"
+      ></el-date-picker>
+    </el-form-item>
+
+    <el-form-item>
+      <el-button type="primary" @click="handleQuery">查询</el-button>
+      <el-button @click="resetQuery">重置</el-button>
+    </el-form-item>
+  </el-form>
+
   <el-row :gutter="10">
     <el-col :span="1.5">
       <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
@@ -58,12 +75,18 @@ import apiGoods from '@/api/goods.js'
 // currentPage: 1;
 const app = getCurrentInstance().appContext.config.globalProperties;
 
+// 搜索
+const refsQueryForm = ref() // 表单 ref 对象
+const queryParams = reactive({
+  pageNum: 1,
+  pageSize: 20,
+  searchTime: ''
+  // delNum: '0',
+});
+
 // 表格
 const tableData = ref([]);
 const total = ref(0);
-const page = ref(1);
-const pageSize = ref(15);
-
 // 非单个禁用
 const multipleSelection = ref([]); // 选中 数据
 const ids = ref([]); // 选中ids
@@ -71,20 +94,35 @@ const single = ref(true); // 单选
 const multiple = ref(true); // 多选
 
 
+const handleQuery = () => {
+  queryParams.pageNum = 1;
+  getList();
+}
+
+const resetQuery = () => {
+  refsQueryForm.value.resetFields();
+  handleQuery();
+}
+
 onMounted(() => {
   getList();
 });
 
 const getList = () => {
-  let params = {page: page.value, per_page: pageSize.value};
+  console.log(queryParams);
+  let params = {
+    ...queryParams,
+    startTime: defaultDate(queryParams.searchTime[0]), // todo:??? 获取不到值
+    endTime: defaultDate(queryParams.searchTime[1]),
+  };
   app.$get(apiGoods.getBillList, params).then(res => {
-    tableData.value = res.data;
-    total.value = res.page_count;
+    tableData.value = res.rows;
+    total.value = res.total;
   })
 }
 
 const handleCurrentChange = (val) => {
-  page.value = val;
+  queryParams.pageNum = val;
   getList();
 }
 
@@ -133,14 +171,15 @@ const resetForm = () => {
 }
 
 const handleBudget = () => {
+  console.log(form);
   let params = {
     consumeWay: form.consumeWay,
     startTime: defaultDate(form.consumeTime[0]),
     endTime: defaultDate(form.consumeTime[1]),
   };
-  app.$post(apiGoods.billBudget,params).then(res=>{
-    if (res.error === 0) {
-      app.$message.warning(`月预算金额: ${res.data.allCount} 元`);
+  app.$get(apiGoods.billBudget,params).then(res=>{
+    if (res.error === 200) {
+      app.$message.warning(`月预算金额: ${res.allCount} 元`);
     } else {
       app.$message.error("月预算失败");
     }
@@ -153,7 +192,7 @@ const submitForm = () => {
     endTime: defaultDate(form.consumeTime[1]),
   };
   app.$post(apiGoods.billAdd, params).then(res => {
-    if (res.error === 0) {
+    if (res.error === 200) {
       app.$message.success("统计成功");
       getList();
     } else {

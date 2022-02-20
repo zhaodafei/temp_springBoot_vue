@@ -16,17 +16,17 @@
       <el-button type="primary" plain icon="Plus" @click="handleAdd">新增</el-button>
     </el-col>
     <el-col :span="1.5">
-      <el-button type="success" plain icon="Edit">修改</el-button>
+      <el-button type="success" plain icon="Edit" @click="handleEdit">修改</el-button>
     </el-col>
     <el-col :span="1.5">
-      <el-button type="danger" plain icon="Delete">删除</el-button>
+      <el-button type="danger" plain icon="Delete" @click="handleDel">删除</el-button>
     </el-col>
     <el-col :span="1.5">
       <el-button type="success" plain icon="View" @click="handleDetail">详细</el-button>
     </el-col>
   </el-row>
 
-  <el-table :data="tableData" stripe style="width: 100%">
+  <el-table  ref="multipleTable" :data="tableData" stripe style="width: 100%" @selection-change="handleSelectionChange">
     <el-table-column type="selection" width="55" align="center"/>
     <el-table-column prop="goodsName" label="商品名称" align="center" />
     <el-table-column prop="unitPrice" label="单价" align="center" />
@@ -78,6 +78,7 @@
 <script setup>
 import {onMounted, getCurrentInstance, ref, reactive} from 'vue'
 import apiGoods from '@/api/goods.js'
+import apiDictType from "@/api/dict";
 
 // currentPage: 1;
 const app = getCurrentInstance().appContext.config.globalProperties;
@@ -88,6 +89,7 @@ const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
   goodsName: '',
+  delNum: '0',
 });
 
 const handleQuery = () => {
@@ -103,8 +105,9 @@ const resetQuery = () => {
 // 表格
 const tableData = ref([]);
 const total = ref(0);
-// const page = ref(1);
-// const pageSize = ref(15);
+const ids = ref([]); // 选中数组
+const single = ref(true); // 选中非单个禁用
+const multiple = ref(true); // 选中非多个禁用
 const latestData = reactive({
   consumeTime: "0000-00-00"
 });
@@ -114,19 +117,16 @@ onMounted(() => {
 });
 
 const getList = () => {
-  // let params = {page: page.value, per_page: pageSize.value};
   let params = {
-    page: queryParams.pageNum,
-    per_page: queryParams.pageSize,
-    goodsName: queryParams.goodsName
+    ...queryParams
   };
   app.$get(apiGoods.getGoodsList, params).then(res => {
-    tableData.value = res.data;
-    total.value = res.page_count;
+    tableData.value = res.rows;
+    total.value = res.total;
 
     // 获取第一条数据时间
-    if (params.page === 1) {
-      latestData.consumeTime = defaultDate(res.data[0].consumeTime);
+    if (params.pageNum === 1) {
+      latestData.consumeTime = defaultDate(res.rows[0].consumeTime);
     }
 
   })
@@ -137,18 +137,30 @@ const handleCurrentChange = (val) => {
   getList();
 }
 
+// 多选框选中数据
+const handleSelectionChange = (selection) => {
+  ids.value = selection.map(item => item.id)
+  single.value = selection.length !== 1
+  multiple.value = !selection.length
+}
+
 // 弹出层
 const title = ref("")
 const isShow = ref(false)
 const formRef = ref() // 表单 ref 对象
-const form = reactive({
-  goodsName: '',
-  unitPrice: 0,
-  goodsNumber: 1,
-  consumeTime: '',
-  goodsComment: '无',
-  consumeWay: '线下',
-});
+const multipleTable = ref() // 表单 ref 对象
+const defaultForm = () => {
+  return {
+    id: undefined,
+    goodsName: '',
+    unitPrice: 0,
+    goodsNumber: 1,
+    consumeTime: '',
+    goodsComment: '无',
+    consumeWay: '线下',
+  }
+}
+const form = reactive(defaultForm());
 
 const handleAdd = () => {
   title.value = "商品添加";
@@ -156,8 +168,26 @@ const handleAdd = () => {
   iniForm();
 }
 
-const handleDetail = () => {
-  app.$get(apiGoods.getTestDetail).then(res=>{
+const handleEdit = (row) => {
+  const id = row.id || ids.value;
+  app.$get(apiGoods.getGoodsDetail, {id: id.toString()}).then(res => {
+    isShow.value = true;
+    Object.assign(form, res.data);
+    title.value = "商品修改";
+  })
+}
+
+const handleDel = (row) => {
+  const id = row.id || ids.value;
+  app.$get(apiGoods.goodsDel, {ids: id.toString()}).then(res => {
+    app.$message.success("删除成功");
+    getList();
+  })
+}
+
+const handleDetail = (row) => {
+  const id = row.id || ids.value;
+  app.$get(apiGoods.getGoodsDetail,{id: id.toString()}).then(res=>{
     console.log(res);
   })
 }
@@ -177,23 +207,39 @@ const resetForm = () => {
 const submitForm = () => {
 
   let params = {
-    goodsName: form.goodsName,
-    unitPrice: form.unitPrice,
-    goodsNumber: form.goodsNumber,
-    consumeWay: form.consumeWay,
-    goodsComment: form.goodsComment,
+    // goodsName: form.goodsName,
+    // unitPrice: form.unitPrice,
+    // goodsNumber: form.goodsNumber,
+    // consumeWay: form.consumeWay,
+    // goodsComment: form.goodsComment,
+    ...form,
     consumeTime: app.$dayjs(form.consumeTime).format("YYYY-MM-DD") + " 08:00:00"
   };
 
-  app.$post(apiGoods.goodsAdd, params).then(res => {
-    if (res.error === 0) {
-      app.$message.success("添加成功");
-      getList();
-    } else {
-      app.$message.error("添加失败");
-    }
-     cancel()
-  })
+  if (form.id) {
+    app.$message.warning("开发中")
+    // app.$post(apiDictType.goodsUpdate, params).then(res => {
+    //   if (Number(res.error) === 200) {
+    //     app.$message.success("修改成功");
+    //     getList();
+    //   } else {
+    //     app.$message.error("修改失败");
+    //   }
+    // }).finally(()=>{
+    //   cancel()
+    // });
+  }else{
+    app.$post(apiGoods.goodsAdd, params).then(res => {
+      if (Number(res.error) === 200) {
+        app.$message.success("添加成功");
+        getList();
+      } else {
+        app.$message.error("添加失败");
+      }
+      cancel()
+    });
+  }
+
 }
 
 const cancel = () => {

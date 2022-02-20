@@ -1,30 +1,21 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Home from '@/views/Home.vue'
-import foo from '@/views/zTest/foo.vue'
-import bar from '@/views/zTest/bar.vue'
-import goodsIndex from '@/views/fGoods/index.vue'
-import billList from '@/views/fGoods/billList.vue'
-import login from '@/views/login'
-import dict from '@/views/fSystem/dictIndex'
-
-import Layout from '@/layout'
 
 // 测试页面路由
 const testRoutes = [
   {
     path: 'foo',
     name: 'foo',
-    component: foo
+    component: () => import('@/views/zTest/foo.vue'),
   },
   {
     path: 'bar',
     name: 'bar',
-    component: bar
+    component: () => import('@/views/zTest/bar.vue'),
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/zTest/About.vue')
+    component: () => import('@/views/zTest/About.vue')
   },
 ]
 
@@ -33,33 +24,38 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: login
+    component: () => import('@/views/login'),
   },
   {
     path: '',
-    component: Layout,
+    component: () => import('@/layout'),
     redirect: 'home',
     children: [
         ...testRoutes,
       {
         path: 'home',
         name: 'home',
-        component: Home
+        component: () => import('@/views/Home.vue'),
       },
       {
         path: 'goods-index',
         name: 'goods-index',
-        component: goodsIndex
+        component: () => import('@/views/fGoods/index.vue'),
       },
       {
         path: 'bill-list',
         name: 'bill-list',
-        component: billList
+        component: () => import('@/views/fGoods/billList.vue')
       },
       {
         path: 'dict-list',
         name: 'dict-list',
-        component: dict
+        component: () => import('@/views/fSystem/dictIndex')
+      },
+      {
+        path: 'dict-data',
+        name: 'dict-data',
+        component: () => import( '@/views/fSystem/dictData')
       },
     ]
   },
