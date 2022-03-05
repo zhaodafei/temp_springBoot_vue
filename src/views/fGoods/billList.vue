@@ -3,8 +3,9 @@
   <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
 
     <el-form-item label="查询时间" prop="searchTime">
-      <el-date-picker v-model="form.searchTime"
+      <el-date-picker v-model="queryParams.searchTime"
                       type="daterange"
+                      value-format="YYYY-MM-DD"
                       start-placeholder="开始时间"
                       end-placeholder="结束时间"
                       range-separator="To"
@@ -31,6 +32,7 @@
 
   <el-table :data="tableData" stripe style="width: 100%"  @selection-change="handleSelectionChange">
     <el-table-column type="selection" width="55" align="center"/>
+    <el-table-column prop="id" label="ID" align="center" />
     <el-table-column prop="startTime" label="开始时间" align="center" />
     <el-table-column prop="endTime" label="结束时间" align="center" />
     <el-table-column prop="allCount" label="总额度" align="center" />
@@ -47,6 +49,7 @@
       <el-form-item label="入库时间" prop="consumeTime">
         <el-date-picker v-model="form.consumeTime"
                         type="daterange"
+                        value-format="YYYY-MM-DD 08:00:00"
                         start-placeholder="开始时间"
                         end-placeholder="结束时间"
                         range-separator="To"
@@ -71,6 +74,7 @@
 <script setup>
 import {onMounted, getCurrentInstance, ref, reactive} from 'vue'
 import apiGoods from '@/api/goods.js'
+import {isEmptyArr_utils} from "@/utils/comUtils";
 
 // currentPage: 1;
 const app = getCurrentInstance().appContext.config.globalProperties;
@@ -80,8 +84,8 @@ const refsQueryForm = ref() // 表单 ref 对象
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 20,
-  searchTime: ''
-  // delNum: '0',
+  searchTime: [],
+  delNum: '0',
 });
 
 // 表格
@@ -110,10 +114,11 @@ onMounted(() => {
 
 const getList = () => {
   console.log(queryParams);
+
   let params = {
     ...queryParams,
-    startTime: defaultDate(queryParams.searchTime[0]), // todo:??? 获取不到值
-    endTime: defaultDate(queryParams.searchTime[1]),
+    startTime: queryParams.searchTime[0],
+    endTime: queryParams.searchTime[1],
   };
   app.$get(apiGoods.getBillList, params).then(res => {
     tableData.value = res.rows;
@@ -153,7 +158,7 @@ const title = ref("")
 const isShow = ref(false)
 const formRef = ref() // 表单 ref 对象
 const form = reactive({
-  consumeTime: '',
+  consumeTime: [],
   consumeWay: '全部',
 });
 
@@ -162,20 +167,15 @@ const handleAdd = () => {
   isShow.value = true;
 }
 
-const defaultDate = (date) => {
-  return app.$dayjs(date).format("YYYY-MM-DD");
-}
-
 const resetForm = () => {
   formRef.value.resetFields();
 }
 
 const handleBudget = () => {
-  console.log(form);
   let params = {
     consumeWay: form.consumeWay,
-    startTime: defaultDate(form.consumeTime[0]),
-    endTime: defaultDate(form.consumeTime[1]),
+    startTime: form.consumeTime[0],
+    endTime: form.consumeTime[1],
   };
   app.$get(apiGoods.billBudget,params).then(res=>{
     if (res.error === 200) {
@@ -188,8 +188,8 @@ const handleBudget = () => {
 const submitForm = () => {
   let params = {
     consumeWay: form.consumeWay,
-    startTime: defaultDate(form.consumeTime[0]),
-    endTime: defaultDate(form.consumeTime[1]),
+    startTime: form.consumeTime[0],
+    endTime: form.consumeTime[1],
   };
   app.$post(apiGoods.billAdd, params).then(res => {
     if (res.error === 200) {

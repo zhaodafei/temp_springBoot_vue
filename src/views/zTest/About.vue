@@ -1,13 +1,10 @@
 <template>
-  <div class="about">
-    <h1 class="about-inner">This is an about page </h1>
-  </div>
+  <!-- 父组件-->
+  <Bar />
 </template>
 
 <script setup>
-
+  import Bar from './bar.vue'
+  import {provide} from "vue";
+  provide('list',"可以隔代传给子组件")
 </script>
-
-<style scoped lang="scss">
-
-</style>

@@ -28,12 +28,14 @@
 
   <el-table  ref="multipleTable" :data="tableData" stripe style="width: 100%" @selection-change="handleSelectionChange">
     <el-table-column type="selection" width="55" align="center"/>
+    <el-table-column prop="id" label="ID" align="center" />
     <el-table-column prop="goodsName" label="商品名称" align="center" />
-    <el-table-column prop="unitPrice" label="单价" align="center" />
+    <el-table-column prop="unitPrice" label="单价(元)" align="center" />
     <el-table-column prop="goodsNumber" label="商品数量" align="center" />
+    <el-table-column prop="countPrice" label="总价格" align="center" />
     <el-table-column prop="consumeTime" label="创建时间" align="center" />
-    <el-table-column prop="goodsComment" label="备注" align="center" />
     <el-table-column prop="consumeWay" label="渠道" align="center" />
+    <el-table-column prop="goodsComment" label="备注" align="center" />
   </el-table>
 
   <el-pagination background
@@ -207,27 +209,21 @@ const resetForm = () => {
 const submitForm = () => {
 
   let params = {
-    // goodsName: form.goodsName,
-    // unitPrice: form.unitPrice,
-    // goodsNumber: form.goodsNumber,
-    // consumeWay: form.consumeWay,
-    // goodsComment: form.goodsComment,
     ...form,
     consumeTime: app.$dayjs(form.consumeTime).format("YYYY-MM-DD") + " 08:00:00"
   };
 
   if (form.id) {
-    app.$message.warning("开发中")
-    // app.$post(apiDictType.goodsUpdate, params).then(res => {
-    //   if (Number(res.error) === 200) {
-    //     app.$message.success("修改成功");
-    //     getList();
-    //   } else {
-    //     app.$message.error("修改失败");
-    //   }
-    // }).finally(()=>{
-    //   cancel()
-    // });
+    app.$post(apiGoods.goodsUpdate, params).then(res => {
+      if (Number(res.error) === 200) {
+        app.$message.success("修改成功");
+        getList();
+      } else {
+        app.$message.error("修改失败");
+      }
+    }).finally(()=>{
+      cancel()
+    });
   }else{
     app.$post(apiGoods.goodsAdd, params).then(res => {
       if (Number(res.error) === 200) {

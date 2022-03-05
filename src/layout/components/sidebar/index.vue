@@ -33,7 +33,7 @@
             <el-icon><Document /></el-icon>
             <span><router-link to="/dict-list">字典管理</router-link></span>
           </el-menu-item>
-          <el-menu-item index="3002">
+          <el-menu-item index="3003">
             <el-icon><Edit /></el-icon>
             <span>日志管理</span>
           </el-menu-item>

@@ -6,7 +6,7 @@ let interfacesGoods = {
   //  *********** 商品管理 ***********
   goodsAdd: 'goods/add',
   goodsDel: 'goods/del',
-  // goodsUpdate: 'goods/update', // todo:开发中
+  goodsUpdate: 'goods/update', // todo:开发中
   getGoodsList: 'goods/list',
   getGoodsDetail: 'goods/detail',
   //***********

@@ -56,7 +56,7 @@
                    @current-change="handleCurrentChange">
     </el-pagination>
 
-    <el-dialog :title="title" v-model="isShow" width="600px" :close-on-click-modal="false">\
+    <el-dialog :title="title" v-model="isShow" width="600px" :close-on-click-modal="false">
       <el-form ref="formRef" :model="form"  label-width="120px">
         <el-form-item label="字典标签" prop="dictLabel">
           <el-input v-model="form.dictLabel" placeholder="字典标签" ></el-input>
@@ -170,7 +170,7 @@ const defaultForm = () => {
 const form = reactive(defaultForm());
 
 const handleAdd = () => {
-  title.value = "商品添加";
+  title.value = "字典添加";
   isShow.value = true;
 }
 
