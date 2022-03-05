@@ -13,5 +13,7 @@ public interface GoodsService {
 
     public int delGoods(String ids);
 
+    public int updateGoods(Goods goods);
+
     public int insertGoods(Goods goods);
 }

@@ -73,6 +73,23 @@ public class GoodsController extends BaseController {
         return toAjax(goodsService.insertGoods(goods));
     }
 
+    @PostMapping("update")
+    public AjaxResult update(@RequestBody Goods goods) throws NoSuchAlgorithmException {
+        Long goodsNumber = goods.getGoodsNumber();
+        BigDecimal unitPrice = goods.getUnitPrice();
+
+        Date nowTime = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formatDate = sdFormatter.format(nowTime);
+        String substring = StringUtils.substring(OtherUtils.getHashStr(formatDate), 0, 4);
+
+
+        goods.setCountPrice(unitPrice.multiply(BigDecimal.valueOf(goodsNumber)));
+        goods.setGoodsNumType(formatDate + substring);
+
+        return toAjax(goodsService.updateGoods(goods));
+    }
+
     @GetMapping("del")
     public AjaxResult del(String ids) {
         return toAjax(goodsService.delGoods(ids));

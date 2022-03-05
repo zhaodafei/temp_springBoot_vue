@@ -70,6 +70,22 @@
         </foreach>
     </update>
 
+    <update id="updateGoods" parameterType="com.example.fei.domain.Goods">
+        UPDATE goods
+        <set>
+            <if test="goodsName != null and goodsName != ''">goodsName = #{goodsName},</if>
+            <if test="unitPrice != null and unitPrice != ''">unitPrice = #{unitPrice},</if>
+            <if test="goodsNumber != null and goodsNumber != ''">goodsNumber = #{goodsNumber},</if>
+            <if test="countPrice != null and countPrice != ''">countPrice = #{countPrice},</if>
+            <if test="consumeWay != null and consumeWay != ''">consumeWay = #{consumeWay},</if>
+            <if test="goodsNumType != null and goodsNumType != ''">goodsNumType = #{goodsNumType},</if>
+            <if test="goodsComment != null and goodsComment != ''">goodsComment = #{goodsComment},</if>
+            <if test="consumeTime != null and consumeTime != ''">consumeTime = #{consumeTime},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
     <insert id="insertGoods" parameterType="com.example.fei.domain.Goods">
         insert into goods(
             <if test="goodsName != null and goodsName != ''">goodsName,</if>

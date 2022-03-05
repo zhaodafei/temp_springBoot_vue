@@ -18,6 +18,20 @@
 
     <select id="selectBillList" resultMap="BillResult" parameterType="long">
         <include refid="sqlSelectBill"/>
+        <where>
+            <if test="delNum != null and delNum != ''">
+                <choose>
+                    <when test="delNum == 0">
+                        AND delNum = 0
+                    </when>
+                    <otherwise>
+                        AND delNum >= #{delNum}
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+
+        ORDER BY id DESC
     </select>
 
     <update id="delBill" parameterType="com.example.fei.domain.BillCount">

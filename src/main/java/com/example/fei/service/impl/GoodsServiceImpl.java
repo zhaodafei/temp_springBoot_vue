@@ -34,6 +34,15 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public int updateGoods(Goods goods) {
+        int row = goodsMapper.updateGoods(goods);
+        if (row > 0) {
+
+        }
+        return row;
+    }
+
+    @Override
     public int insertGoods(Goods goods) {
         int row = goodsMapper.insertGoods(goods);
         if (row > 0) {
