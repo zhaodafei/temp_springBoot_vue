@@ -43,6 +43,12 @@
           <template #title>
             <el-icon><Help /></el-icon>其他
           </template>
+          <el-menu-item index="5000011">
+            <el-icon><Help /></el-icon>
+            <span>
+             <router-link to="/file">文件处理</router-link>
+            </span>
+          </el-menu-item>
           <el-menu-item index="5000001">
             <el-icon><Help /></el-icon>
             <span>

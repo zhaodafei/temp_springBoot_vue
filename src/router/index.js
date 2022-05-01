@@ -17,6 +17,15 @@ const testRoutes = [
     name: 'About',
     component: () => import('@/views/zTest/About.vue')
   },
+];
+
+// 文件处理路由
+const fileRoutes = [
+  {
+    path: '/file',
+    name: 'file',
+    component: () => import('@/views/zTest/fileIndex.vue'),
+  },
 ]
 
 // 正式路由
@@ -32,6 +41,7 @@ const routes = [
     redirect: 'home',
     children: [
         ...testRoutes,
+        ...fileRoutes,
       {
         path: 'home',
         name: 'home',

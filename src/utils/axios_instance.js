@@ -103,6 +103,38 @@ export function post(url, data = {}) {
   })
 }
 
+// 文件下载---接口返回二进制流
+export function fPost(url, data = {}) {
+  return new Promise((resolve, reject) => {
+    axios_instance.post(url,
+        data,
+        {responseType: "blob"}
+    ).then(response => {
+      resolve(response);
+    }, err => {
+      reject(err)
+    }).catch(err => {
+      // console.log("catch".err);
+    }).finally(() => {
+      // console.log("finally");
+    });
+  })
+}
+
+// 文件下载---接口返回二进制流
+// export function fGet(url, params = {}) {
+  // return new Promise((resolve, reject) => {
+  //   axios_instance.get(url, {
+  //     params: params,
+  //     responseType: "blob",
+  //   }).then(response => {
+  //     resolve(response.data)
+  //   }).catch(err => {
+  //     reject(err)
+  //   })
+  // })
+// }
+
 /**
  * $get 调用 getCurrentInstance().appContext.config.globalProperties.$get;
  * @param app
@@ -110,6 +142,8 @@ export function post(url, data = {}) {
 const axiosInstall = function (app) {
   app.config.globalProperties.$get = get;
   app.config.globalProperties.$post = post;
+  // app.config.globalProperties.$fGet = fGet;
+  app.config.globalProperties.$fPost = fPost;
 };
 
 export {axiosInstall}
