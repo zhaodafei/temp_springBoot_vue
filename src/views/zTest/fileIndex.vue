@@ -14,18 +14,18 @@
 
     <div class="file-item">
       <strong> 文件上传2 </strong>
-      <input type="file" id="fileUpload2" name="fileUpload2" accept=".jpg, .gif, .png" multiple @change="changesFile2"/>
+      <!--<input type="file" id="fileUpload2" name="fileUpload2" accept=".jpg, .gif, .png" multiple @change="changesFile2"/>-->
     </div>
 
     <div class="file-item">
       <strong> 文件上传3 </strong>
-      <input type="file" id="fileUpload3" name="fileUpload3" accept=".jpg, .gif, .png" multiple @change="changesFile3"/>
+      <!--<input type="file" id="fileUpload3" name="fileUpload3" accept=".jpg, .gif, .png" multiple @change="changesFile3"/>-->
     </div>
 
     <!--<el-button @click="addFiles">上传</el-button>-->
 
     <div class="file-item" style="display: flex;justify-content: space-between;width: 150px">
-      <button @click="fileDownload2">下载222</button>
+      <button @click="fileDownload">下载222</button>
     </div>
   </div>
 </template>
@@ -54,7 +54,7 @@ const changesFile = () => {
 }
 
 // 文件上传接口2
-const changesFile2 = () => {
+/*const changesFile2 = () => {
   const formData = new FormData();
   const fileObj = document.getElementById("fileUpload2").files[0];
   if (fileObj != "undefined") {
@@ -66,10 +66,10 @@ const changesFile2 = () => {
       console.log(res);
     })
   }
-}
+}*/
 
 // 文件上传接口3
-const changesFile3 = () => {
+/*const changesFile3 = () => {
   const formData = new FormData();
   const fileObj = document.getElementById("fileUpload3").files[0];
   if (fileObj != "undefined") {
@@ -81,10 +81,10 @@ const changesFile3 = () => {
       console.log(res);
     })
   }
-}
+}*/
 
-const fileDownload2 = () => {
-  app.$fPost("file/download2", {fileId: 222}).then(res => {
+const fileDownload = () => {
+  app.$fPost("file/download", {fileId: 222}).then(res => {
     comDownload(res);
   })
 }
