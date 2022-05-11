@@ -105,4 +105,33 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <!-- 其中id代表这个环境的唯一标识，下面会用到 -->
+            <id>dev</id>
+            <!-- properties下我们我们自己自定义了标签env,内容分别是dev和prd -->
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <!-- activeByDefault=true代表如果不指定某个固定id的profile,那么就使用这个环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

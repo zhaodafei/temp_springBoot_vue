@@ -4,8 +4,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 // @SpringBootApplication
+// @CrossOrigin(origins = "http://demo.hexo.com")//表示只允许这一个url可以跨域访问这个controller
 @MapperScan("com.example.*.mapper")
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class})
 public class FeiApplication {

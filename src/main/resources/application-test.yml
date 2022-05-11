@@ -1,0 +1,60 @@
+# 项目相关配置
+fei:
+  # 名称
+  name: 大飞
+  # 版本
+  version: 1.0.0
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8073
+  servlet:
+    # 应用的访问路径
+    context-path: /api
+  #tomcat:
+    # tomcat的URI编码
+    #uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    #max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    #min-spare-threads: 30
+
+# 数据库配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # url: jdbc:mysql://localhost:3306/test
+    url: jdbc:mysql://localhost:3306/temp_demo
+    username: root
+    password: root
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.example.fei.domain
+  #typeAliasesPackage: com.example.fei.web.mapper
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  # 加载全局的配置文件
+  #config-location: classpath:mybatis/mybatis-config.xml
+  # 输出 MyBatis 中的 SQL
+  #configuration:
+  #  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 控制台输出SQL
+logging:
+  level:
+    com.example.fei.mapper: DEBUG
+
+# token配置
+token:
+  # 令牌自定义标识
+  header: Authorization
+  # 令牌密钥
+  secret: fei_Secret_123456
+  # 令牌有效期（默认30分钟）
+  expireTime: 30
+
+
+
