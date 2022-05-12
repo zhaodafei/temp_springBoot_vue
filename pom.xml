@@ -103,13 +103,23 @@
             </plugin>
 
         </plugins>
+        <!-- <resources>
+            <resource>
+                &lt;!&ndash;打包排除项&ndash;&gt;
+                <excludes>
+                    <exclude>dev/**</exclude>
+                    <exclude>prod/**</exclude>
+                    <exclude>test/**</exclude>
+                </excludes>
+            </resource>
+        </resources> -->
     </build>
 
     <profiles>
         <profile>
             <!-- 其中id代表这个环境的唯一标识，下面会用到 -->
             <id>dev</id>
-            <!-- properties下我们我们自己自定义了标签env,内容分别是dev和prd -->
+            <!-- properties下我们我们自己自定义了标签env,内容分别是dev和prd,对应application.yml中 active: @env@ -->
             <properties>
                 <env>dev</env>
             </properties>

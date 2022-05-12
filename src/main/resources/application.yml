@@ -28,6 +28,17 @@ spring:
     url: jdbc:mysql://localhost:3306/temp_demo
     username: root
     password: root
+  profiles:
+    # 动态环境选择,对应pom.xml文件中 <properties> <env>dev</env> </properties>
+    active: @env@
+  #tomcat:
+    #uri-encoding: utf-8
+  #servlet:
+    #context-path: /
+    #multipart:
+      #enabled: true
+      #max-file-size: 30MB
+      #max-request-size: 30MB
 
 # MyBatis配置
 mybatis:

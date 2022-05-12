@@ -14,6 +14,37 @@ http://localhost:8072/api   GET
 http://localhost:8072/api/test/detail  测试接口
 ```
 
+## Nginx配置
+
+```nginx
+server {
+    listen        80;
+    #server_name  localhost demo.fei.com;
+    server_name  demo.fei.com;
+    # 配置 Vue 打包首页地址
+    root   "E:/self_web/git_dev/vue/zFei_vue/dist";
+    location / {
+        try_files $uri $uri/ /index.html;
+        index  index.html index.htm;
+    }
+    # 代理到 Java 的8072接口
+    # 访问 http://localhost:80/api/test/detail
+    # 调用 Java 接口 http://localhost:8072/api/test/detail
+    location /api/ {
+        proxy_pass http://127.0.0.1:8072/api/;
+    }
+}
+```
+
+### 启动`jar`包
+
+```bash
+java -jar fei-0.0.1-SNAPSHOT.jar
+java -jar fei-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+java -jar fei-0.0.1-SNAPSHOT.jar --server.port=8072 --spring.profiles.active=prod
+```
+
+
 
 
 ## 接口文档
