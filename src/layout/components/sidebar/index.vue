@@ -1,6 +1,6 @@
 <template>
   <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-    <el-scrollbar>
+    <el-scrollbar data-title="使用框架的滚动条样式,但是要自己设置内容区域高度">
       <el-menu :default-openeds="['1']">
         <el-menu-item index="1">
           <el-icon><HomeFilled /></el-icon>
@@ -62,6 +62,10 @@
           <el-menu-item index="500003">
             <el-icon><Help /></el-icon>
             <span><router-link to="/about">其他about</router-link></span>
+          </el-menu-item>
+          <el-menu-item index="500004">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_h">其他_滚动条</router-link></span>
           </el-menu-item>
         </el-sub-menu>
 

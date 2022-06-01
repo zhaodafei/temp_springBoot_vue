@@ -17,6 +17,11 @@ const testRoutes = [
     name: 'About',
     component: () => import('@/views/zTest/About.vue')
   },
+  {
+    path: '/fei_h',
+    name: 'fei_h',
+    component: () => import('@/views/zTest/fHeight.vue')
+  },
 ];
 
 // 文件处理路由

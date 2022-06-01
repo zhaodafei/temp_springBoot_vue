@@ -1,20 +1,19 @@
 <template>
-  <el-container
-      class="layout-container-demo"
-      style="height: 960px; min-height: 270px; border: 1px solid #eee"
-  >
+  <el-container class="layout-container-demo fei100h" data-title="fei100h 这个高度很重要">
     <Sidebar />
 
     <el-container>
       <el-header>
-        <HeadNav />
+        <HeadNav /> height: calc(100% - 100px);
       </el-header>
 
-      <el-main>
-        <div class="main-body">
-          <router-view />
-        </div>
-      </el-main>
+      <el-scrollbar data-title="使用框架的滚动条样式,但是要自己设置内容区域高度">
+        <el-main>
+          <div class="main-body">
+            <router-view />
+          </div>
+        </el-main>
+      </el-scrollbar>
 
       <Footer />
 
@@ -37,8 +36,6 @@ import Footer from './components/foot'
 
   .el-main {
     background-color: var(--main-bg-color);
-    /* 90 = navbar + tags-view = 60 + 30 */
-    min-height: calc(100vh - 90px);
     .main-body{
       padding: 0 10px;
     }
