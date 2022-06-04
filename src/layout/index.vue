@@ -4,10 +4,10 @@
 
     <el-container>
       <el-header>
-        <HeadNav /> height: calc(100% - 100px);
+        <HeadNav />
       </el-header>
 
-      <el-scrollbar data-title="使用框架的滚动条样式,但是要自己设置内容区域高度">
+      <el-scrollbar data-title="使用框架的滚动条样式,但是要自己设置内容区域高度"> <!-- 有时候这里需要设置 height: 100%"-->
         <el-main>
           <div class="main-body">
             <router-view />
