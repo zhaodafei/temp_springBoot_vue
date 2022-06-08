@@ -14,8 +14,8 @@ const testRoutes = [
   },
   {
     path: '/about',
-    name: 'About',
-    component: () => import('@/views/zTest/About.vue')
+    name: 'about',
+    component: () => import('@/views/zTest/about.vue')
   },
   {
     path: '/fei_h',
@@ -50,7 +50,7 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/home.vue'),
       },
       {
         path: 'goods-index',

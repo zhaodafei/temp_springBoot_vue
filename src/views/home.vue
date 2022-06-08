@@ -3,7 +3,7 @@
     <div class="panel-wrapper" data-title="控制外边框">
       <div class="home-notice">
         <div class="notice-info">
-          <a href="#">关于本网站介绍说明</a>
+          <a href="#">关于本网站介绍说明ok</a>
         </div>
         <div class="notice-extra">
           <em class="notice-date">2022-02-22</em>
