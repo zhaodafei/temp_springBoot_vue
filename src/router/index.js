@@ -22,6 +22,11 @@ const testRoutes = [
     name: 'fei_h',
     component: () => import('@/views/zTest/fHeight.vue')
   },
+  {
+    path: '/fei_chart',
+    name: 'fei_chart',
+    component: () => import('@/views/zTest/fChart.vue')
+  },
 ];
 
 // 文件处理路由

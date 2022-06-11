@@ -67,6 +67,10 @@
             <el-icon><Help /></el-icon>
             <span><router-link to="/fei_h">其他_滚动条</router-link></span>
           </el-menu-item>
+          <el-menu-item index="500004">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_chart">聊天消息</router-link></span>
+          </el-menu-item>
         </el-sub-menu>
 
       </el-menu>

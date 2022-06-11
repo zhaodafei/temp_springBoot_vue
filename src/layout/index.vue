@@ -28,7 +28,7 @@ import Footer from './components/foot'
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .layout-container-demo {
   .el-header {
     padding: 0;

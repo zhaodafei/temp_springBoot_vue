@@ -57,17 +57,18 @@
 
 <script setup>
 import {reactive, toRefs} from 'vue'
+import avatarImg from '@/assets/images/avatar/user1.jpg'
 
-const state = reactive({
-  avatarImg: require('@/assets/images/avatar/user1.jpg')
-})
-
-const {avatarImg} = toRefs(state)
+// const state = reactive({
+//   avatarImg: require('@/assets/images/avatar/user1.jpg')
+// })
+//
+// const {avatarImg} = toRefs(state)
 
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 .header-nav {
   flex-shrink: 0;
   height: var(--el-header-height);
