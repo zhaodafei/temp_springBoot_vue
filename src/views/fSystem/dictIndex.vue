@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
-      <el-form-item label="字典名称" prop="dictName">
+      <el-form-item prop="dictName">
         <el-input v-model="queryParams.dictName" placeholder="字典名称" ></el-input>
       </el-form-item>
 
-      <el-form-item label="字典类型" prop="dictType">
+      <el-form-item prop="dictType">
         <el-input v-model="queryParams.dictType" placeholder="字典类型" ></el-input>
       </el-form-item>
 
-      <el-form-item label="字典状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择">
+      <el-form-item prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择字典状态">
           <el-option
               v-for="item in statusOptions"
               :key="item.value"
@@ -49,7 +49,7 @@
         <template #default="scope">
           <!--<router-link to="/dict-data"> 字典内容 </router-link>-->
           <!--<router-link :to="{ name: 'dict-data', params: { dictId: scope.row.dictId }}"> 字典内容 </router-link>-->
-          <router-link :to="{ name: 'dict-data', query: { dictId: scope.row.dictType }}"> 字典内容 </router-link>
+          <router-link class="aLink" :to="{ name: 'dict-data', query: { dictId: scope.row.dictType }}"> 字典内容 </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -102,6 +102,7 @@ import {getCurrentInstance, onMounted, reactive, ref} from "vue";
 import apiDictType from '@/api/dict.js'
 
 const app = getCurrentInstance().appContext.config.globalProperties;
+const { proxy } = getCurrentInstance()
 
 // 搜索
 const refsQueryForm = ref() // 表单 ref 对象
@@ -202,12 +203,22 @@ const handleEdit = (row) => {
 }
 
 const handleDel = (row) => {
-  const id = row.dictId || ids.value;
-  app.$get(apiDictType.dictTypeDel, {dictIds: id.toString()}).then(res=>{
-    app.$message.success("删除成功");
-    getList();
+  console.log(proxy);
+  proxy.$confirm('是否确认删除?','警告',{
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning"
+  }).then(()=>{
+    const id = row.dictId || ids.value;
+    app.$get(apiDictType.dictTypeDel, {dictIds: id.toString()}).then(res=>{
+      app.$message.success("删除成功");
+      getList();
+    })
+  }).catch(()=>{
   })
 }
+
+const delLoading = ref(false);
 
 const initForm = () => {
   Object.assign(form, defaultForm());
@@ -259,6 +270,8 @@ const cancel = () => {
 
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.aLink{
+  color: #1890ff;
+}
 </style>

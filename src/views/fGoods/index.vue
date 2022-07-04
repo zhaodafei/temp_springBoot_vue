@@ -1,8 +1,11 @@
 <template>
 <div>
+  <div >
+    <el-input v-model="queryParams.goodsName" placeholder="商品名称" clearable ></el-input>
+  </div>
   <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
     <el-form-item label="商品名称" prop="goodsName">
-      <el-input v-model="queryParams.goodsName" placeholder="商品名称" ></el-input>
+      <el-input v-model="queryParams.goodsName" placeholder="商品名称" clearable ></el-input>
     </el-form-item>
 
     <el-form-item>
@@ -26,7 +29,7 @@
     </el-col>
   </el-row>
 
-  <el-table  ref="multipleTable" :data="tableData" stripe style="width: 100%" @selection-change="handleSelectionChange">
+  <el-table  ref="multipleTable" :data="tableData" v-loading="tableLoading" stripe style="width: 100%" @selection-change="handleSelectionChange">
     <el-table-column type="selection" width="55" align="center"/>
     <el-table-column prop="id" label="ID" align="center" />
     <el-table-column prop="goodsName" label="商品名称" align="center" />
@@ -107,6 +110,7 @@ const resetQuery = () => {
 // 表格
 const tableData = ref([]);
 const total = ref(0);
+const tableLoading = ref(false);
 const ids = ref([]); // 选中数组
 const single = ref(true); // 选中非单个禁用
 const multiple = ref(true); // 选中非多个禁用
@@ -119,6 +123,7 @@ onMounted(() => {
 });
 
 const getList = () => {
+  tableLoading.value = true;
   let params = {
     ...queryParams
   };
@@ -131,6 +136,7 @@ const getList = () => {
       latestData.consumeTime = defaultDate(res.rows[0].consumeTime);
     }
 
+    tableLoading.value = false;
   })
 }
 

@@ -47,3 +47,25 @@ export function comDownload(res, file_name) {
   }
   window.URL.revokeObjectURL(objectUrl); //释放blob对象
 }
+
+/**
+ * element-plus 下拉框获取当前行输入
+ * @param dataArr  下拉框所有数据数组
+ * @param keyName  当前行下标字段名称
+ * @param key  当前行下标值key
+ * @returns {string|{}}
+ */
+export function selectRow(dataArr, keyName, key) {
+  if (Object.prototype.toString.call(dataArr) !== "[object Array]") {
+    return "数组不能为空";
+  }
+  let currentRow = {};
+  dataArr.some(item => {
+    if (item[keyName] === key) {
+      currentRow = item;
+      return true;
+    }
+  })
+
+  return currentRow;
+}

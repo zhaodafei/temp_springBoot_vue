@@ -18,14 +18,19 @@ const testRoutes = [
     component: () => import('@/views/zTest/about.vue')
   },
   {
-    path: '/fei_h',
+    path: '/fei_h', // 滚动条
     name: 'fei_h',
     component: () => import('@/views/zTest/fHeight.vue')
   },
   {
-    path: '/fei_chart',
+    path: '/fei_chart', // 聊天界面
     name: 'fei_chart',
     component: () => import('@/views/zTest/fChart.vue')
+  },
+  {
+    path: '/fei_ele', // element-plus 中常见的UI
+    name: 'fei_ele',
+    component: () => import('@/views/zTest/elementUi.vue')
   },
 ];
 

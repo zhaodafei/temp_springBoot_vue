@@ -73,6 +73,7 @@
 
 <script setup>
 import {onMounted, getCurrentInstance, ref, reactive} from 'vue'
+import dayjs from "dayjs";
 import apiGoods from '@/api/goods.js'
 import {isEmptyArr_utils} from "@/utils/comUtils";
 
@@ -117,8 +118,8 @@ const getList = () => {
 
   let params = {
     ...queryParams,
-    startTime: queryParams.searchTime[0],
-    endTime: queryParams.searchTime[1],
+    startTime: dayjs(queryParams.searchTime[0]).format("YYYY-MM-DD 00:00:00"),
+    endTime: dayjs(queryParams.searchTime[1]).format("YYYY-MM-DD 23:59:59"),
   };
   app.$get(apiGoods.getBillList, params).then(res => {
     tableData.value = res.rows;
@@ -174,8 +175,8 @@ const resetForm = () => {
 const handleBudget = () => {
   let params = {
     consumeWay: form.consumeWay,
-    startTime: form.consumeTime[0],
-    endTime: form.consumeTime[1],
+    startTime: dayjs(form.consumeTime[0]).format("YYYY-MM-DD 00:00:00"),
+    endTime: dayjs(form.consumeTime[1]).format("YYYY-MM-DD 23:59:59"),
   };
   app.$get(apiGoods.billBudget,params).then(res=>{
     if (res.error === 200) {
@@ -188,8 +189,8 @@ const handleBudget = () => {
 const submitForm = () => {
   let params = {
     consumeWay: form.consumeWay,
-    startTime: form.consumeTime[0],
-    endTime: form.consumeTime[1],
+    startTime: dayjs(form.consumeTime[0]).format("YYYY-MM-DD 00:00:00"),
+    endTime: dayjs(form.consumeTime[1]).format("YYYY-MM-DD 23:59:59"),
   };
   app.$post(apiGoods.billAdd, params).then(res => {
     if (res.error === 200) {
