@@ -19,8 +19,8 @@
         <el-form-item prop="code">
           <el-input v-model="form.code" placeholder="验证码" style="width: 63%" />
           <div class="login-code">
-            <img :src="captchaImg" @click="getCaptcha" class="login-code-img"/>
-            <!--<img :src="captchaImg_api" @click="getCaptcha" class="login-code-img"/>-->
+            <!--<img :src="captchaImg" @click="getCaptcha" class="login-code-img"/>-->
+            <img :src="captchaImg_api" @click="getCaptcha" class="login-code-img"/>
           </div>
         </el-form-item>
 
@@ -36,6 +36,7 @@ import interfacesUser from "@/api/user";
 import avatarImg from '@/assets/images/logo_in.svg'
 import captchaImg from '@/assets/images/captchaImage.jpg'
 
+const app = getCurrentInstance().appContext.config.globalProperties;
 const { proxy } = getCurrentInstance()
 const formRef = ref() // 表单 ref 对象
 
@@ -44,7 +45,8 @@ const loginLoading = ref(false);
 const form = reactive({
   username: 'dafei',
   password: '123456',
-  code: '',
+  code: undefined,
+  uuid: undefined,
 });
 
 onMounted(()=>{
@@ -53,9 +55,9 @@ onMounted(()=>{
 })
 
 const getCaptcha = () => {
-  proxy.$get(interfacesUser.APIGetCaptcha,{}).then(res=>{
-    console.log(res);
+  app.$get(interfacesUser.APIGetCaptcha,{}).then(res=>{
     captchaImg_api.value = "data:image/gif;base64," + res.img;
+    form.uuid= res.uuid;
   })
 }
 
@@ -65,7 +67,7 @@ const loginForm = () => {
     username: form.username,
     password: form.password,
   };
-  proxy.$post(interfacesUser.login, params).then(res => {
+  app.$post(interfacesUser.login, params).then(res => {
     if (res) {
       if (res.error === 200) {
         loginLoading.value = false;
