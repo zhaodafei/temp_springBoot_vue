@@ -77,8 +77,9 @@ import dayjs from "dayjs";
 import apiGoods from '@/api/goods.js'
 import {isEmptyArr_utils} from "@/utils/comUtils";
 
-// currentPage: 1;
+// 用那个都行
 const app = getCurrentInstance().appContext.config.globalProperties;
+const { proxy } = getCurrentInstance();
 
 // 搜索
 const refsQueryForm = ref() // 表单 ref 对象
@@ -152,7 +153,7 @@ const handleDel = (row) => {
     app.$post(apiGoods.billDel, {bill_count_ids: id}).then(()=>{
       getList();
       app.$message('删除成功');
-    });
+    });``
   }).catch(()=>{
   })
 }

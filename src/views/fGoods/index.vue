@@ -83,8 +83,8 @@ import {onMounted, getCurrentInstance, ref, reactive, unref} from 'vue'
 import apiGoods from '@/api/goods.js'
 import apiDictType from "@/api/dict";
 
-// currentPage: 1;
-// const proxy = getCurrentInstance().appContext.config.globalProperties;
+// 用那个都行
+const app = getCurrentInstance().appContext.config.globalProperties;
 const { proxy } = getCurrentInstance();
 
 // 搜索
@@ -126,7 +126,7 @@ const getList = () => {
   let params = {
     ...queryParams
   };
-  proxy.$get(apiGoods.getGoodsList, params).then(res => {
+  app.$get(apiGoods.getGoodsList, params).then(res => {
     tableData.value = res.rows;
     total.value = res.total;
 
@@ -180,7 +180,7 @@ const handleAdd = () => {
 
 const handleEdit = (row) => {
   const id = row.id || ids.value;
-  proxy.$get(apiGoods.getGoodsDetail, {id: id.toString()}).then(res => {
+  app.$get(apiGoods.getGoodsDetail, {id: id.toString()}).then(res => {
     isShow.value = true;
     Object.assign(form, res.data);
     title.value = "商品修改";
@@ -189,24 +189,24 @@ const handleEdit = (row) => {
 
 const handleDel = (row) => {
   const id = row.id || ids.value;
-  proxy.$get(apiGoods.goodsDel, {ids: id.toString()}).then(res => {
-    proxy.$message.success("删除成功");
+  app.$get(apiGoods.goodsDel, {ids: id.toString()}).then(res => {
+    app.$message.success("删除成功");
     getList();
   })
 }
 
 const handleDetail = (row) => {
   const id = row.id || ids.value;
-  proxy.$get(apiGoods.getGoodsDetail,{id: id.toString()}).then(res=>{
+  app.$get(apiGoods.getGoodsDetail,{id: id.toString()}).then(res=>{
     console.log(res.data);
   })
 }
 
 const defaultDate = (date) => {
-  return proxy.$dayjs(date).format("YYYY-MM-DD");
+  return app.$dayjs(date).format("YYYY-MM-DD");
 }
 const iniForm = () => {
-  // form.consumeTime = proxy.$dayjs("2019-06-23 16:30:00").format("YYYY-MM-DD") + " 08:00:00";
+  // form.consumeTime = app.$dayjs("2019-06-23 16:30:00").format("YYYY-MM-DD") + " 08:00:00";
   form.consumeTime = latestData.consumeTime;
 }
 
@@ -223,26 +223,26 @@ const submitForm =  async () => {
     if (valid) {
       let params = {
         ...form,
-        consumeTime: proxy.$dayjs(form.consumeTime).format("YYYY-MM-DD 08:00:00"),
+        consumeTime: app.$dayjs(form.consumeTime).format("YYYY-MM-DD 08:00:00"),
       };
       if (form.id) {
-        proxy.$post(apiGoods.goodsUpdate, params).then(res => {
+        app.$post(apiGoods.goodsUpdate, params).then(res => {
           if (Number(res.error) === 200) {
-            proxy.$message.success("修改成功");
+            app.$message.success("修改成功");
             getList();
           } else {
-            proxy.$message.error("修改失败");
+            app.$message.error("修改失败");
           }
         }).finally(()=>{
           cancel()
         });
       }else{
-        proxy.$post(apiGoods.goodsAdd, params).then(res => {
+        app.$post(apiGoods.goodsAdd, params).then(res => {
           if (Number(res.error) === 200) {
-            proxy.$message.success("添加成功");
+            app.$message.success("添加成功");
             getList();
           } else {
-            proxy.$message.error("添加失败");
+            app.$message.error("添加失败");
           }
           cancel()
         });
