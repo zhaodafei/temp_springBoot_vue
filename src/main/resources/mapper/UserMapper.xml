@@ -18,9 +18,14 @@
     </sql>
 
     <!-- 查询一条数据 -->
-    <select id="selectUser" resultType="com.example.fei.domain.User" parameterType="long">
+    <select id="selectUser" resultMap="UserResult" parameterType="long">
         <include refid="sqlSelectUser"/>
         WHERE id = 1
+    </select>
+
+    <select id="selectByUsername" resultMap="UserResult">
+        <include refid="sqlSelectUser"/>
+        WHERE username=#{username} AND password=#{password}
     </select>
 
 </mapper>

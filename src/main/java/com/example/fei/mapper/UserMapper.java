@@ -11,4 +11,7 @@ public interface UserMapper {
     // 查询一条数据
     User selectUser(long id);
 
+    // 用户名&密码查询
+    User selectByUsername(User user);
+
 }

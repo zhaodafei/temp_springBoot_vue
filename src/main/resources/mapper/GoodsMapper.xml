@@ -55,7 +55,7 @@
 
     <select id="selectBudget" resultMap="GoodsResult">
         SELECT SUM(countPrice) as allCount FROM goods
-        where consumeTime>#{startTime} and  #{endTime} > consumeTime
+        where consumeTime>=#{startTime} and  #{endTime} >= consumeTime
     </select>
 
     <!-- 更新逗号分隔字符串 String ids = "1,2,3" -->

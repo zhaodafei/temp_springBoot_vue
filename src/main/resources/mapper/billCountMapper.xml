@@ -4,8 +4,8 @@
 <mapper namespace="com.example.fei.mapper.BillCountMapper">
 
     <resultMap type="com.example.fei.domain.BillCount" id="BillResult">
-        <id     property="id"           column="id"  />
-        <result property="startTime"    column="startTime"  />
+        <id     property="id"          column="id"  />
+        <result property="startTime"   column="startTime"  />
         <result property="endTime"     column="endTime"  />
         <result property="consumeWay"  column="consumeWay"     />
         <result property="allCount"    column="allCount"     />
@@ -28,6 +28,9 @@
                         AND delNum >= #{delNum}
                     </otherwise>
                 </choose>
+            </if>
+            <if test="startTime != null and startTime != ''">
+                AND startTime>=#{startTime} AND #{endTime}>=endTime
             </if>
         </where>
 

@@ -7,4 +7,5 @@ import com.example.fei.domain.User2;
 public interface UserService {
     User selectUser(long userId);
 
+    User selectByUsername(User user);
 }

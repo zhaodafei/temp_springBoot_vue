@@ -1,5 +1,6 @@
 package com.example.fei.service;
 
+import com.example.fei.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -39,7 +40,7 @@ public class TokenService {
      * 创建 token
      * @return {}
      */
-    public String createToken() {
+    public String createToken(User user) {
         System.out.println(expireTime);
         System.out.println(secret);
         System.out.println(header);
@@ -62,8 +63,10 @@ public class TokenService {
                 // .setAudience("iot")
                 // .setIssuer("fei") // 设置发行人
                 .setSubject( "fei_setSubject" )
-                .claim("userName", "username_01")
-                .claim("userPwd", "123456")
+                /*.claim("userName", "username_01")
+                .claim("userPwd", "123456")*/
+                .claim("userName", user.getUsername())
+                .claim("userPwd", user.getPassword())
                 .signWith(signatureAlgorithm, signKey); // 设置签名 使用HS256算法，并设置SecretKey(字符串)
 
         return builder.compact();

@@ -30,7 +30,7 @@ spring:
     password: root
   profiles:
     # 动态环境选择,对应pom.xml文件中 <properties> <env>dev</env> </properties>
-    active: @env@
+    active: '@env@'
   #tomcat:
     #uri-encoding: utf-8
   #servlet:
