@@ -8,7 +8,7 @@
           :to="{path: tag.path}"
           @contextmenu.prevent="openMenu(tag, $event)">
         {{ tag.title }}
-        <span @click.prevent.stop="closeSelTag(tag)">
+        <span @click.prevent.stop="closeSelTag(tag)" v-if="tag.path!=='/home'">
           <close class="el-icon-close" style="width: 1em; height: 1em;vertical-align: middle;" />
         </span>
       </router-link>
@@ -65,8 +65,12 @@ const addTags = () => {
   return false
 }
 // 关闭当前页签
-const closeSelTag = (view) => {
-  // allTags.value = allTags.value.filter(item => item.path !== selectedTag.value.path)
+const closeSelTag = (tag) => {
+  console.log("dddddd",tag);
+  if (tag.path !== '/home') {
+    allTags.value = allTags.value.filter(item => item.path !== tag.path);
+    toHome()
+  }
 }
 // 关闭其他
 const closeOthersTags = () => {
