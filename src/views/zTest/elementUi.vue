@@ -27,25 +27,75 @@
 
   <div>
     <h3>合并单元格</h3>
-    <el-table :data="tableData"
+   <!-- <el-table :data="tableData"
               :span-method="objectSpanMethod"
               border
               :header-cell-style="{'textAlign':'center'}"
               :cell-style="{'textAlign':'center'}">
       <el-table-column label="序号"  width="55" type="index" />
-      <!--<el-table-column label="xxx" prop="showRow" />-->
+      &lt;!&ndash;<el-table-column label="xxx" prop="showRow" />&ndash;&gt;
       <el-table-column label="课程名称" prop="xxx" />
       <el-table-column label="姓名" prop="xx1" />
       <el-table-column label="学习时间" prop="xx2" />
       <el-table-column label="xx3" prop="xx3" />
       <el-table-column label="xx4" prop="xx4" />
-    </el-table>
+    </el-table>-->
   </div>
+
+  <div>
+    <h3>自动补全输入框</h3>
+    <p> 输入框可以输入,又可以选择 </p>
+    <el-autocomplete
+        v-model="autoFei"
+        :fetch-suggestions="querySearch"
+        clearable
+        class="inline-input w-50"
+        placeholder="请输入发票抬头"
+        :debounce="300"
+        value-key="valueFei"
+        @select="handleSelect"
+    />
+  </div>
+
+  <div class="readme-ui" style="margin-bottom: 150px">
+    <h2 style="background-color:#90ee90;color: #fff">开发注意事项:</h2>
+    <dl>
+      <dt>表单数据处理 </dt>
+      <dd>
+        <ol>
+          <li>表单正常重置使用 formRef.value.resetFields(); </li>
+          <li>对话框中重置初始化操作,在关闭弹窗事件中操作</li>
+          <li>表单在开发阶段写好校验</li>
+        </ol>
+      </dd>
+
+      <dt>抽屉必须销毁 </dt>
+      <dd>
+        <ol>
+          <li>抽屉必须销毁 &lt;el-drawer /&gt;  destroy-on-close    同时重置表单</li>
+        </ol>
+      </dd>
+
+      <dt>抽屉必须销毁 </dt>
+      <dd>
+        <ol>
+          <li>对话框必须销毁 &lt;el-dialog /&gt;   destroy-on-close  同时重置表单</li>
+        </ol>
+      </dd>
+
+      <dt>xxx </dt>
+      <dd>
+        <ol>
+          <li>xxx</li>
+        </ol>
+      </dd>
+    </dl>
+  </div>
+
 </template>
 
 <script setup>
-import {getCurrentInstance} from "vue";
-import {ref,onMounted,unref} from "vue";
+import {ref, onMounted, unref, getCurrentInstance} from "vue";
 
 const {proxy} = getCurrentInstance();
 // ****************************************************************************************************
@@ -187,6 +237,21 @@ const InitTable = () => {
 }
 const {tableData, objectSpanMethod} = InitTable();
 
+// ****************************************************************************************************
+const autoFei = ref();
+const querySearch = (val,cb) => {
+  let resData = [
+    {valueFei: 'vue', link: 'https://github.com/vuejs/vue'},
+    {valueFei: 'element', link: 'https://github.com/ElemeFE/element'},
+    {valueFei: 'cooking', link: 'https://github.com/ElemeFE/cooking'},
+  ];
+
+  cb(resData)
+}
+const handleSelect = (val) => {
+  console.log("选中行项目___",val);
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -209,4 +274,22 @@ const {tableData, objectSpanMethod} = InitTable();
   }
 }
 
+</style>
+
+<style scoped lang="scss">
+.readme-ui{
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin-left: 40px;
+  }
+
+  ol{
+    li{
+      list-style-type: decimal;
+    }
+  }
+}
 </style>

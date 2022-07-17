@@ -32,6 +32,11 @@ axios_instance.interceptors.request.use(config => {
       // 03) 对请求的参数进行序列化(看服务器是否需要序列化)
       // config.data = Qs.stringify(config.data);
       // console.log(config);
+      if (config.method === 'get') { // 防止参数中出现数组
+        config.paramsSerializer = function(params) {
+          return Qs.stringify(params, { arrayFormat: 'repeat' })
+        }
+      }
 
       return config;
     }, err => {
@@ -136,7 +141,9 @@ export function fPost(url, data = {}) {
 // }
 
 /**
- * $get 调用 getCurrentInstance().appContext.config.globalProperties.$get;
+ * $get 使用demo:
+ * 调用01) getCurrentInstance().appContext.config.globalProperties.$get;
+ * 调用02) const { proxy } = getCurrentInstance();  proxy.$get();
  * @param app
  */
 const axiosInstall = function (app) {

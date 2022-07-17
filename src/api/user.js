@@ -1,6 +1,6 @@
 let interfacesUser = {
-  login: 'user/login', // 登录
-
+  login: 'login', // 登录
+  APIGetCaptcha: "getCaptcha" // 验证码
 };
 
 export default interfacesUser;

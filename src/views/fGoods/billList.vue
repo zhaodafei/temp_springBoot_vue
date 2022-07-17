@@ -2,8 +2,8 @@
 <div>
   <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
 
-    <el-form-item label="查询时间" prop="searchTime">
-      <el-date-picker v-model="queryParams.searchTime"
+    <el-form-item label="查询时间" prop="WEB_searchTime">
+      <el-date-picker v-model="queryParams.WEB_searchTime"
                       type="daterange"
                       value-format="YYYY-MM-DD"
                       start-placeholder="开始时间"
@@ -44,9 +44,9 @@
                  @current-change="handleCurrentChange">
   </el-pagination>
 
-  <el-dialog :title="title" v-model="isShow" width="600px" :close-on-click-modal="false">
+  <el-dialog :title="title" v-model="isShow" width="600px" :close-on-click-modal="false"  destroy-on-close @close="cancel">
     <el-form ref="formRef" :model="form" class="demo-form-inline" label-width="120px">
-      <el-form-item label="入库时间" prop="consumeTime">
+      <el-form-item label="入库时间" prop="consumeTime" required>
         <el-date-picker v-model="form.consumeTime"
                         type="daterange"
                         value-format="YYYY-MM-DD 08:00:00"
@@ -65,7 +65,7 @@
     <template #footer>
       <el-button type="primary" plain @click="handleBudget">月预算</el-button>
       <el-button type="success" plain @click="submitForm">月统计</el-button>
-      <el-button plain @click="cancel">取消</el-button>
+      <el-button plain @click="isShow=false">取消</el-button>
     </template>
   </el-dialog>
 </div>
@@ -85,7 +85,7 @@ const refsQueryForm = ref() // 表单 ref 对象
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 20,
-  searchTime: [],
+  WEB_searchTime: [],
   delNum: '0',
 });
 
@@ -114,17 +114,20 @@ onMounted(() => {
 });
 
 const getList = () => {
-  console.log(queryParams);
-
   let params = {
     ...queryParams,
-    startTime: dayjs(queryParams.searchTime[0]).format("YYYY-MM-DD 00:00:00"),
-    endTime: dayjs(queryParams.searchTime[1]).format("YYYY-MM-DD 23:59:59"),
+    fei:"dddd",
+    WEB_searchTime: [1,2],
+
   };
+  if (queryParams.WEB_searchTime && queryParams.WEB_searchTime.length > 0) {
+    params.startTime = dayjs(queryParams.WEB_searchTime[0]).format("YYYY-MM-DD")
+    params.endTime = dayjs(queryParams.WEB_searchTime[1]).format("YYYY-MM-DD")
+  }
   app.$get(apiGoods.getBillList, params).then(res => {
     tableData.value = res.rows;
     total.value = res.total;
-  })
+  });
 }
 
 const handleCurrentChange = (val) => {
@@ -158,10 +161,13 @@ const handleDel = (row) => {
 const title = ref("")
 const isShow = ref(false)
 const formRef = ref() // 表单 ref 对象
-const form = reactive({
-  consumeTime: [],
-  consumeWay: '全部',
-});
+const defaultForm = () => {
+  return {
+    consumeTime: [],
+    consumeWay: '全部',
+  }
+}
+const form = reactive(defaultForm());
 
 const handleAdd = () => {
   title.value = "账单统计";
@@ -170,9 +176,15 @@ const handleAdd = () => {
 
 const resetForm = () => {
   formRef.value.resetFields();
+  Object.assign(form, defaultForm());
 }
 
 const handleBudget = () => {
+
+  if (!form.consumeTime || form.consumeTime && form.consumeTime.length === 0) {
+    app.$message.warning('时间不能为空');
+    return ;
+  }
   let params = {
     consumeWay: form.consumeWay,
     startTime: dayjs(form.consumeTime[0]).format("YYYY-MM-DD 00:00:00"),
@@ -187,6 +199,11 @@ const handleBudget = () => {
   })
 }
 const submitForm = () => {
+  if (!form.consumeTime || form.consumeTime && form.consumeTime.length === 0) {
+    app.$message.warning('时间不能为空');
+    return ;
+  }
+
   let params = {
     consumeWay: form.consumeWay,
     startTime: dayjs(form.consumeTime[0]).format("YYYY-MM-DD 00:00:00"),
