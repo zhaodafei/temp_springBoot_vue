@@ -11,11 +11,11 @@
           <template #title>
             <el-icon><Goods /></el-icon>商品管理
           </template>
-          <el-menu-item index="4000">
+          <el-menu-item index="2000">
             <el-icon><Goods /></el-icon>
             <span><router-link to="/goods-index">商品列表</router-link></span>
           </el-menu-item>
-          <el-menu-item index="4002">
+          <el-menu-item index="2002">
             <el-icon><Discount /></el-icon>
             <span><router-link to="/bill-list">月度结算</router-link></span>
           </el-menu-item>
@@ -38,6 +38,26 @@
             <span>日志管理</span>
           </el-menu-item>
         </el-sub-menu>
+
+        <el-sub-menu index="4">
+          <template #title>
+            <el-icon><Setting /></el-icon>预约管理
+          </template>
+          <el-menu-item index="4000">
+            <el-icon />
+            <span><router-link to="/subscribe-index">预约登录</router-link></span>
+          </el-menu-item>
+          <el-menu-item index="4001">
+            <el-icon />
+            <span><router-link to="/subscribe-appoint">预约场馆</router-link></span>
+          </el-menu-item>
+          <!--<el-menu-item index="4002">
+            <el-icon />
+            <span>日志管理</span>
+          </el-menu-item>-->
+        </el-sub-menu>
+
+
 
         <el-sub-menu index="500000">
           <template #title>

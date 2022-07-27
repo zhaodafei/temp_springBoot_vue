@@ -42,14 +42,6 @@ const testRoutes = [
     },
     component: () => import('@/views/zTest/fChart.vue')
   },
-  {
-    path: '/fei_ele', // element-plus 中常见的UI
-    name: 'fei_ele',
-    meta: {
-      title: "Element"
-    },
-    component: () => import('@/views/zTest/elementUi.vue')
-  },
 ];
 
 // 文件处理路由
@@ -61,6 +53,18 @@ const fileRoutes = [
       title: "文件处理"
     },
     component: () => import('@/views/zTest/fileIndex.vue'),
+  },
+]
+
+// element-plus 路由 *********** element-plus 中常见的UI
+const eleRoutes = [
+  {
+    path: '/fei_ele',
+    name: 'fei_ele',
+    meta: {
+      title: "Element"
+    },
+    component: () => import('@/views/fElementUi/elementUi.vue')
   },
 ]
 
@@ -81,6 +85,7 @@ const routes = [
     children: [
         ...testRoutes,
         ...fileRoutes,
+        ...eleRoutes,
       {
         path: 'home',
         name: 'home',
@@ -106,7 +111,7 @@ const routes = [
         component: () => import('@/views/fGoods/billList.vue')
       },
       {
-        path: 'dict-list',
+        path: '/dict-list',
         name: 'dict-list',
         meta: {
           title: "字典"
@@ -114,12 +119,36 @@ const routes = [
         component: () => import('@/views/fSystem/dictIndex')
       },
       {
-        path: 'dict-data',
+        path: '/dict-data',
         name: 'dict-data',
         meta: {
           title: "字典详细"
         },
         component: () => import( '@/views/fSystem/dictData')
+      },
+      {
+        path: '/subscribe-index',
+        name: 'subscribe-index',
+        meta: {
+          title: "预约登录"
+        },
+        component: () => import( '@/views/fSubscribe/index')
+      },
+      {
+        path: '/subscribe-appoint',
+        name: 'subscribe-appoint',
+        meta: {
+          title: "预约场馆"
+        },
+        component: () => import( '@/views/fSubscribe/appoint')
+      },
+      {
+        path: '/subscribe-selectTime',
+        name: 'subscribe-selectTime',
+        meta: {
+          title: "预约时间"
+        },
+        component: () => import( '@/views/fSubscribe/selectTime')
       },
     ]
   },

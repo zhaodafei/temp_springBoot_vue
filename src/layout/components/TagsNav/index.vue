@@ -66,7 +66,6 @@ const addTags = () => {
 }
 // 关闭当前页签
 const closeSelTag = (tag) => {
-  console.log("dddddd",tag);
   if (tag.path !== '/home') {
     allTags.value = allTags.value.filter(item => item.path !== tag.path);
     toHome()

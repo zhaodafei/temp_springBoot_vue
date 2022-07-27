@@ -117,10 +117,6 @@ const latestData = reactive({
   consumeTime: "0000-00-00"
 });
 
-onMounted(() => {
-  getList();
-});
-
 const getList = () => {
   tableLoading.value = true;
   let params = {
@@ -257,7 +253,9 @@ const cancel = () => {
   isShow.value = false;
 }
 
-
+onMounted(() => {
+  getList();
+});
 </script>
 
 <style scoped>

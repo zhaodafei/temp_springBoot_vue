@@ -110,10 +110,6 @@ const resetQuery = () => {
   handleQuery();
 }
 
-onMounted(() => {
-  getList();
-});
-
 const getList = () => {
   let params = {
     ...queryParams,
@@ -225,6 +221,10 @@ const cancel = () => {
   resetForm();
   isShow.value = false;
 }
+
+onMounted(() => {
+  getList();
+});
 </script>
 
 <style scoped>

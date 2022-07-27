@@ -2,11 +2,11 @@
   <div>
     <el-form ref="refsQueryForm" :model="queryParams" :inline="true">
       <el-form-item prop="dictName">
-        <el-input v-model="queryParams.dictName" placeholder="字典名称" ></el-input>
+        <el-input v-model="queryParams.dictName" placeholder="字典名称" />
       </el-form-item>
 
       <el-form-item prop="dictType">
-        <el-input v-model="queryParams.dictType" placeholder="字典类型" ></el-input>
+        <el-input v-model="queryParams.dictType" placeholder="字典类型" />
       </el-form-item>
 
       <el-form-item prop="status">
@@ -40,16 +40,27 @@
     </el-row>
 
     <el-table :data="tableData" stripe style="width: 100%" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column type="selection" width="55" align="center" />
       <el-table-column prop="dictName" label="字典名称" align="center" />
-      <el-table-column prop="dictType" label="字典类型" align="center" />
-      <el-table-column prop="status" label="字典状态" align="center" :formatter="stateFormat"/>
-      <el-table-column prop="remark" label="备注" align="center" />
-      <el-table-column prop="remark" label="备注" align="center">
-        <template #default="scope">
+      <el-table-column prop="dictType" label="字典类型" align="center" >
+        <template #default="{row}">
           <!--<router-link to="/dict-data"> 字典内容 </router-link>-->
           <!--<router-link :to="{ name: 'dict-data', params: { dictId: scope.row.dictId }}"> 字典内容 </router-link>-->
-          <router-link class="aLink" :to="{ name: 'dict-data', query: { dictId: scope.row.dictType }}"> 字典内容 </router-link>
+          <router-link class="aLink"
+                       :to="{
+                          name: 'dict-data',
+                          query: { dictId: row.dictId, dictType: row.dictType, dictName: row.dictName }
+                        }">
+            {{ row.dictType }}
+          </router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" label="字典状态" align="center" :formatter="stateFormat"/>
+      <el-table-column prop="remark" label="备注" align="center" />
+      <el-table-column prop="remark" label="操作" align="center">
+        <template #default="{row}">
+          <el-button type="text" icon="Edit" @click="handleEdit(row)">修改</el-button>
+          <el-button type="text" icon="Delete" @click="handleDel(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,13 +73,13 @@
     </el-pagination>
 
     <el-dialog :title="title" v-model="isShow" width="600px" :close-on-click-modal="false">
-      <el-form ref="formRef" :model="form"  label-width="120px">
+      <el-form ref="formRef" :model="form" :rules="rules"  label-width="120px">
         <el-form-item label="字典名称" prop="dictName">
-          <el-input v-model="form.dictName" placeholder="字典名称" ></el-input>
+          <el-input v-model="form.dictName" placeholder="字典名称" />
         </el-form-item>
 
         <el-form-item label="字典类型" prop="dictType">
-          <el-input v-model="form.dictType" placeholder="字典类型" ></el-input>
+          <el-input v-model="form.dictType" placeholder="字典类型" />
         </el-form-item>
 
         <el-form-item label="字典状态" prop="status">
@@ -82,7 +93,7 @@
         </el-form-item>
 
         <el-form-item label="备注" prop="dictName">
-          <el-input v-model="form.remark" placeholder="备注" ></el-input>
+          <el-input v-model="form.remark" placeholder="备注" />
         </el-form-item>
       </el-form>
 
@@ -98,7 +109,7 @@
 </template>
 
 <script setup>
-import {getCurrentInstance, onMounted, reactive, ref} from "vue";
+import {getCurrentInstance, onMounted, reactive, ref,unref} from "vue";
 import apiDictType from '@/api/dict.js'
 
 const app = getCurrentInstance().appContext.config.globalProperties;
@@ -135,11 +146,6 @@ const total = ref(0);
 const ids = ref([]); // 选中数组
 const single = ref(true); // 选中非单个禁用
 const multiple = ref(true); // 选中非多个禁用
-
-
-onMounted(() => {
-  getList();
-});
 
 const getList = () => {
   let params = {
@@ -182,6 +188,10 @@ const defaultForm = () => {
   }
 }
 const form = reactive(defaultForm());
+const rules = {
+  dictName:{ required: true, message: '不能为空', trigger: 'blur' },
+  dictType:{ required: true, message: '不能为空', trigger: 'blur' },
+}
 
 // const statusOptions = ref([
 //   {name: "正常", value: '0'},
@@ -203,7 +213,6 @@ const handleEdit = (row) => {
 }
 
 const handleDel = (row) => {
-  console.log(proxy);
   proxy.$confirm('是否确认删除?','警告',{
     confirmButtonText: "确定",
     cancelButtonText: "取消",
@@ -233,34 +242,39 @@ const resetForm = () => {
   initForm()
 }
 
-const submitForm = () => {
-  let params = {
-    ...form
-  };
-  if (form.dictId) {
-    app.$post(apiDictType.dictTypeUpdate, params).then(res => {
-      if (Number(res.error) === 200) {
-        app.$message.success("修改成功");
-        getList();
+const submitForm = async () => {
+  const unrefForm = unref(formRef);
+  if (!unrefForm) return;
+  await unrefForm.validate(valid => {
+    if (valid) {
+      let params = {
+        ...form
+      };
+      if (form.dictId) {
+        app.$post(apiDictType.dictTypeUpdate, params).then(res => {
+          if (Number(res.error) === 200) {
+            app.$message.success("修改成功");
+            getList();
+          } else {
+            app.$message.error("修改失败");
+          }
+        }).finally(() => {
+          cancel()
+        });
       } else {
-        app.$message.error("修改失败");
+        app.$post(apiDictType.dictTypeAdd, params).then(res => {
+          if (Number(res.error) === 200) {
+            app.$message.success("添加成功");
+            getList();
+          } else {
+            app.$message.error("添加失败");
+          }
+        }).finally(() => {
+          cancel()
+        });
       }
-    }).finally(()=>{
-      cancel()
-    });
-  }else{
-    app.$post(apiDictType.dictTypeAdd, params).then(res => {
-      if (Number(res.error) === 200) {
-        app.$message.success("添加成功");
-        getList();
-      } else {
-        app.$message.error("添加失败");
-      }
-    }).finally(()=>{
-      cancel()
-    });
-  }
-
+    }
+  })
 }
 
 const cancel = () => {
@@ -268,6 +282,9 @@ const cancel = () => {
   isShow.value = false;
 }
 
+onMounted(() => {
+  getList();
+});
 </script>
 
 <style scoped lang="scss">

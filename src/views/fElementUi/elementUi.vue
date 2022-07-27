@@ -27,7 +27,7 @@
 
   <div>
     <h3>合并单元格</h3>
-   <!-- <el-table :data="tableData"
+    <!--<el-table :data="tableData"
               :span-method="objectSpanMethod"
               border
               :header-cell-style="{'textAlign':'center'}"
@@ -39,7 +39,17 @@
       <el-table-column label="学习时间" prop="xx2" />
       <el-table-column label="xx3" prop="xx3" />
       <el-table-column label="xx4" prop="xx4" />
+      <template #empty>
+        <el-empty description="暂无数据" />
+      </template>
     </el-table>-->
+    <h3>全选/全不选 multipleTableRef.value.toggleAllSelection(); </h3>
+    <p>
+      反选
+      tableData.value.forEach(item => {
+        multipleTableRef.value.toggleRowSelection(item, undefined);
+      })
+    </p>
   </div>
 
   <div>
@@ -56,6 +66,55 @@
         @select="handleSelect"
     />
   </div>
+
+  <div>
+    <h3>dialog 弹窗</h3>
+    <el-button type="primary" @click="handleOpen">打开弹窗</el-button>
+    <FDialog :visible="feiVisible" @close="handleClose"  />
+  </div>
+
+  <div>
+    <h3>drawer 抽屉</h3>
+    <el-button type="primary" @click="openDrawer">打开抽屉</el-button>
+    <FDrawer :visible="drawerVisible" @close="closeDrawer"  />
+  </div>
+
+  <div>
+    <h3>下拉框 获取key和label</h3>
+    <p> const {proxy} = getCurrentInstance(); </p>
+    <el-select v-model="feiVal" ref="feiRefs"  @change="handleChange">
+      <el-option
+          v-for="item in [{value: 'da', label: '大'},{value: 'fei', label: '飞'}]"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+      />
+    </el-select>
+  </div>
+
+  <div>
+    <h3> 表单校验规则 </h3>
+    <p> 或者参照 antdv 框架的校验 https://www.antdv.com/components/form-cn </p>
+    <pre>
+      const rules = {
+        role: { type: 'enum', enum: ['admin', 'user', 'guest'] },
+        data: [{type: 'date', required: true, trigger: 'change', message: "日期不能为空"}],
+        time: [{type: 'array', required: true, trigger: 'change', message: "时间不能为空"}],
+      };
+    </pre>
+  </div>
+
+  <div>
+    <h3> 复选框,取值不要 ture  和 false</h3>
+    <p>
+      <el-checkbox-group > <!-- v-model="form.spaceId" -->
+        <el-checkbox value="fei" label="fei">大飞</el-checkbox>
+      </el-checkbox-group>
+    </p>
+  </div>
+
+
+
 
   <div class="readme-ui" style="margin-bottom: 150px">
     <h2 style="background-color:#90ee90;color: #fff">开发注意事项:</h2>
@@ -95,7 +154,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, unref, getCurrentInstance} from "vue";
+import {ref, onMounted, unref, getCurrentInstance, nextTick} from "vue";
 
 const {proxy} = getCurrentInstance();
 // ****************************************************************************************************
@@ -252,6 +311,57 @@ const handleSelect = (val) => {
   console.log("选中行项目___",val);
 }
 
+// ****************************************************************************************************
+import FDialog from './components/fDialog.vue'
+// dialog 的 hooks
+const feiDialog = () => {
+  const feiVisible = ref();
+  const handleOpen = (row) => {
+    feiVisible.value = true
+  }
+  const handleClose = (val) => {
+    feiVisible.value = false
+    if (val && val.isUpdate) {
+      // 其他操作
+    }
+  }
+
+  return {feiVisible,handleOpen,handleClose}
+}
+const {feiVisible, handleOpen, handleClose} = feiDialog();
+
+// ****************************************************************************************************
+import FDrawer from './components/fDrawer.vue'
+// drawer  的 hooks
+const feiDrawer = () => {
+  const drawerVisible = ref();
+  const openDrawer = (row) => {
+    drawerVisible.value = true
+  }
+  const closeDrawer = (val) => {
+    drawerVisible.value = false
+    if (val && val.isUpdate) {
+      // 其他操作
+    }
+  }
+
+  return {drawerVisible, openDrawer, closeDrawer}
+}
+const {drawerVisible, openDrawer, closeDrawer} = feiDrawer();
+
+// ****************************************************************************************************
+// 下拉框获取值
+const feiRefs = ref();
+const feiVal = ref(undefined);
+const handleChange = (val) => {
+  console.log("下标值__",val);
+  // 01) 使用循环遍历
+  // 02) 使用 proxy.$refs 获取
+  nextTick(()=>{
+    console.log("获取key和label",proxy.$refs.feiRefs.selected);
+    console.log("获取label",proxy.$refs.feiRefs.selectedLabel);
+  })
+}
 </script>
 
 <style scoped lang="scss">
