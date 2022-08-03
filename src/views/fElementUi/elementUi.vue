@@ -111,6 +111,38 @@
         <el-checkbox value="fei" label="fei">大飞</el-checkbox>
       </el-checkbox-group>
     </p>
+    <h3>开关自定义值</h3>
+    <p>
+      <el-switch
+          v-model="feiNumber"
+          :active-value="1"
+          :inactive-value="0"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+      />
+    </p>
+  </div>
+
+  <div>
+    <h3>  Form-Item 插槽使用 </h3>
+    <p>
+      <el-form>
+        <el-form-item>
+          <template #label>
+            自定义label飞:
+            <!--<el-popover placement="top" :width="50" trigger="hover" content="我是说明提示">
+              <template #reference>
+                <el-icon style="vertical-align: sub; cursor: pointer"><Warning/></el-icon>
+              </template>
+            </el-popover>-->
+            <el-icon style="vertical-align: sub; cursor: pointer"><Warning/></el-icon>
+          </template>
+          <template #default>
+            <el-input v-model="feiNumber"  style="width: 200px"/>
+          </template>
+        </el-form-item>
+      </el-form>
+    </p>
   </div>
 
 
@@ -178,14 +210,14 @@ const handleInputKeyup = e => {
 }
 // ****************************************************************************************************
 // 单页面中 hooks 简单使用
-const feiHooks = () => {
+const useFeiHooks = () => {
   const foo = () => {
     console.log("使用hooks,调用成功");
   }
   return {foo}
 }
 onMounted(()=>{
-  const {foo} = feiHooks();
+  const {foo} = useFeiHooks();
   foo();
 })
 // ****************************************************************************************************
