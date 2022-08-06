@@ -105,6 +105,31 @@
   </div>
 
   <div>
+    <h3> 单选框,校验</h3>
+    <p>
+      <el-form :model="ruleForm"  ref="formRef">
+        <el-form-item prop="feiName" :rules="[
+            {
+              required: true,
+              message: 'Please select activity resource',
+              trigger: 'change',
+            },
+          ]">
+          <el-radio-group v-model="ruleForm.feiName">
+            <el-radio :label="3">孔子</el-radio>
+            <el-radio :label="6">孟子</el-radio>
+            <el-radio :label="9">战国策</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm">fei 单选框校验</el-button>
+        </el-form-item>
+      </el-form>
+    </p>
+  </div>
+
+  <div>
     <h3> 复选框,取值不要 ture  和 false</h3>
     <p>
       <el-checkbox-group > <!-- v-model="form.spaceId" -->
@@ -143,6 +168,11 @@
         </el-form-item>
       </el-form>
     </p>
+  </div>
+
+  <div>
+    <h3>Feedback 反馈组件  消息提示,防止重复点击</h3>
+    <el-button @click="handleMsgBox">Message Box 防止重复点击</el-button>
   </div>
 
 
@@ -186,7 +216,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, unref, getCurrentInstance, nextTick} from "vue";
+import {ref, reactive, onMounted, unref, getCurrentInstance, nextTick} from "vue";
 
 const {proxy} = getCurrentInstance();
 // ****************************************************************************************************
@@ -276,7 +306,7 @@ const dataFei = [
 ]
 // ****************************************************************************************************
 // 合并单元格
-const InitTable = () => {
+const useInitTable = () => {
   const tableData = ref([]);
   const objectSpanMethod = (rowData) => {
     const {column, rowIndex, columnIndex,row} = rowData;
@@ -326,7 +356,7 @@ const InitTable = () => {
 
   return {tableData,objectSpanMethod,onMounted}
 }
-const {tableData, objectSpanMethod} = InitTable();
+const {tableData, objectSpanMethod} = useInitTable();
 
 // ****************************************************************************************************
 const autoFei = ref();
@@ -346,7 +376,7 @@ const handleSelect = (val) => {
 // ****************************************************************************************************
 import FDialog from './components/fDialog.vue'
 // dialog 的 hooks
-const feiDialog = () => {
+const useFeiDialog = () => {
   const feiVisible = ref();
   const handleOpen = (row) => {
     feiVisible.value = true
@@ -360,12 +390,31 @@ const feiDialog = () => {
 
   return {feiVisible,handleOpen,handleClose}
 }
-const {feiVisible, handleOpen, handleClose} = feiDialog();
+const {feiVisible, handleOpen, handleClose} = useFeiDialog();
+// ****************************************************************************************************
+const useFeiFormRadio = () => {
+  const formRef = ref()
+  const ruleForm = reactive({
+    feiName: "",
+  })
+  const submitForm  = async () => {
+    const unrefForm = unref(formRef);
+    if (!unrefForm) return;
+    await unrefForm.validate((valid, invalidFields) => {
+      console.log(valid, invalidFields);
+      if (valid) console.log("dddd");
+    })
+  }
+
+  return {formRef,ruleForm,submitForm}
+}
+const {formRef, ruleForm, submitForm} = useFeiFormRadio();
+
 
 // ****************************************************************************************************
 import FDrawer from './components/fDrawer.vue'
 // drawer  的 hooks
-const feiDrawer = () => {
+const useFeiDrawer = () => {
   const drawerVisible = ref();
   const openDrawer = (row) => {
     drawerVisible.value = true
@@ -379,7 +428,7 @@ const feiDrawer = () => {
 
   return {drawerVisible, openDrawer, closeDrawer}
 }
-const {drawerVisible, openDrawer, closeDrawer} = feiDrawer();
+const {drawerVisible, openDrawer, closeDrawer} = useFeiDrawer();
 
 // ****************************************************************************************************
 // 下拉框获取值
@@ -394,6 +443,40 @@ const handleChange = (val) => {
     console.log("获取label",proxy.$refs.feiRefs.selectedLabel);
   })
 }
+// ****************************************************************************************************
+// Message Box 防止重复点击
+const useMsgBox = () => {
+  const feiLoading = ref(false);
+  const handleMsgBox = () => {
+    feiLoading.value = false
+    proxy.$confirm('我是内容', '标题', {
+      type: 'warning',
+      beforeClose: (action, instance, done) => {
+        if (instance.action !== 'confirm') {
+          done() // 用户直接关闭
+        } else {
+          if (feiLoading.value) {
+            proxy.$message.warning('不要重复点击')
+            return false;
+          }
+          feiLoading.value = true
+          // 接口调用成功
+          setTimeout(()=>{
+            feiLoading.value = false
+            done() // 调用接口ok后放行
+          },3000)
+        }
+      }
+    }).then(() => {
+      feiLoading.value = false
+    }).catch(() => {
+      feiLoading.value = false
+    })
+  }
+  return {handleMsgBox}
+}
+const {handleMsgBox} = useMsgBox();
+
 </script>
 
 <style scoped lang="scss">
