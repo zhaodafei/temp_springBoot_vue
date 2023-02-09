@@ -8,6 +8,7 @@
     <el-button :loading="true">加载中1</el-button>
     <el-button v-loading="true">加载中1</el-button>
   </div>
+  <hr>
 
   <div style="width: 200px;margin-top:20px">
     <h3>去掉数字框的箭头</h3>
@@ -15,6 +16,7 @@
     <h3>input 正则输入数字校验</h3>
     <el-input  @keyup="handleInputKeyup" v-model="feiNumber" />
   </div>
+  <hr>
 
   <div>
     <h1>树形选择</h1>
@@ -24,6 +26,7 @@
 
     <el-tree-select v-model="selFei" :data="dataFei" />
   </div>
+  <hr>
 
   <div>
     <h3>合并单元格</h3>
@@ -51,6 +54,7 @@
       })
     </p>
   </div>
+  <hr>
 
   <div>
     <h3>自动补全输入框</h3>
@@ -66,18 +70,21 @@
         @select="handleSelect"
     />
   </div>
+  <hr>
 
   <div>
     <h3>dialog 弹窗</h3>
     <el-button type="primary" @click="handleOpen">打开弹窗</el-button>
     <FDialog :visible="feiVisible" @close="handleClose"  />
   </div>
+  <hr>
 
   <div>
     <h3>drawer 抽屉</h3>
     <el-button type="primary" @click="openDrawer">打开抽屉</el-button>
     <FDrawer :visible="drawerVisible" @close="closeDrawer"  />
   </div>
+  <hr>
 
   <div>
     <h3>下拉框 获取key和label</h3>
@@ -91,6 +98,7 @@
       />
     </el-select>
   </div>
+  <hr>
 
   <div>
     <h3> 表单校验规则 </h3>
@@ -103,6 +111,7 @@
       };
     </pre>
   </div>
+  <hr>
 
   <div>
     <h3> 单选框,校验</h3>
@@ -128,6 +137,7 @@
       </el-form>
     </p>
   </div>
+  <hr>
 
   <div>
     <h3> 复选框,取值不要 ture  和 false</h3>
@@ -147,6 +157,7 @@
       />
     </p>
   </div>
+  <hr>
 
   <div>
     <h3>  Form-Item 插槽使用 </h3>
@@ -169,11 +180,43 @@
       </el-form>
     </p>
   </div>
+  <hr>
 
   <div>
     <h3>Feedback 反馈组件  消息提示,防止重复点击</h3>
     <el-button @click="handleMsgBox">Message Box 防止重复点击</el-button>
   </div>
+  <hr>
+
+  <div>
+    <h3>Element：设置el-input宽度大小</h3>
+    <p> 样式在下面 width-form </p>
+    <div style="width: 500px">
+      <el-form :model="widthForm" ref="widthFormRef" inline class="width-form">
+        <el-form-item label="姓名" prop="feiName">
+          <el-input v-model="widthForm.feiName" placeholder="请输入姓名" clearable />
+        </el-form-item>
+
+        <el-form-item label="地址" prop="feiAddress">
+          <el-input v-model="widthForm.feiAddress" placeholder="请输入地址" clearable />
+        </el-form-item>
+
+        <el-form-item label="金额" prop="price">
+          <el-input-number
+              v-model="widthForm.price"
+              :precision="2"
+              placeholder="请输入金额"
+              clearable
+          />
+        </el-form-item>
+
+        <el-form-item label="行内长度" prop="other">
+          <el-input v-model="widthForm.other" placeholder="行内长度" clearable style="width: 150px" />
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+  <hr>
 
 
 
@@ -396,6 +439,7 @@ const useFeiFormRadio = () => {
   const formRef = ref()
   const ruleForm = reactive({
     feiName: "",
+    address: "",
   })
   const submitForm  = async () => {
     const unrefForm = unref(formRef);
@@ -413,6 +457,7 @@ const {formRef, ruleForm, submitForm} = useFeiFormRadio();
 
 // ****************************************************************************************************
 import FDrawer from './components/fDrawer.vue'
+import {Stamp} from "@element-plus/icons-vue";
 // drawer  的 hooks
 const useFeiDrawer = () => {
   const drawerVisible = ref();
@@ -476,6 +521,21 @@ const useMsgBox = () => {
   return {handleMsgBox}
 }
 const {handleMsgBox} = useMsgBox();
+// ****************************************************************************************************
+const useWidthForm = () => {
+  const widthFormRef = ref()
+  const defaultForm = () => {
+    return {
+      feiName: undefined,
+      feiAddress: undefined,
+      price: 0,
+      other: undefined,
+    }
+  }
+  const widthForm = reactive(defaultForm())
+  return {widthFormRef, widthForm}
+}
+const {widthFormRef, widthForm} = useWidthForm()
 
 </script>
 
@@ -514,6 +574,22 @@ const {handleMsgBox} = useMsgBox();
   ol{
     li{
       list-style-type: decimal;
+    }
+  }
+}
+</style>
+
+<style scoped lang="scss">
+.width-form{
+  .el-form-item {
+    .el-input {
+      width: 260px;
+    }
+    .el-select {
+      width: 260px;
+    }
+    .el-input-number {
+      width: 260px;
     }
   }
 }
