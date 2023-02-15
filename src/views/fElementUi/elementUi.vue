@@ -15,6 +15,19 @@
     <el-input type="number" class="foo" v-model="feiNumber" placeholder="请输入数字"/>
     <h3>input 正则输入数字校验</h3>
     <el-input  @keyup="handleInputKeyup" v-model="feiNumber" />
+    <h3>普通input 利用正则,变为数字</h3>
+    手机号<el-input
+            v-model="feiNumber"
+            placeholder="请输入手机号"
+            maxlength="11"
+            oninput="value=value.replace(/[^\d]/g,'')"
+        />
+    身份证号 <el-input
+                v-model="feiNumber"
+                placeholder="请输入身份证号"
+                maxlength="18"
+                oninput="value=value.replace(/[^\d]/g,'')"
+            />
   </div>
   <hr>
 
