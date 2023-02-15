@@ -123,6 +123,18 @@
         time: [{type: 'array', required: true, trigger: 'change', message: "时间不能为空"}],
       };
     </pre>
+    <h3>禁用日期范围</h3>
+    <div>
+      <el-date-picker
+          v-model="feiTime"
+          type="datetime"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          format="YYYY-MM-DD HH:mm:ss"
+          placeholder="请选择"
+          :clearable="false"
+          :disabled-date="disabledDate"
+      />
+    </div>
   </div>
   <hr>
 
@@ -500,6 +512,19 @@ const handleChange = (val) => {
     console.log("获取key和label",proxy.$refs.feiRefs.selected);
     console.log("获取label",proxy.$refs.feiRefs.selectedLabel);
   })
+}
+// ****************************************************************************************************
+// 禁用日期范围
+const feiTime = ref()
+const disabledDate = (time) => {
+  // 2023-01-18 之后日期都可以选
+  // return time.getTime() <= new Date('2023-01-18').getTime()
+
+  // 2023-01-18 到 2023-01-25 之间的都可以选
+  return (
+      time.getTime() <= new Date('2023-01-18').getTime() ||
+      time.getTime() >= new Date('2023-01-25').getTime()
+  )
 }
 // ****************************************************************************************************
 // Message Box 防止重复点击
