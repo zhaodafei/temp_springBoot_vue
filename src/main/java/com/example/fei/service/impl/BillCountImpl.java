@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service("BillCountService")
+// @Service("BillCountService")
+@Service
 public class BillCountImpl implements BillCountService {
     @Resource
     private BillCountMapper billCountMapper;

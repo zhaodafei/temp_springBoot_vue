@@ -91,6 +91,19 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--  pinyin4j 和 aspose-words 研究其他项目 -->
+        <!-- https://mvnrepository.com/artifact/org.clojars.cbilson/pinyin4j -->
+        <!-- <dependency>
+            <groupId>org.clojars.cbilson</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-words</artifactId>
+            <version>15.8.0</version>
+        </dependency> -->
     </dependencies>
 
     <build>
