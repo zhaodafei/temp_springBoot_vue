@@ -24,6 +24,16 @@
 
     <!--<el-button @click="addFiles">上传</el-button>-->
 
+
+    <div class="file-item">
+      <strong> 文件上传4 </strong>
+      <el-upload action :http-request="changesFile4">
+        <el-button type="primary">
+          element 上传文件
+        </el-button>
+      </el-upload>
+    </div>
+
     <div class="file-item" style="display: flex;justify-content: space-between;width: 150px">
       <button @click="fileDownload">下载222</button>
     </div>
@@ -82,6 +92,15 @@ const changesFile = () => {
     })
   }
 }*/
+
+const changesFile4 = (req) => {
+  let fd = new FormData()
+  fd.append('file', req.file)
+  fd.append('FileName', req.file.name)
+  app.$post("file/upload", fd).then(res => {
+    console.log(res);
+  })
+}
 
 const fileDownload = () => {
   app.$fPost("file/download", {fileId: 222}).then(res => {
