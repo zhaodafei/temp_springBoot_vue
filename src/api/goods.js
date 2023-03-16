@@ -1,5 +1,5 @@
 let interfacesGoods = {
-  // 免登录接口测试
+  // GET/POST 免登录接口测试
   getTestDetail: 'user/detail',
 
 

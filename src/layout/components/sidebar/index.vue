@@ -72,16 +72,16 @@
           <el-menu-item index="5000001">
             <el-icon><Help /></el-icon>
             <span>
-             <router-link to="/foo">其他foo</router-link>
+             <router-link to="/foo">其他 foo</router-link>
             </span>
           </el-menu-item>
           <el-menu-item index="500002">
             <el-icon><Help /></el-icon>
-            <span><router-link to="/bar">其他bar</router-link></span>
+            <span><router-link to="/bar">其他 bar</router-link></span>
           </el-menu-item>
           <el-menu-item index="500003">
             <el-icon><Help /></el-icon>
-            <span><router-link to="/about">其他about</router-link></span>
+            <span><router-link to="/about">其他 about</router-link></span>
           </el-menu-item>
           <el-menu-item index="500004">
             <el-icon><Help /></el-icon>
@@ -94,6 +94,14 @@
           <el-menu-item index="500006">
             <el-icon><Help /></el-icon>
             <span><router-link to="/fei_ele">elementUI</router-link></span>
+          </el-menu-item>
+          <el-menu-item index="500007">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_utils_vCharts">图表 vEcharts</router-link></span>
+          </el-menu-item>
+          <el-menu-item index="500008">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_utils_jsonp">跨域 jsonp</router-link></span>
           </el-menu-item>
         </el-sub-menu>
 

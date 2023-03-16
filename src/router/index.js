@@ -68,6 +68,28 @@ const eleRoutes = [
   },
 ]
 
+// 其他小功能 路由 *********** 一些常用的小功能库
+const utilsRoutes = [
+  {
+    path: '/fei_utils_vCharts',
+    name: 'fei_utils_vCharts',
+    meta: {
+      // 图表
+      title: "utils_vCharts"
+    },
+    component: () => import('@/views/fUtils/vChart.vue')
+  },
+  {
+    path: '/fei_utils_jsonp',
+    name: 'fei_utils_jsonp',
+    meta: {
+      // jsonp,跨域请求
+      title: "utils_jsonp"
+    },
+    component: () => import('@/views/fUtils/fJsonp.vue')
+  },
+]
+
 // 正式路由
 const routes = [
   {
@@ -86,6 +108,7 @@ const routes = [
         ...testRoutes,
         ...fileRoutes,
         ...eleRoutes,
+        ...utilsRoutes,
       {
         path: 'home',
         name: 'home',
