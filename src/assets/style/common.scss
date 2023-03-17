@@ -1,0 +1,45 @@
+/****** reset.css 常见公用样式 ******/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, hr, pre, code,
+form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+body { color:#555;background:#FFF; font-size:16px; font-family:  "microsoft yahei", sans-serif, arial; }
+a {text-decoration: none;color: #1a1b1c;}
+a:hover{text-decoration:none;}
+img {border: 0;vertical-align: middle;}
+ul,ol{list-style:none;}
+table{border-collapse:collapse;border-spacing:0;}
+p{word-wrap:break-word;}
+
+.clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
+.clearfix { *zoom:1; }
+
+:root {
+  --main-bg-color: #f6f7f8;
+  --main-cardBg-color: #fff;
+  --main-font-color: #1a1b1c;
+}
+
+
+body{
+  line-height: 1.6;
+  font-size: 14px;
+  background-color: var(--main-bg-color);
+}
+
+.el-table--small {
+  font-size: 14px !important;
+}
+
+// 全局标题颜色
+.el-table .el-table__header-wrapper th,
+.el-table .el-table__fixed-header-wrapper th {
+  word-break: break-word;
+  //background-color: #f8f8f9 !important;
+  background-color: #f2f2f2 !important;
+  color: #515a6e;
+  height: 40px !important;
+  font-size: 13px;
+}
