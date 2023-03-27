@@ -36,11 +36,6 @@ app.use(store);
 app.use(router);
 app.mount('#app');
 
-
-
-// https://www.cnblogs.com/tianxiaoxiao/p/9983063.html
-// https://www.cnblogs.com/xiaoqiangink/p/12718524.html
-// https://www.jianshu.com/p/248a276e1a18
 console.log("" +
     "\u001B[32m  *** \u001B[0m " +
     "\u001B[35m Vue 项目启动成功,作者:大飞 \u001B[0m" +
