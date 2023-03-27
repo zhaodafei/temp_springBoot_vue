@@ -35,3 +35,20 @@ app.use(axiosInstall);
 app.use(store);
 app.use(router);
 app.mount('#app');
+
+
+
+// https://www.cnblogs.com/tianxiaoxiao/p/9983063.html
+// https://www.cnblogs.com/xiaoqiangink/p/12718524.html
+// https://www.jianshu.com/p/248a276e1a18
+console.log("" +
+    "\u001B[32m  *** \u001B[0m " +
+    "\u001B[35m Vue 项目启动成功,作者:大飞 \u001B[0m" +
+    "\u001B[32m  *** \n\r\u001B[0m " +
+    "\u001B[35m  美好的一天开始了, \n\r \u001B[0m" +
+    "\u001B[35m  请大家努力工作, \n\r \u001B[0m" +
+    "\u001B[35m  迎娶白富美,    \n\r \u001B[0m" +
+    "\u001B[35m  嫁个高富帅, \n\r \u001B[0m" +
+    "\u001B[35m  踏上人生巅峰 \n\r \u001B[0m" +
+    "\u001B[32m ********************************* \u001B[0m " +
+    "");
