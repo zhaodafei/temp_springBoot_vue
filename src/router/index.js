@@ -88,6 +88,15 @@ const utilsRoutes = [
     },
     component: () => import('@/views/fUtils/fJsonp.vue')
   },
+  {
+    path: '/fei_utils_swiper',
+    name: 'fei_utils_swiper',
+    meta: {
+      // swiper 轮播
+      title: "utils_swiper"
+    },
+    component: () => import('@/views/fUtils/fSwiper.vue')
+  },
 ]
 
 // 正式路由

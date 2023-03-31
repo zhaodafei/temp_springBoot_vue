@@ -103,6 +103,10 @@
             <el-icon><Help /></el-icon>
             <span><router-link to="/fei_utils_jsonp">跨域 jsonp</router-link></span>
           </el-menu-item>
+          <el-menu-item index="500009">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_utils_swiper">轮播 swiper</router-link></span>
+          </el-menu-item>
         </el-sub-menu>
 
       </el-menu>

@@ -65,7 +65,6 @@ export function str_trim(str, type = 1) {
   return returnStr;
 }
 
-
 /**
  * 获取地址中参数值
  * @param variable 参数名字
@@ -81,4 +80,14 @@ export function getQueryVariable(variable) {
     }
   }
   return "";
+}
+
+/**
+ * 转为数字
+ * @param num 一个任意类型:undefined, null, NaN, string,
+ * @returns {number|number} 返回一个数字
+ */
+export function toNumber(num) {
+  console.log("当前类型:", Object.prototype.toString.call(num));
+  return isNaN(num * 1) ? 0 : num * 1
 }
