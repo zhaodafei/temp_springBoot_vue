@@ -4,7 +4,7 @@
     官网参考地址：https://swiperjs.com/vue
   </p>
 
-  <div class="exhibition-segment">
+  <div class="swiper-box">
     <div class="swiper-wrap">
       <swiper
           :slides-per-view="sOptions.perView"
@@ -63,7 +63,7 @@ const onSlideChange = () => {
 </script>
 
 <style scoped lang="scss">
-.exhibition-segment {
+.swiper-box {
   margin-top: 20px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);;
   border-radius: 4px;
