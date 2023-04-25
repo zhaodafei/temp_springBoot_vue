@@ -5,6 +5,10 @@
              :before-close="handleClose">
 
     <div>
+      <p>
+        v-loading.fullscreen="true"
+        v-loading="true"
+      </p>
       <p> 我是弹窗内容</p>
       <p> 使用 :close-on-click-modal="false"  禁止点击空白区域关闭</p>
     </div>

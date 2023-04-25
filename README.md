@@ -58,3 +58,9 @@ Use a v-bind binding combined with a v-on listener that emits update:x event ins
   File: E:/home/fei/src/views/foo/Edit.vue
 ```
 
+### 库说明
+
+1. lodash 常见工具函数( 字符串,数组 )
+2. xxx
+3. xxx
+4. xx

@@ -53,7 +53,7 @@ export default defineConfig(({ mode, command }) => {
     server: {
       port: 3400,
       host: true,
-      open: true,
+      // open: true, // 是否自动打开浏览器
       proxy: {
         '^/api': {
           // target: 'http://demo.yizheng_fei.com', // 本地 PHP
