@@ -51,16 +51,17 @@ export default defineConfig(({ mode, command }) => {
     },
     // vite 相关配置
     server: {
-      port: 3400,
+      port: 3401,
       host: true,
       // open: true, // 是否自动打开浏览器
       proxy: {
         '^/api': {
           // target: 'http://demo.yizheng_fei.com', // 本地 PHP
-          // target: env.VITE_APP_SERVER,
+          target: env.VITE_APP_SHOW_URL,
           changeOrigin: true,
           logLevel: 'debug',
-          rewrite: path => path.replace(/^\/api/, '/')
+          // tip: 所有接口需要带上前缀/api
+          // rewrite: path => path.replace(/^\/api/, '/api')
         }
       }
     }
