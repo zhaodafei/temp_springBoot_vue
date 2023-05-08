@@ -4,7 +4,7 @@
              @opened="onOpened"
              :before-close="handleClose">
 
-    <div>
+    <div v-loading="detailLoading">
       <p>
         v-loading.fullscreen="true"
         v-loading="true"
@@ -16,7 +16,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="handleClose">取消</el-button>
-        <el-button type="primary" @click="handleSave" :loading="saveLoading">保存</el-button>
+        <el-button type="primary" @click="handleSave" :loading="saveLoading || detailLoading">保存</el-button>
       </span>
     </template>
   </el-dialog>
@@ -38,9 +38,12 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['close']);
+const detailLoading = ref()
 
 const onOpened = () => {
   console.log("打开了",props.visible);
+  detailLoading.value = true
+  detailLoading.value = false
 }
 const onClose = (isUpdate) => {
   console.log("关闭销毁数据____1111111111");
