@@ -61,6 +61,6 @@ Use a v-bind binding combined with a v-on listener that emits update:x event ins
 ### 库说明
 
 1. lodash 常见工具函数( 字符串,数组 )
-2. xxx
+2. crypto-js 常见加密工具库
 3. xxx
 4. xx
