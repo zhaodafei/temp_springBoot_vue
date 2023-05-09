@@ -10,7 +10,7 @@ const IV = CryptoJS.enc.Utf8.parse(keyStr)
 /**
  * 加密方法
  */
-export function WebEncryptAES(word, keyStr, ivStr) {
+export function WebEncryptAES(word) {
   let key = KEY
   let iv = IV
 
@@ -27,7 +27,7 @@ export function WebEncryptAES(word, keyStr, ivStr) {
 /**
  * 解密方法
  */
-export function WebDecryptAES(word, keyStr, ivStr) {
+export function WebDecryptAES(word) {
   let key = KEY
   let iv = IV
 
