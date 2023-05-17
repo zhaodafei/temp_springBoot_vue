@@ -242,6 +242,33 @@
     </div>
   </div>
   <hr>
+  <div>
+    <h3> 时间: el-time-picker 禁用范围</h3>
+    <p>  demo: 如允许 17:30:00 - 18:30:00 </p>
+    <div>
+      <el-time-picker
+          v-model="timePicker1"
+          :disabled-hours="disabledHours"
+          :disabled-minutes="disabledMinutes"
+          :disabled-seconds="disabledSeconds"
+          placeholder="任意时间点" />
+
+    </div>
+    <div>
+      <el-time-picker
+          v-model="timePicker2"
+          is-range
+          range-separator="To"
+          start-placeholder="Start time"
+          end-placeholder="End time"
+          value-format="HH:00"
+          format="HH:00"
+          :disabled-minutes="disabledMinutes2"
+          :disabled-seconds="disabledSeconds2"
+      />
+    </div>
+  </div>
+  <hr>
 
 
 
@@ -574,6 +601,42 @@ const useWidthForm = () => {
   return {widthFormRef, widthForm}
 }
 const {widthFormRef, widthForm} = useWidthForm()
+// ****************************************************************************************************
+// 时间: el-time-picker 禁用范围: demo:如允许 17:30:00 - 18:30:00
+const makeRange = (start, end) => {
+  const result = []
+  for (let i = start; i <= end; i++) {
+    result.push(i)
+  }
+  return result
+}
+
+const timePicker1 = ref(new Date(2016, 9, 10, 18, 40))
+const disabledHours = () => {
+  return makeRange(0, 16).concat(makeRange(19, 23))
+}
+const disabledMinutes  = (hour) => {
+  if (hour === 17) {
+    return makeRange(0, 29)
+  }
+  if (hour === 18) {
+    return makeRange(31, 59)
+  }
+}
+const disabledSeconds = (hour, minute) => {
+  if (hour === 18 && minute === 30) {
+    return makeRange(1, 59)
+  }
+}
+const timePicker2 = ref([])
+const disabledMinutes2  = (hour) => {
+  return makeRange(0, 59)
+}
+const disabledSeconds2 = (hour, minute) => {
+  return makeRange(0, 59)
+}
+
+// ****************************************************************************************************
 
 </script>
 

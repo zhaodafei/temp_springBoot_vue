@@ -18,6 +18,7 @@
     "dayjs": "^1.10.7",
     "echarts": "^5.4.1",
     "element-plus": "2.1.8",
+    "file-saver": "^2.0.5",
     "jquery": "^3.6.4",
     "jsonp": "^0.2.1",
     "qs": "^6.10.3",
