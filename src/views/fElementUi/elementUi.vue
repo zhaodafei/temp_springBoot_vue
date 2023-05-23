@@ -16,18 +16,41 @@
     <h3>input 正则输入数字校验</h3>
     <el-input  @keyup="handleInputKeyup" v-model="feiNumber" />
     <h3>普通input 利用正则,变为数字</h3>
+    <p style="color: red"> 尽量要直接在input中处理 oninput 和 onchange, 这个会与表单的v-model 出现异常空值</p>
     手机号<el-input
             v-model="feiNumber"
             placeholder="请输入手机号"
             maxlength="11"
             oninput="value=value.replace(/[^\d]/g,'')"
+            @blur="e => (feiNumber.value = e.target.value)"
         />
     身份证号 <el-input
                 v-model="feiNumber"
                 placeholder="请输入身份证号"
                 maxlength="18"
-                oninput="value=value.replace(/[^\d]/g,'')"
+                onchange="value=value.replace(/[^\d]/g,'')"
             />
+
+      <!-- 正确使用,但是以后项目中,尽量别使用
+        <el-form-item label="手机号" prop="phoneNumber">
+          <el-input
+            v-model="form.phoneNumber"
+            placeholder="请输入手机号"
+            maxlength="11"
+            oninput="value=value.replace(/[^\d]/g,'')"
+            clearable
+            @blur="e => (form.phoneNumber = e.target.value)"
+          />
+          <el-input
+              v-model="form.phoneNumber"
+              placeholder="请输入手机号"
+              maxlength="11"
+              onchange="value=value.replace(/[^\d]/g,'')"
+              clearable
+          />
+        </el-form-item>
+      -->
+
   </div>
   <hr>
 
