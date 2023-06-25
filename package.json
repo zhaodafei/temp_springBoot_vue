@@ -17,7 +17,7 @@
     "crypto-js": "^4.1.1",
     "dayjs": "^1.10.7",
     "echarts": "^5.4.1",
-    "element-plus": "2.1.8",
+    "element-plus": "2.3.7",
     "file-saver": "^2.0.5",
     "jquery": "^3.6.4",
     "jsonp": "^0.2.1",
@@ -31,7 +31,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.0.0",
+    "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^4.0.0",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-static-copy": "^0.16.0"

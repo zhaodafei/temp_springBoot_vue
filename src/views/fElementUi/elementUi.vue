@@ -294,9 +294,38 @@
   <hr>
 
 
+  <div class="readme-ui">
+    <h3>element-plus": "2.3.7" 修复问题 </h3>
+    <ol style="margin-left: 20px;">
+      <li>el-input-number 可以用 @input 事件</li>
+      <li>输入框 clearable 不会出现来回跳动</li>
+    </ol>
+    <div>
+      <el-input v-model="rInputVal" placeholder="Please input" clearable style="width: 240px"  />
+    </div>
+    <div>
+      <el-input-number v-model="rINumVal" :min="1" :max="10" @input="rChange" />
+    </div>
+    <div style="display: flex">
+      <el-select v-model="rSel"  placeholder="请选择"  style="width: 200px">
+        <el-option
+            v-for="item in [{value: 'da', label: '大'},{value: 'fei', label: '飞'}]"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        />
+      </el-select>
+      <div>
+        <el-button @click="rSelNo">选中_no</el-button>
+        <el-button @click="rSelYes">选中_ok</el-button>
+      </div>
+    </div>
+  </div>
+  <hr>
 
 
-  <div class="readme-ui" style="margin-bottom: 150px">
+
+  <div class="readme-ui" style="margin-top: 50px;margin-bottom: 150px">
     <h2 style="background-color:#90ee90;color: #fff">开发注意事项:</h2>
     <dl>
       <dt>表单数据处理 </dt>
@@ -660,7 +689,45 @@ const disabledSeconds2 = (hour, minute) => {
 }
 
 // ****************************************************************************************************
+// element-plus 升级修复
+const useVersionRepair = () => {
+  const rInputVal = ref('');
 
+  const rINumVal = ref(1);
+  const rChange = (value) => {
+    console.log('我改变了触发input事件',value)
+  }
+
+  const rSel = ref('')
+  const rSelNo = () => {
+    isSel('111111111111,这个值选不中')
+  }
+
+  const rSelYes = () => {
+    isSel('fei') // 可以选中回显的一个值
+  }
+
+  const isSel = (defaultVal) => {
+    let isDefaultSel = false;
+    [{value: 'da', label: '大'},{value: 'fei', label: '飞'}].forEach(item => {
+      if (item.value === defaultVal) {
+        console.log('找到了');
+        isDefaultSel = true;
+      }
+    })
+
+    // tip: 先判断再赋值,避开下拉框中没有值回显value
+    if (isDefaultSel) {
+      rSel.value = defaultVal
+    } else {
+      rSel.value = undefined
+    }
+  }
+
+  return {rInputVal, rINumVal, rChange, rSel, rSelNo, rSelYes}
+}
+const {rInputVal, rINumVal, rChange, rSel, rSelNo, rSelYes} = useVersionRepair()
+// ****************************************************************************************************
 </script>
 
 <style scoped lang="scss">
