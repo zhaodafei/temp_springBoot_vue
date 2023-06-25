@@ -63,4 +63,5 @@ Use a v-bind binding combined with a v-on listener that emits update:x event ins
 1. lodash 常见工具函数( 字符串,数组 )
 2. crypto-js 常见加密工具库
 3. file-saver 下载文件流保存为文件
-4. xx
+4. vite-plugin-static-copy 拷贝源文件到打包目录文件下
+4. xxx

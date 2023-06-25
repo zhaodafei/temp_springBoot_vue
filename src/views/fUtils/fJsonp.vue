@@ -35,7 +35,8 @@ import axios from 'axios'
 import $ from 'jquery'
 
 import jsonp  from 'jsonp';
-import querystring  from 'querystring';
+// import querystring  from 'querystring';
+import Qs from 'qs'
 
 const getAxios = () => {
   console.log('这个会跨域调用不到数据');
@@ -73,7 +74,8 @@ const getAjax = () => {
 
 const getJsonp = () => {
   let obj = {foo1: 'p111', foo2: 'p222'};
-  let q = querystring.encode(obj);
+  // let q = querystring.encode(obj);
+  let q = Qs.stringify(obj);
 
   jsonp('http://demo.pro_fei.com/fei.php?'+q, {param:'jsoncallback'}, (err, data) => {
     if (err) {

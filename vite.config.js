@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import path from 'path'
 import createVitePlugins from './vite/plugins'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
@@ -8,7 +9,10 @@ export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd())
 
   return {
-    plugins: createVitePlugins(env, command === 'build'),
+    plugins: [
+        createVitePlugins(env, command === 'build'),
+        viteStaticCopy({targets: [{src: './copyPackFile/fei.txt', dest: './'}]})
+    ],
     resolve: {
       // https://cn.vitejs.dev/config/#resolve-alias
       alias: {
