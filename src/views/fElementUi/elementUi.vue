@@ -323,7 +323,32 @@
   </div>
   <hr>
 
-
+  <div>
+    <h3>单张图片</h3>
+    <p> 用单独的样式控制最后的加号是否显示 </p>
+    <div>
+      <el-upload
+          class="hide-fei"
+          v-model:file-list="feiUrl"
+          :limit="1"
+          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          list-type="picture-card"
+      >
+        <el-icon><Plus /></el-icon>
+        <template #file="{ file }">
+          <div>
+            <img class="el-upload-list__item-thumbnail" :src="file.url" />
+            <span class="el-upload-list__item-actions">
+            <span class="el-upload-list__item-delete" @click="feiImgRemove(file)">
+              <el-icon><Delete /></el-icon>
+            </span>
+          </span>
+          </div>
+        </template>
+      </el-upload>
+    </div>
+  </div>
+  <hr>
 
   <div class="readme-ui" style="margin-top: 50px;margin-bottom: 150px">
     <h2 style="background-color:#90ee90;color: #fff">开发注意事项:</h2>
@@ -728,6 +753,29 @@ const useVersionRepair = () => {
 }
 const {rInputVal, rINumVal, rChange, rSel, rSelNo, rSelYes} = useVersionRepair()
 // ****************************************************************************************************
+// 单张图片
+const useImgUpload = () => {
+  const feiUrl = ref([
+    {
+      name:'name_01',
+      url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg'
+    }
+  ])
+
+  const feiImgRemove = (file) => {
+    console.log('可以移除了',file)
+    const fIndex = feiUrl.value.map(f => f.name).indexOf(file.name)
+    if (fIndex > -1) {
+      feiUrl.value.splice(fIndex,1)
+      alert('删除成功了')
+    }
+  }
+
+  return {feiUrl, feiImgRemove}
+}
+
+const {feiUrl, feiImgRemove} = useImgUpload()
+// ****************************************************************************************************
 </script>
 
 <style scoped lang="scss">
@@ -782,6 +830,31 @@ const {rInputVal, rINumVal, rChange, rSel, rSelNo, rSelYes} = useVersionRepair()
     .el-input-number {
       width: 260px;
     }
+  }
+}
+</style>
+
+<style scoped lang="scss">
+// .el-upload--picture-card 控制加号部分
+:deep(.hide-fei .el-upload--picture-card) {
+  display: none;
+}
+
+// 去掉动画效果
+:deep(.el-list-enter-active),
+:deep(.el-list-leave-active) {
+  transition: all 0s;
+}
+
+:deep(.el-list-enter, .el-list-leave-active) {
+  opacity: 0;
+  transform: translateY(0);
+}
+
+// 禁用
+:deep(.disabledUpload) {
+  .el-upload {
+    cursor: not-allowed;
   }
 }
 </style>
