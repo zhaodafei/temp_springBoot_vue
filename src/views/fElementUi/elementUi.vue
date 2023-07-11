@@ -328,7 +328,7 @@
     <p> 用单独的样式控制最后的加号是否显示 </p>
     <div>
       <el-upload
-          class="hide-fei"
+          :class="{ 'hide-fei': feiUrl.length >= 1 }"
           v-model:file-list="feiUrl"
           :limit="1"
           action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
