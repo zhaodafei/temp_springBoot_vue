@@ -45,8 +45,8 @@ const loginLoading = ref(false);
 const form = reactive({
   username: 'dafei',
   password: '123456',
-  code: undefined,
-  uuid: undefined,
+  code: undefined,  // 验证码输入值
+  uuid: undefined, // 这个值去校验验证码
 });
 
 onMounted(()=>{
@@ -64,13 +64,13 @@ const getCaptcha = () => {
 const loginForm = () => {
   loginLoading.value = true;
   let params = {
-    username: form.username,
-    password: form.password,
+    // username: form.username,
+    // password: form.password,
+    ...form
   };
   app.$post(interfacesUser.login, params).then(res => {
     if (res) {
       if (res.error === 200) {
-        loginLoading.value = false;
         let user = {
           token: res.data.access_token,
           username: params.username,
@@ -82,6 +82,8 @@ const loginForm = () => {
         proxy.$message.error(res.msg);
       }
     }
+  }).finally(()=>{
+    loginLoading.value = false;
   })
 }
 
