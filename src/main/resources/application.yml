@@ -67,5 +67,8 @@ token:
   # 令牌有效期（默认30分钟）
   expireTime: 30
 
-
+#开关配置
+switchFei:
+  #登录验证码开关校验
+  isLoginCaptcha: false
 

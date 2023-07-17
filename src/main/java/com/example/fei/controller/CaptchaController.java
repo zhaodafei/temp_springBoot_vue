@@ -1,8 +1,14 @@
 package com.example.fei.controller;
 
+import com.example.fei.common.constant.CacheConstants;
+import com.example.fei.common.constant.Constants;
 import com.example.fei.common.core.AjaxResult;
 import com.example.fei.common.utils.IdUtils;
+import com.example.fei.service.SwitchConfig;
 import com.google.code.kaptcha.Producer;
+import com.example.fei.common.core.redis.RedisCache;
+import com.example.fei.service.SwitchConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 验证码操作处理
@@ -22,6 +29,12 @@ public class CaptchaController {
 
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
+
+    @Autowired
+    private RedisCache redisCache;
+
+    @Autowired
+    private SwitchConfig switchConfig;
 
     /**
      * 生成登录验证码
@@ -39,7 +52,14 @@ public class CaptchaController {
 
         String code = captchaProducer.createText(); // 验证码 code, 等前端穿过来值和这个对比
         BufferedImage image = captchaProducer.createImage(code);
-        // 存入redis { uuid+code: code }
+
+        if (switchConfig.isLoginCaptcha) {
+            // 存入redis { uuid+code: code }
+            String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
+            redisCache.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
+            String captcha = redisCache.getCacheObject(verifyKey);
+            System.out.println("1从redis获取到验证码" + captcha);
+        }
 
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {

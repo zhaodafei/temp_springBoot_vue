@@ -1,6 +1,5 @@
 package com.example.fei.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.fei.common.core.AjaxResult;
 import com.example.fei.domain.User;
 import com.example.fei.domain.User2;

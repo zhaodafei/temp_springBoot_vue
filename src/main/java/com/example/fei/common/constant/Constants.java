@@ -2,6 +2,10 @@ package com.example.fei.common.constant;
 
 import io.jsonwebtoken.Claims;
 
+/**
+ * 通用常量信息
+ *
+ */
 public class Constants {
     /**
      * UTF-8 字符集
@@ -54,29 +58,9 @@ public class Constants {
     public static final String LOGIN_FAIL = "Error";
 
     /**
-     * 验证码 redis key
-     */
-    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
-
-    /**
-     * 登录用户 redis key
-     */
-    public static final String LOGIN_TOKEN_KEY = "login_tokens:";
-
-    /**
-     * 防重提交 redis key
-     */
-    public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
-
-    /**
-     * 限流 redis key
-     */
-    public static final String RATE_LIMIT_KEY = "rate_limit:";
-
-    /**
      * 验证码有效期（分钟）
      */
-    public static final Integer CAPTCHA_EXPIRATION = 2;
+    public static final Integer CAPTCHA_EXPIRATION = 30;
 
     /**
      * 令牌

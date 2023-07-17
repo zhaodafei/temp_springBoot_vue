@@ -10,6 +10,8 @@ public class User {
     private String password;
     private String email;
     private String mobile;
+    private String code; // 验证码
+    private String uuid; // 验证码唯一标志
 
     public long getId() {
         return id;
@@ -51,4 +53,19 @@ public class User {
         this.mobile = mobile;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 }
