@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 用于前后端之间数据交互
+ * 用于前后端之间数据交互(尽量不用)
  */
 public class AESEncryptWeb {
 
