@@ -1,4 +1,4 @@
-// 用于前后端之间数据交互
+// 用于前后端之间数据交互(tip:尽量不要用这个)
 
 import CryptoJS from 'crypto-js'
 
