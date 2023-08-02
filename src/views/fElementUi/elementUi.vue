@@ -123,6 +123,12 @@
   <hr>
 
   <div>
+    <h3>dialog 弹窗== 非组件</h3>
+    <fDialog2 />
+  </div>
+  <hr>
+
+  <div>
     <h3>下拉框 获取key和label</h3>
     <p> const {proxy} = getCurrentInstance(); </p>
     <el-select v-model="feiVal" ref="feiRefs"  @change="handleChange">
@@ -563,6 +569,29 @@ const useFeiDialog = () => {
   return {feiVisible,handleOpen,handleClose}
 }
 const {feiVisible, handleOpen, handleClose} = useFeiDialog();
+
+// ****************************************************************************************************
+import FDrawer from './components/fDrawer.vue'
+// drawer  的 hooks
+const useFeiDrawer = () => {
+  const drawerVisible = ref();
+  const openDrawer = (row) => {
+    drawerVisible.value = true
+  }
+  const closeDrawer = (val) => {
+    drawerVisible.value = false
+    if (val && val.isUpdate) {
+      // 其他操作
+    }
+  }
+
+  return {drawerVisible, openDrawer, closeDrawer}
+}
+const {drawerVisible, openDrawer, closeDrawer} = useFeiDrawer();
+
+// ****************************************************************************************************
+// dialog 弹窗(非组件)
+import fDialog2 from './components/fDialog2.vue'
 // ****************************************************************************************************
 const useFeiFormRadio = () => {
   const formRef = ref()
@@ -582,27 +611,6 @@ const useFeiFormRadio = () => {
   return {formRef,ruleForm,submitForm}
 }
 const {formRef, ruleForm, submitForm} = useFeiFormRadio();
-
-
-// ****************************************************************************************************
-import FDrawer from './components/fDrawer.vue'
-import {Stamp} from "@element-plus/icons-vue";
-// drawer  的 hooks
-const useFeiDrawer = () => {
-  const drawerVisible = ref();
-  const openDrawer = (row) => {
-    drawerVisible.value = true
-  }
-  const closeDrawer = (val) => {
-    drawerVisible.value = false
-    if (val && val.isUpdate) {
-      // 其他操作
-    }
-  }
-
-  return {drawerVisible, openDrawer, closeDrawer}
-}
-const {drawerVisible, openDrawer, closeDrawer} = useFeiDrawer();
 
 // ****************************************************************************************************
 // 下拉框获取值
