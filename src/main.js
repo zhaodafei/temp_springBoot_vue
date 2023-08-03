@@ -8,6 +8,7 @@ import {axiosInstall} from "./utils/axios_instance.js"
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import directive from './directive' // 指令
 
 // 导入图表库
 import ECharts from 'vue-echarts'
@@ -34,6 +35,9 @@ app.use(axiosInstall);
 
 app.use(store);
 app.use(router);
+directive(app)
+
+
 app.mount('#app');
 
 

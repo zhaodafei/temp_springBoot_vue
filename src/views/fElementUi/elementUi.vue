@@ -356,6 +356,20 @@
   </div>
   <hr>
 
+  <div>
+    <h3>Vue 针对element按钮防止多次点击</h3>
+    <div>
+      <el-button v-reClick icon="Grid" type="primary">点击3秒后恢复</el-button>
+      <el-button v-reClick="(10000)" icon="Grid" type="primary">点击10秒后恢复 </el-button>
+    </div>
+    <div>
+      <p> 普通指令测试 </p>
+      <input type="text" v-myFeiDirective>
+      <input type="text" v-myFeiDirective2="{color:'blue',text:'图书_论语'}">
+    </div>
+  </div>
+  <hr>
+
   <div class="readme-ui" style="margin-top: 50px;margin-bottom: 150px">
     <h2 style="background-color:#90ee90;color: #fff">开发注意事项:</h2>
     <dl>
