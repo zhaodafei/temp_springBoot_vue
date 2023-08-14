@@ -92,6 +92,11 @@ export function toNumber(num) {
   return isNaN(num * 1) ? 0 : num * 1
 }
 
+// 金额逗号分隔
+export function formatAmount(str) {
+  return str && str.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 // 生成UUID
 export function guid_1() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

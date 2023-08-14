@@ -70,7 +70,10 @@
               :span-method="objectSpanMethod"
               border
               :header-cell-style="{'textAlign':'center'}"
-              :cell-style="{'textAlign':'center'}">
+              :cell-style="{'textAlign':'center'}"
+              class="fei-table-wrapper"
+              header-cell-class-name="fei-header-cell-wrapper 头部"
+              cell-class-name="fei-cell-wrapper 单元格">
       <el-table-column label="序号"  width="55" type="index" />
       &lt;!&ndash;<el-table-column label="xxx" prop="showRow" />&ndash;&gt;
       <el-table-column label="课程名称" prop="xxx" />
@@ -81,7 +84,13 @@
       <template #empty>
         <el-empty description="暂无数据" />
       </template>
-    </el-table>-->
+    </el-table>
+    <div>
+      css 样式
+      .fei-table-wrapper {color: black !important;border: 1px solid black;}
+      .fei-cell-wrapper, .fei-header-cell-wrapper {color: black !important;border-color: black !important;}
+    </div>-->
+
     <h3>全选/全不选 multipleTableRef.value.toggleAllSelection(); </h3>
     <p>
       反选
@@ -150,6 +159,7 @@
         role: { type: 'enum', enum: ['admin', 'user', 'guest'] },
         data: [{type: 'date', required: true, trigger: 'change', message: "日期不能为空"}],
         time: [{type: 'array', required: true, trigger: 'change', message: "时间不能为空"}],
+        email:[{type: 'email', required: true, trigger: ['blur', 'change'], message: "请输入正确的邮箱格式"}],
       };
     </pre>
     <h3>禁用日期范围</h3>
@@ -183,6 +193,18 @@
             <el-radio :label="6">孟子</el-radio>
             <el-radio :label="9">战国策</el-radio>
           </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="客户星级" prop="feiLevel" :rules="[
+            {
+              required: true,
+              message: '请选择等级',
+              type: 'enum', enum: [2, 3, 4],
+              trigger: ['change','blur','focus','hoverChange','keydown']
+            },
+          ]">
+          <el-rate v-model="ruleForm.feiLevel" clearable  :colors="['#F7BA2A', '#F7BA2A', '#F7BA2A']" />
+          <span style="color: #ff6b81"> 这个校验稍微有点问题,校验后再次选择提示信息不会消失 </span>
         </el-form-item>
 
         <el-form-item>
@@ -612,6 +634,7 @@ const useFeiFormRadio = () => {
   const ruleForm = reactive({
     feiName: "",
     address: "",
+    feiLevel: 1, // 这个默认值会是0
   })
   const submitForm  = async () => {
     const unrefForm = unref(formRef);
