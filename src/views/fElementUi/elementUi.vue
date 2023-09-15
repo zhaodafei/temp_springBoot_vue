@@ -11,8 +11,10 @@
   <hr>
 
   <div style="width: 200px;margin-top:20px">
-    <h3>去掉数字框的箭头</h3>
-    <el-input type="number" class="foo" v-model="feiNumber" placeholder="请输入数字"/>
+    <h3 style="width: 260px">去掉数字框的箭头 <em style="font-size: 12px">用属性: controls </em></h3>
+
+    <el-input-number v-model="feiNumber" :controls="false"/>
+    <!--<el-input type="number" class="foo" v-model="feiNumber" placeholder="请输入数字"/>-->
     <h3>input 正则输入数字校验</h3>
     <el-input  @keyup="handleInputKeyup" v-model="feiNumber" />
     <h3>普通input 利用正则,变为数字</h3>
@@ -824,24 +826,24 @@ const {feiUrl, feiImgRemove} = useImgUpload()
 </script>
 
 <style scoped lang="scss">
-:deep(.foo){ // 去掉数字框的箭头  或者使用 :deep(.foo) ::v-deep(.foo)
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button{
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    -o-appearance: none !important;
-    -ms-appearance: none !important;
-    appearance: none !important;
-    margin: 0;
-  }
-  input[type="number"]{
-    -webkit-appearance:textfield;
-    -moz-appearance:textfield;
-    -o-appearance:textfield;
-    -ms-appearance:textfield;
-    appearance:textfield;
-  }
-}
+//:deep(.foo){ // 去掉数字框的箭头  或者使用 :deep(.foo) ::v-deep(.foo)
+//  input::-webkit-outer-spin-button,
+//  input::-webkit-inner-spin-button{
+//    -webkit-appearance: none !important;
+//    -moz-appearance: none !important;
+//    -o-appearance: none !important;
+//    -ms-appearance: none !important;
+//    appearance: none !important;
+//    margin: 0;
+//  }
+//  input[type="number"]{
+//    -webkit-appearance:textfield;
+//    -moz-appearance:textfield;
+//    -o-appearance:textfield;
+//    -ms-appearance:textfield;
+//    appearance:textfield;
+//  }
+//}
 
 </style>
 
