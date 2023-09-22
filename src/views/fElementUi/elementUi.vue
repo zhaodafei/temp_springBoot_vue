@@ -14,6 +14,9 @@
     <h3 style="width: 260px">去掉数字框的箭头 <em style="font-size: 12px">用属性: controls </em></h3>
 
     <el-input-number v-model="feiNumber" :controls="false"/>
+
+    <h3> 只能是正整数 </h3>
+    <el-input-number v-model="feiNumber" :min="1" :step="1" step-strictly />
     <!--<el-input type="number" class="foo" v-model="feiNumber" placeholder="请输入数字"/>-->
     <h3>input 正则输入数字校验</h3>
     <el-input  @keyup="handleInputKeyup" v-model="feiNumber" />
