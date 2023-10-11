@@ -166,6 +166,11 @@
         time: [{type: 'array', required: true, trigger: 'change', message: "时间不能为空"}],
         email:[{type: 'email', required: true, trigger: ['blur', 'change'], message: "请输入正确的邮箱格式"}],
       };
+
+      正则:
+      rules: [
+      　　{ pattern:/^[0-9a-zA-Z_]+$/, message: '用户名必须是英文数字组合' }
+      ],
     </pre>
     <h3>禁用日期范围</h3>
     <div>
