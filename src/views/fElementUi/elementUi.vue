@@ -227,20 +227,20 @@
 
   <div>
     <h3> 复选框,取值不要 ture  和 false</h3>
-    <p>
-      <el-checkbox-group > <!-- v-model="form.spaceId" -->
+    <!--<p>
+      <el-checkbox-group > &lt;!&ndash; v-model="form.spaceId" &ndash;&gt;
         <el-checkbox value="fei" label="fei">大飞</el-checkbox>
       </el-checkbox-group>
-    </p>
+    </p>-->
     <h3>开关自定义值</h3>
     <p>
-      <el-switch
+     <!-- <el-switch
           v-model="feiNumber"
           :active-value="1"
           :inactive-value="0"
           active-color="#13ce66"
           inactive-color="#ff4949"
-      />
+      />-->
     </p>
   </div>
   <hr>
@@ -405,22 +405,26 @@
   <div>
     <h3> select 和 table 传参数</h3>
     <div>
-      <!--<el-select
+      <el-select
           v-model="paramsFei"
           placeholder="Select"
           style="width: 240px"
           @change="onSelectFei($event, 'fei_其他参数')"
       >
         <el-option v-for="item in WEB_fei_arr" :key="item.value" :label="item.label" :value="item.value" />
-      </el-select>-->
+      </el-select>
     </div>
     <div>
-    <!--  <el-table :data="[{name: 'fei', age: '18'}]">
+      <h4> table 传参数 </h4>
+      <el-table :data="[{name: 'fei', age: '18'}]">
         <el-table-column label="姓名"  prop="name" width="180"/>
-        <el-table-column label="姓名"  prop="name" width="180"/>
-        <el-table-column label="姓名"  prop="name" width="180"/>
-        <el-table-column label="姓名"  prop="name" width="180"/>
-      </el-table>-->
+        <el-table-column label="姓名"  prop="name" width="480">
+          <template #default="{ row, column, $index }">
+           这三个都可以显示出来  row, column, $index
+          </template>
+        </el-table-column>
+
+      </el-table>
     </div>
   </div>
   <hr>
@@ -855,25 +859,25 @@ const useImgUpload = () => {
 const {feiUrl, feiImgRemove} = useImgUpload()
 // ****************************************************************************************************
 // select 和 table 传参数
-// const useMultipleParams = () => {
-//   const paramsFei = ref()
-//   const WEB_fei_arr = [
-//     {value: 'Option1', label: 'Option1'},
-//     {value: 'Option2', label: 'Option2'}
-//   ]
-//   /**
-//    * 下拉选择
-//    * @param val 下拉框的值
-//    * @param otherFei 其他参数
-//    */
-//   const onSelectFei = (val, otherFei) => {
-//     console.log(val, otherFei)
-//   }
-//
-//   return {paramsFei, WEB_fei_arr, onSelectFei}
-// }
-//
-// const {paramsFei, WEB_fei_arr, onSelectFei} = useMultipleParams()
+const useMultipleParams = () => {
+  const paramsFei = ref()
+  const WEB_fei_arr = [
+    {value: 'Option1', label: 'Option1'},
+    {value: 'Option2', label: 'Option2'}
+  ]
+  /**
+   * 下拉选择
+   * @param val 下拉框的值
+   * @param otherFei 其他参数
+   */
+  const onSelectFei = (val, otherFei) => {
+    console.log(val, otherFei)
+  }
+
+  return {paramsFei, WEB_fei_arr, onSelectFei}
+}
+
+const {paramsFei, WEB_fei_arr, onSelectFei} = useMultipleParams()
 // ****************************************************************************************************
 
 
