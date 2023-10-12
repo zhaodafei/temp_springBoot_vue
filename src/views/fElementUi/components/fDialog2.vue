@@ -4,7 +4,7 @@
   <el-dialog title="在当前页面中使用弹窗" :width="560" v-model="visibleNo" v-if="visibleNo" destroy-on-close
              :close-on-click-modal="false"
              modal-class="遮罩层的自定义类名 111111111111111"
-             custom-class="Drawer 的自定义类名 222222222222222"
+             class="Drawer 的自定义类名 222222222222222"
              @opened="onOpenedNo"
              :before-close="handleCloseNo">
 

@@ -125,14 +125,14 @@
   <div>
     <h3>dialog 弹窗</h3>
     <el-button type="primary" @click="handleOpen">打开弹窗</el-button>
-    <FDialog :visible="feiVisible" @close="handleClose"  />
+    <FDialog v-if="feiVisible" :visible="feiVisible" @close="handleClose"  />
   </div>
   <hr>
 
   <div>
     <h3>drawer 抽屉</h3>
     <el-button type="primary" @click="openDrawer">打开抽屉</el-button>
-    <FDrawer :visible="drawerVisible" @close="closeDrawer"  />
+    <FDrawer v-if="drawerVisible" :visible="drawerVisible" @close="closeDrawer"  />
   </div>
   <hr>
 
@@ -398,6 +398,29 @@
       <p> 普通指令测试 </p>
       <input type="text" v-myFeiDirective>
       <input type="text" v-myFeiDirective2="{color:'blue',text:'图书_论语'}">
+    </div>
+  </div>
+  <hr>
+
+  <div>
+    <h3> select 和 table 传参数</h3>
+    <div>
+      <!--<el-select
+          v-model="paramsFei"
+          placeholder="Select"
+          style="width: 240px"
+          @change="onSelectFei($event, 'fei_其他参数')"
+      >
+        <el-option v-for="item in WEB_fei_arr" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>-->
+    </div>
+    <div>
+    <!--  <el-table :data="[{name: 'fei', age: '18'}]">
+        <el-table-column label="姓名"  prop="name" width="180"/>
+        <el-table-column label="姓名"  prop="name" width="180"/>
+        <el-table-column label="姓名"  prop="name" width="180"/>
+        <el-table-column label="姓名"  prop="name" width="180"/>
+      </el-table>-->
     </div>
   </div>
   <hr>
@@ -831,6 +854,29 @@ const useImgUpload = () => {
 
 const {feiUrl, feiImgRemove} = useImgUpload()
 // ****************************************************************************************************
+// select 和 table 传参数
+// const useMultipleParams = () => {
+//   const paramsFei = ref()
+//   const WEB_fei_arr = [
+//     {value: 'Option1', label: 'Option1'},
+//     {value: 'Option2', label: 'Option2'}
+//   ]
+//   /**
+//    * 下拉选择
+//    * @param val 下拉框的值
+//    * @param otherFei 其他参数
+//    */
+//   const onSelectFei = (val, otherFei) => {
+//     console.log(val, otherFei)
+//   }
+//
+//   return {paramsFei, WEB_fei_arr, onSelectFei}
+// }
+//
+// const {paramsFei, WEB_fei_arr, onSelectFei} = useMultipleParams()
+// ****************************************************************************************************
+
+
 </script>
 
 <style scoped lang="scss">

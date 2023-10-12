@@ -2,7 +2,7 @@
   <el-drawer title="新增-修改" v-model="visible" destroy-on-close
       :close-on-click-modal="false"
              modal-class="遮罩层的自定义类名 111111111111111"
-             custom-class="Drawer 的自定义类名 222222222222222"
+             class="Drawer 的自定义类名 222222222222222"
       @opened="onOpened"
       :before-close="handleClose">
 
