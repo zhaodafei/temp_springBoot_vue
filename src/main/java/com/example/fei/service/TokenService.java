@@ -7,10 +7,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
 import java.util.Date;
 
 
@@ -21,8 +17,6 @@ import java.util.Date;
  */
 @Component
 public class TokenService {
-
-    private final static String myApiKeySecret = "fei_Secret_123456"; // 这里写入你的Secret
 
     // 令牌自定义标识 ---------- 后期定义到配置文件中
     @Value("${token.header}")
@@ -49,17 +43,12 @@ public class TokenService {
         long nowMillis  = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         Date exp = new Date(nowMillis + 1000 * 30); // 过期时间 30秒
-
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256; // 签名算法
-        // 设置秘钥
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(myApiKeySecret);
-        Key signKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-
 
         JwtBuilder builder = Jwts.builder()
                 .setId("fei123") // 置唯一编号
-                .setIssuedAt(now)  //设置签发日期
-                .setExpiration(exp) // 设置过期时间
+                // .setIssuedAt(now)  //设置签发日期
+                // .setExpiration(exp) // 设置过期时间
                 // .setAudience("iot")
                 // .setIssuer("fei") // 设置发行人
                 .setSubject( "fei_setSubject" )
@@ -67,20 +56,20 @@ public class TokenService {
                 .claim("userPwd", "123456")*/
                 .claim("userName", user.getUsername())
                 .claim("userPwd", user.getPassword())
-                .signWith(signatureAlgorithm, signKey); // 设置签名 使用HS256算法，并设置SecretKey(字符串)
+                .signWith(signatureAlgorithm, secret); // 设置签名 使用HS256算法，并设置SecretKey(字符串)
 
         return builder.compact();
     }
 
     /**
-     * 获取 token
+     * 解析校验token
      * @param jwt String
      * @return {}
      */
     public Boolean parseJWT(String jwt) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(myApiKeySecret))
+                    .setSigningKey(secret)
                     .parseClaimsJws(jwt)
                     .getBody();
 
@@ -98,4 +87,41 @@ public class TokenService {
             return false;
         }
     }
+
+    ///======================== 临时测试功能,不参与项目====================
+    public static String fei01() {
+        String token = Jwts.builder().
+                setId("fei123") // 置唯一编号
+                .setSubject("大飞")
+                .setIssuedAt(new Date())//设置签发时间
+                .claim("userName", "username_01")
+                .claim("userPwd", "123456")
+                .signWith(SignatureAlgorithm.HS256, "fei_secret")//设置签名秘钥
+                .compact();
+
+        System.out.println(token);
+        return token;
+    }
+    public static Boolean fei02(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey("fei_secret")
+                    .parseClaimsJws(token)
+                    .getBody();
+            System.out.println("id:"+claims.getId());
+            System.out.println("subject:"+claims.getSubject());
+            System.out.println("IssuedAt:"+claims.getIssuedAt());
+            System.out.println("userName:"+claims.get("userName"));
+            System.out.println("userPwd:"+claims.get("userPwd"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    // public static void main(String[] args) {
+    //     // 测试fei01和fei02
+    //     String s = TokenService.fei01();
+    //     TokenService.fei02(s);
+    // }
+    ///============================================
 }
