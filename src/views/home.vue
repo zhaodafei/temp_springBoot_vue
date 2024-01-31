@@ -12,7 +12,14 @@
       </div>
     </div>
 
-    <div>用户登录情况</div>
+    <div class="panel-wrapper" style="margin: 24px 0">
+      <h3 class="panel-title">
+        用户登录情况
+      </h3>
+      <div>
+        <button @click="isLogin">校验登录token是否正确</button>
+      </div>
+    </div>
 
     <div class="panel-wrapper">
       <h3 class="panel-title">
@@ -43,7 +50,9 @@
 
 <script setup>
 import CharsPie from "@/components/echartsCommon/chartPie";
-import {reactive} from "vue";
+import {getCurrentInstance, reactive} from "vue";
+const app = getCurrentInstance().appContext.config.globalProperties;
+import interfacesUser from "@/api/user";
 
 const cdata = reactive({
   seriesTitle: "用户统计",
@@ -52,6 +61,21 @@ const cdata = reactive({
     { value: 50, name: 'admin' },
   ]
 })
+
+const isLogin = () => {
+  let user = JSON.parse(sessionStorage.getItem('user'));
+  const params =  {
+    "token": user.token,
+    "username": "dafei"
+  }
+  params.foo = params.token
+  // params.foo = "sssss"
+  params.token = undefined;
+
+  app.$get(interfacesUser.isLogin,params).then(res=>{
+    console.log(res);
+  })
+}
 </script>
 
 <style scoped lang="scss">
