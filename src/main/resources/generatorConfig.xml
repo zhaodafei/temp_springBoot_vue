@@ -7,8 +7,9 @@
 <generatorConfiguration>
     <!--  构建命令：mvn mybatis-generator:generate  -->
     <!--    windows下路径和Mac路径不一样，需要自己替换-->
+    <!--    D:\soft_position\Java\mvn_repository -->
     <classPathEntry
-            location="C:\Users\fei\.m2\repository\mysql\mysql-connector-java\8.0.27\mysql-connector-java-8.0.27.jar"/>
+            location="D:\soft_position\Java\mvn_repository\mysql\mysql-connector-java\8.0.27\mysql-connector-java-8.0.27.jar"/>
 
     <context id="MysqlTables" targetRuntime="MyBatis3">
 
@@ -56,13 +57,7 @@
         </javaClientGenerator>
 
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表 -->
-        <table tableName="yz_book" domainObjectName="Book" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-            <!-- 数据库表主键 -->
-            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
-        </table>
-
-        <table tableName="yz_foo" domainObjectName="Foo" enableCountByExample="false"
+        <table tableName="zzz_book_copy" domainObjectName="BookCopy" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
             <!-- 数据库表主键 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />

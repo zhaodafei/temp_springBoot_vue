@@ -51,7 +51,7 @@ public class TokenService {
                 // .setExpiration(exp) // 设置过期时间
                 // .setAudience("iot")
                 // .setIssuer("fei") // 设置发行人
-                .setSubject( "fei_setSubject" )
+                .setSubject("fei_setSubject")
                 /*.claim("userName", "username_01")
                 .claim("userPwd", "123456")*/
                 .claim("userName", user.getUsername())
