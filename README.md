@@ -66,4 +66,6 @@ Use a v-bind binding combined with a v-on listener that emits update:x event ins
 4. file-saver 下载文件流保存为文件
 5. vite-plugin-static-copy 拷贝源文件到打包目录文件下
 4. vue-echarts 图表
+4. element-china-area-data  中国省市区级联数据
+4. fullcalendar 日历功能
 4. xxx

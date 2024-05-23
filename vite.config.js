@@ -60,8 +60,9 @@ export default defineConfig(({ mode, command }) => {
       // open: true, // 是否自动打开浏览器
       proxy: {
         '^/api': {
-          // target: 'http://demo.yizheng_fei.com', // 本地 PHP
-          target: env.VITE_APP_SHOW_URL,
+          // target: 'http://demo.beih.com', // 本地 PHP
+          target: 'http://demo.yizheng_fei.com', // 本地 PHP
+          // target: env.VITE_APP_SHOW_URL,
           changeOrigin: true,
           logLevel: 'debug',
           // tip: 所有接口需要带上前缀/api

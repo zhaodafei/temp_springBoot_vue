@@ -107,6 +107,14 @@
             <el-icon><Help /></el-icon>
             <span><router-link to="/fei_utils_swiper">轮播 swiper</router-link></span>
           </el-menu-item>
+          <el-menu-item index="500010">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_utils_calendar">日历 FullCalendar</router-link></span>
+          </el-menu-item>
+          <el-menu-item index="500011">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_utils_calendar2">日历2 FullCalendar</router-link></span>
+          </el-menu-item>
         </el-sub-menu>
 
       </el-menu>

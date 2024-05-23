@@ -75,7 +75,7 @@ const utilsRoutes = [
     name: 'fei_utils_vCharts',
     meta: {
       // 图表
-      title: "utils_vCharts"
+      title: "图表"
     },
     component: () => import('@/views/fUtils/vChart.vue')
   },
@@ -93,9 +93,27 @@ const utilsRoutes = [
     name: 'fei_utils_swiper',
     meta: {
       // swiper 轮播
-      title: "utils_swiper"
+      title: "轮播"
     },
     component: () => import('@/views/fUtils/fSwiper.vue')
+  },
+  {
+    path: '/fei_utils_calendar',
+    name: 'fei_utils_calendar',
+    meta: {
+      // FullCalendar 日历
+      title: "日历"
+    },
+    component: () => import('@/views/fUtils/fCalendar.vue')
+  },
+  {
+    path: '/fei_utils_calendar2',
+    name: 'fei_utils_calendar2',
+    meta: {
+      // FullCalendar 日历
+      title: "日历2"
+    },
+    component: () => import('@/views/fUtils/fCalendar2.vue')
   },
 ]
 

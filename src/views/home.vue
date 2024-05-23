@@ -18,6 +18,7 @@
       </h3>
       <div>
         <button @click="isLogin">校验登录token是否正确</button>
+        <el-button type="primary" @click="isCheckAPI">校验 接口是否可以通  </el-button>
       </div>
     </div>
 
@@ -75,6 +76,17 @@ const isLogin = () => {
   app.$get(interfacesUser.isLogin,params).then(res=>{
     console.log(res);
   })
+}
+
+const isCheckAPI = () => {
+
+  app.$get("/foo/da").then(res=>{
+    console.log(res);
+  })
+
+  // app.$post("/foo/fei").then(res=>{
+  //   console.log(res);
+  // })
 }
 </script>
 
