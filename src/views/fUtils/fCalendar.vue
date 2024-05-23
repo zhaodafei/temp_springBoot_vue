@@ -10,7 +10,7 @@
 
     <div class='demo-app-main'>
       <FullCalendar
-          ref="fullCalendar"
+          ref="refFullCalendar"
           v-loading="loading"
           class="calendar"
           :options='calendarOptions'
@@ -54,12 +54,12 @@ const calendarColor = {
   a05: '#ff6b81',
 }
 let calendarApi = null
-const fullCalendar = ref(null)
+const refFullCalendar = ref(null)
 const eventList = ref([]) // 缓存的全部事件的列表
 
 // 视口大小变化调整日历高度
 const handleWindowResize = () => {
-  fullCalendar.value.options.height = window.screen.height - 46
+  refFullCalendar.value.options.height = window.screen.height - 46
 }
 const handleEventClick = (clickInfo) => {
   console.log("点击信息",clickInfo);
@@ -76,8 +76,9 @@ const clearCalendarEvent = () => {
   }
 }
 
-// 添加日历事件
+// 添加日历事件(初始化调用)
 const addEventToCalendar = (eventList) => {
+  console.log('谁能点击到');
   // 先清空日历事件
   clearCalendarEvent()
   eventList.forEach(event => {
@@ -85,6 +86,78 @@ const addEventToCalendar = (eventList) => {
   })
 }
 
+/**
+ * const btn_addEventToCalendar = (eventList) => {
+  // 先清空日历事件
+  clearCalendarEvent()
+  eventList.forEach(event => {
+    calendarApi.addEvent(event)
+  })
+}
+ */
+
+// 自定义按钮事件
+const prevMonthCustomClick = () => {
+  const month5 = [
+    {
+      "id": 6,
+      "classroomName": "WEB_4月",
+      "startDate": "2024-04-11 08:00:00",
+      "endDate": "2024-04-13 16:23:35",
+      "status": "a03",
+      "location": "西楼W403",
+      "isDel": "0"
+    },
+    {
+      "id": 7,
+      "classroomName": "JAVA_4月",
+      "startDate": "2024-04-11 08:00:00",
+      "endDate": "2024-04-13 16:23:35",
+      "status": "a03",
+      "location": "西楼W403",
+      "isDel": "0"
+    }
+  ]
+  restAPIData(month5);
+
+  calendarApi.prev();
+  renderCalendar();
+}
+
+const nextMonthCustomClick = () => {
+  const month6 = [
+    {
+      "id": 4,
+      "classroomName": "化学6月",
+      "startDate": "2024-06-08 08:00:00",
+      "endDate": "2024-06-09 16:23:35",
+      "status": "a03",
+      "location": "北楼203",
+      "isDel": "0"
+    },
+    {
+      "id": 5,
+      "classroomName": "物理6月",
+      "startDate": "2024-06-11 08:00:00",
+      "endDate": "2024-06-13 16:23:35",
+      "status": "a03",
+      "location": "北楼203",
+      "isDel": "0"
+    }
+  ]
+
+  restAPIData(month6)
+
+  calendarApi.next();
+  renderCalendar();
+}
+
+const renderCalendar = () => {
+  // 获取数据重新渲染
+
+  // 添加事件到日历
+  addEventToCalendar(eventList.value)
+}
 
 const calendarOptions = reactive({
   //设置产品**不设置左下角会出现链接
@@ -94,7 +167,9 @@ const calendarOptions = reactive({
   ],
   headerToolbar: { // 顶部工具栏
     // 01)每次加一个空格会多一个空白按钮 02)每个逗号分隔一个按钮
-    left: 'prevYear,prev,next,nextYear today',
+    // left: 'prevYear,prev,next,nextYear today',
+    left: 'prev,next today prevMonthCustom,nextMonthCustom',
+    // left: 'today prevMonthCustom,nextMonthCustom',
     center: 'title', // 显示中间时间
     right: 'resourceTimelineMonth,resourceTimelineWeek,resourceTimelineDay'
   },
@@ -102,7 +177,23 @@ const calendarOptions = reactive({
     today: '今天',
     month: '月',
     week: '周',
-    day: '日'
+    day: '日',
+  },
+  customButtons: {
+    prevMonthCustom: { // 我的自定义
+      text: '上xx <',
+      icon: 'chevron-left', // icon 会覆盖 text 显示
+      click: function() {
+        prevMonthCustomClick();
+      }
+    },
+    nextMonthCustom: { // 我的自定义; 下一页模拟原有功能下一页
+      text: '下xx >',
+      icon: 'chevron-right',
+      click: function() {
+        nextMonthCustomClick();
+      }
+    }
   },
   // views:{ // 视图设置
   // },
@@ -120,10 +211,68 @@ const calendarOptions = reactive({
     }
   ],
   resources: [],
-  eventClick: handleEventClick  // 事件
+  eventClick: handleEventClick  // 事件(点击日历中具体的某个方格内容)
 })
 
 
+// 按照日历格式构建接口返回数据
+const restAPIData = (resData) => {
+  // 开始对日历数据赋值
+  let resources = [];
+  resData.forEach(item=>{
+    resources.push({id: item.id, title: item.classroomName });
+  })
+
+  // 添加左侧资源名字( 对应 resourceAreaColumns 中的 headerContent 数据 )
+  // calendarOptions.resources = resources
+  calendarOptions.resources = [
+    // tip: 方便测试,这里暂时不用写固定数据,但是一定确保 id 和接口中对应
+    {"id": 1, "title": "数学教室"},
+    {"id": 2, "title": "语文"},
+    {"id": 3, "title": "英语"},
+    {"id": 4, "title": "化学6月"},
+    {"id": 5, "title": "物理6月"},
+    {"id": 6, "title": "WEB_4月"},
+    {"id": 7, "title": "JAVA_4月"}
+  ]
+
+  // 添加事件到日历( 为日历中添加数据显示 )
+  // 参考地址: https://fullcalendar.io/docs/event-source-object
+  eventList.value = resData.map(row => {
+    return {
+      resourceId: row.id, // 这个 id 要和 resources 中的 id 对应
+      id: row.id,
+      start: row.startDate,
+      end: row.endDate,
+      allDay: false,
+
+      // 日历四个颜色
+      // color: 'yellow',
+      // textColor: 'black',
+      // backgroundColor: calendarColor[row.status],
+      borderColor: calendarColor[row.status],
+
+      title: "课程内容: " + row.classroomName,
+      // 额外字段: 默认添加到 extendedProps 中,也可以直接 extendedProps 中定义
+      // 额外字段: https://fullcalendar.io/docs/event-object
+      daFei_name: "大飞",
+      daFei_age: "18",
+      daFei_gender: "男",
+      extendedProps: {
+        daFei_name2: "飞哥",
+        daFei_age2: "20",
+        daFei_gender2: "不提供",
+        daFei_name: row.classroomName, // 名字
+        daFei_status: "无状态"+row.status, // 状态
+        daFei_location: row.location, // 位置
+        daFei_startDate: "", // 预约时间
+        daFei_endDate: "", // 预约时间
+      }
+    }
+  })
+
+
+}
 // 查询接口数据
 const loading = ref(false)
 const findDataList = () => {
@@ -135,50 +284,51 @@ const findDataList = () => {
     const resData = res.data
     console.log(resData);
 
-    // 开始对日历数据赋值
-    let resources = [];
-    resData.forEach(item=>{
-      resources.push({id: item.id, title: item.classroomName });
-    })
+    // // 开始对日历数据赋值
+    // let resources = [];
+    // resData.forEach(item=>{
+    //   resources.push({id: item.id, title: item.classroomName });
+    // })
+    //
+    // // 添加左侧资源名字( 对应 resourceAreaColumns 中的 headerContent 数据 )
+    // calendarOptions.resources = resources
+    //
+    // // 添加事件到日历( 为日历中添加数据显示 )
+    // // 参考地址: https://fullcalendar.io/docs/event-source-object
+    // eventList.value = resData.map(row => {
+    //   return {
+    //     resourceId: row.id, // 这个 id 要和 resources 中的 id 对应
+    //     id: row.id,
+    //     start: row.startDate,
+    //     end: row.endDate,
+    //     allDay: false,
+    //
+    //     // 日历四个颜色
+    //     // color: 'yellow',
+    //     // textColor: 'black',
+    //     // backgroundColor: calendarColor[row.status],
+    //     borderColor: calendarColor[row.status],
+    //
+    //     title: "课程内容: " + row.classroomName,
+    //     // 额外字段: 默认添加到 extendedProps 中,也可以直接 extendedProps 中定义
+    //     // 额外字段: https://fullcalendar.io/docs/event-object
+    //     daFei_name: "大飞",
+    //     daFei_age: "18",
+    //     daFei_gender: "男",
+    //     extendedProps: {
+    //       daFei_name2: "飞哥",
+    //       daFei_age2: "20",
+    //       daFei_gender2: "不提供",
+    //       daFei_name: row.classroomName, // 名字
+    //       daFei_status: "无状态"+row.status, // 状态
+    //       daFei_location: row.location, // 位置
+    //       daFei_startDate: "", // 预约时间
+    //       daFei_endDate: "", // 预约时间
+    //     }
+    //   }
+    // })
 
-    // 添加左侧资源名字( 对应 resourceAreaColumns 中的 headerContent 数据 )
-    calendarOptions.resources = resources
-
-    // 添加事件到日历( 为日历中添加数据显示 )
-    // 参考地址: https://fullcalendar.io/docs/event-source-object
-    eventList.value = resData.map(row => {
-      return {
-        resourceId: row.id, // 这个 id 要和 resources 中的 id 对应
-        id: row.id,
-        start: row.startDate,
-        end: row.endDate,
-        allDay: false,
-
-        // 日历四个颜色
-        // color: 'yellow',
-        // textColor: 'black',
-        // backgroundColor: calendarColor[row.status],
-        borderColor: calendarColor[row.status],
-
-        title: "课程内容: " + row.classroomName,
-        // 额外字段: 默认添加到 extendedProps 中,也可以直接 extendedProps 中定义
-        // 额外字段: https://fullcalendar.io/docs/event-object
-        daFei_name: "大飞",
-        daFei_age: "18",
-        daFei_gender: "男",
-        extendedProps: {
-          daFei_name2: "飞哥",
-          daFei_age2: "20",
-          daFei_gender2: "不提供",
-          daFei_name: row.classroomName, // 名字
-          daFei_status: "无状态"+row.status, // 状态
-          daFei_location: row.location, // 位置
-          daFei_startDate: "", // 预约时间
-          daFei_endDate: "", // 预约时间
-        }
-      }
-    })
-
+    restAPIData(resData);
     // 添加事件到日历
     addEventToCalendar(eventList.value)
 
@@ -188,7 +338,38 @@ const findDataList = () => {
 
 onMounted(() => {
   // 获取操作日历的 API
-  calendarApi = fullCalendar.value.getApi()
+  calendarApi = refFullCalendar.value.getApi()
+
+  // 获取日历中按钮( 月,周,天; 今天;  )
+  const monthButton = document.querySelector('.fc-resourceTimelineMonth-button')
+  const weekButton = document.querySelector('.fc-resourceTimelineWeek-button')
+  const dayButton = document.querySelector('.fc-resourceTimelineDay-button')
+  const todayButton = document.querySelector('.fc-today-button')
+  // 获取日历中按钮(上一个,下一个);(如果选择的是天, 为上一天,下一天; 如果选择的是周, 为上一周,下一周)
+  const prevButton = document.querySelector('.fc-prev-button')
+  const nextButton = document.querySelector('.fc-next-button')
+  // // 获取日历中按钮(上一年,下一年)
+  // const prevYearButton = document.querySelector('.fc-prevYear-button')
+  // const nextYearButton = document.querySelector('.fc-nextYear-button')
+
+  const buttonObj = {
+    monthBtn: {viewType: "month", selectorName: monthButton},
+    weekBtn: {viewType: "week", selectorName: weekButton},
+    dayBtn: {viewType: "day", selectorName: dayButton},
+    toDayBtn: {viewType: "day", selectorName: todayButton},
+
+    preBtn: {viewType: "prev", selectorName: prevButton},
+    nextBtn: {viewType: "next", selectorName: nextButton},
+
+    // preYearBtn: {viewType: "prevYear", selectorName: prevYearButton},
+    // nextYearBtn: {viewType: "nextYear", selectorName: nextYearButton},
+  }
+  // // 添加事件到日历
+  // Object.keys(buttonObj).forEach(key=>{
+  //   buttonObj[key].selectorName.addEventListener('click', () => {
+  //     btn_addEventToCalendar(eventList.value)
+  //   })
+  // })
 
   findDataList()
 })
