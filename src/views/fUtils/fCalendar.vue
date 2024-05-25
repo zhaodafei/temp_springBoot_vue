@@ -9,6 +9,7 @@
     </div>-->
 
     <div class='demo-app-main'>
+      <!-- FullCalendar的 class必须命名为 calendar -->
       <FullCalendar
           ref="refFullCalendar"
           v-loading="loading"
@@ -162,6 +163,14 @@ const renderCalendar = () => {
 const calendarOptions = reactive({
   //设置产品**不设置左下角会出现链接
   schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+  locale: 'zh-cn', // 中文
+  resourceAreaWidth: '15%', // 资源区宽度
+  // slotMinWidth: 150,
+  // height: window.screen.height - 46, // 设置高度
+  height: '100%', // 设置高度 https://fullcalendar.io/docs/height
+  windowResize: handleWindowResize,
+  // initialDate: '2025-10-06', // 设置初始化日期 https://fullcalendar.io/docs/date-parsing
+  initialView: 'resourceTimelineMonth', // 初始视图
   plugins: [
     resourceTimelinePlugin
   ],
@@ -195,15 +204,46 @@ const calendarOptions = reactive({
       }
     }
   },
-  // views:{ // 视图设置
-  // },
-  initialView: 'resourceTimelineMonth', // 初始视图
-  locale: 'zh-cn', //中文
+  views:{ // 视图设置(日历表头) https://fullcalendar.io/docs/date-formatting
+    // resourceTimelineMonth: {
+    //   slotLabelFormat: [
+    //     {
+    //       day: '2-digit',
+    //       weekday: 'short'
+    //     }
+    //   ]
+    // },
+    // resourceTimelineWeek: {
+    //   duration: {
+    //     week: 1
+    //   },
+    //   slotDuration: {
+    //     days: 1
+    //   },
+    //   slotLabelFormat: [
+    //     {
+    //       day: '2-digit',
+    //       weekday: 'short'
+    //     }
+    //   ]
+    // },
+    resourceTimelineDay: {
+      slotDuration: '00:60:00', // 持续时间, 多久分割
+      slotMinTime: '07:00:00', // 开始时间点
+      slotMaxTime: '23:00:00', // 结束时间点
+      slotLabelFormat: [
+        {
+          weekday: 'short'
+        },
+        {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        }
+      ]
+    }
+  },
   firstDay: 1, // 周视图中 设置星期一为第一天
-  resourceAreaWidth: '15%', // 资源区宽度
-  // slotMinWidth: 150,
-  height: window.screen.height - 46, // 设置高度
-  windowResize: handleWindowResize,
   resourceAreaColumns: [
     {
       field: 'title', // 对应resources列表项要显示的字段
@@ -284,50 +324,6 @@ const findDataList = () => {
     const resData = res.data
     console.log(resData);
 
-    // // 开始对日历数据赋值
-    // let resources = [];
-    // resData.forEach(item=>{
-    //   resources.push({id: item.id, title: item.classroomName });
-    // })
-    //
-    // // 添加左侧资源名字( 对应 resourceAreaColumns 中的 headerContent 数据 )
-    // calendarOptions.resources = resources
-    //
-    // // 添加事件到日历( 为日历中添加数据显示 )
-    // // 参考地址: https://fullcalendar.io/docs/event-source-object
-    // eventList.value = resData.map(row => {
-    //   return {
-    //     resourceId: row.id, // 这个 id 要和 resources 中的 id 对应
-    //     id: row.id,
-    //     start: row.startDate,
-    //     end: row.endDate,
-    //     allDay: false,
-    //
-    //     // 日历四个颜色
-    //     // color: 'yellow',
-    //     // textColor: 'black',
-    //     // backgroundColor: calendarColor[row.status],
-    //     borderColor: calendarColor[row.status],
-    //
-    //     title: "课程内容: " + row.classroomName,
-    //     // 额外字段: 默认添加到 extendedProps 中,也可以直接 extendedProps 中定义
-    //     // 额外字段: https://fullcalendar.io/docs/event-object
-    //     daFei_name: "大飞",
-    //     daFei_age: "18",
-    //     daFei_gender: "男",
-    //     extendedProps: {
-    //       daFei_name2: "飞哥",
-    //       daFei_age2: "20",
-    //       daFei_gender2: "不提供",
-    //       daFei_name: row.classroomName, // 名字
-    //       daFei_status: "无状态"+row.status, // 状态
-    //       daFei_location: row.location, // 位置
-    //       daFei_startDate: "", // 预约时间
-    //       daFei_endDate: "", // 预约时间
-    //     }
-    //   }
-    // })
-
     restAPIData(resData);
     // 添加事件到日历
     addEventToCalendar(eventList.value)
@@ -378,5 +374,8 @@ onMounted(() => {
 <style>
 .demo-app-main {
   border: 2px solid #ff6b81;
+  /** 配置高度 100%, 然后有外部盒子控制宽高 */
+  width: 800px;
+  height: 500px;
 }
 </style>
