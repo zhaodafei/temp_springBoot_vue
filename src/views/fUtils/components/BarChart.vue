@@ -41,7 +41,12 @@
   const option = ref({
     title: {
       text: '柱状图',
-      left: 'center'
+      left: 'left'
+    },
+    legend: {
+      // orient: 'vertical',
+      left: 'center',
+      data: ['类别1', '类别2']
     },
     tooltip: {
       trigger: 'axis',
@@ -58,12 +63,14 @@
     },
     series: [
       {
-        data: [120, 200, 150, 80, 70, 110, 130],
         type: 'bar',
+        name: '类别1',
+        data: [120, 200, 150, 80, 70, 110, 130],
       },
       {
-        data: [140, 30, 340, 80, 58, 76, 125],
         type: 'bar',
+        name: '类别2',
+        data: [140, 30, 340, 80, 58, 76, 125],
       },
     ],
   })
