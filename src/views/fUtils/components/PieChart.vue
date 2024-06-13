@@ -42,6 +42,10 @@
     title: {
       text: '示例饼图',
       left: 'center'
+      // 控制上下距离
+      // orient: 'horizontal',
+      // x: 'center',
+      // y: '90px'
     },
     tooltip: {
       trigger: 'item'
@@ -49,7 +53,11 @@
     legend: {
       orient: 'vertical',
       left: 'left',
-      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+      data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎'],
+      // 控制上下距离
+      // orient: 'horizontal',
+      // x: 'center',
+      // y: '90px'
     },
     series: [
       {

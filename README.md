@@ -61,11 +61,27 @@ Use a v-bind binding combined with a v-on listener that emits update:x event ins
 ### 库说明
 
 1. lodash 常见工具函数( 字符串,数组 )
+
 2. crypto-js 常见加密工具库(尽量不用)
+
 3. sm-crypto  常见加密工具库(优先考虑)
+
 4. file-saver 下载文件流保存为文件
+
 5. vite-plugin-static-copy 拷贝源文件到打包目录文件下
-4. vue-echarts 图表
-4. element-china-area-data  中国省市区级联数据
-4. fullcalendar 日历功能
+
+6. vue-echarts 图表
+
+7. element-china-area-data  中国省市区级联数据
+
+8. fullcalendar 日历功能
+
+9. `vue-drag-resize`拖拽功能
+
+   > 1. [vue-drag-resize](vue-drag-resize)
+   > 2. [Vue-drag-resize](https://zhuanlan.zhihu.com/p/407509202)
+   > 3. [demo用例](https://kirillmurashov.com/vue-drag-resize/)
+   >
+   > 
+
 4. xxx
