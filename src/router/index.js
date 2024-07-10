@@ -128,6 +128,17 @@ const routes = [
     component: () => import('@/views/login'),
   },
   {
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/Error/404.vue')
+  },
+  // 当什么都没有匹配到的时候，重定向页面到 404 页面
+  {
+    path: '/:pathMatch(.*)',
+    redirect: '/404',
+    name: 'notMatch',
+  },
+  {
     path: '',
     component: () => import('@/layout'),
     redirect: 'home',
