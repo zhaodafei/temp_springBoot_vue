@@ -66,7 +66,7 @@
           <el-menu-item index="5000011">
             <el-icon><Help /></el-icon>
             <span>
-             <router-link to="/file">文件处理</router-link>
+             <router-link to="/fei_utils_file">文件处理</router-link>
             </span>
           </el-menu-item>
           <el-menu-item index="5000001">
@@ -115,8 +115,52 @@
             <el-icon><Help /></el-icon>
             <span><router-link to="/fei_utils_calendar2">日历2 FullCalendar</router-link></span>
           </el-menu-item>
+          <el-menu-item index="500012">
+            <el-icon><Help /></el-icon>
+            <span><router-link to="/fei_utils_screen">全屏</router-link></span>
+          </el-menu-item>
         </el-sub-menu>
 
+
+        <el-sub-menu index="999800">
+          <template #title>
+            <el-icon><Setting /></el-icon>垫底(无内容)
+          </template>
+          <el-menu-item index="999801">
+            <el-icon />
+            <span>xxx无</span>
+          </el-menu-item>
+          <el-menu-item index="999802">
+            <el-icon />
+            <span>xxx无</span>
+          </el-menu-item>
+        </el-sub-menu>
+        <el-sub-menu index="999900">
+          <template #title>
+            <el-icon><Setting /></el-icon>垫底(无内容)
+          </template>
+          <el-menu-item index="999801">
+            <el-icon />
+            <span>xxx无</span>
+          </el-menu-item>
+          <el-menu-item index="999802">
+            <el-icon />
+            <span>xxx无</span>
+          </el-menu-item>
+        </el-sub-menu>
+        <el-sub-menu index="999900">
+          <template #title>
+            <el-icon><Setting /></el-icon>垫底(无内容)
+          </template>
+          <el-menu-item index="999801">
+            <el-icon />
+            <span>xxx无</span>
+          </el-menu-item>
+          <el-menu-item index="999802">
+            <el-icon />
+            <span>xxx无</span>
+          </el-menu-item>
+        </el-sub-menu>
       </el-menu>
     </el-scrollbar>
   </el-aside>

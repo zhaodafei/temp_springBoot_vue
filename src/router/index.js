@@ -47,12 +47,12 @@ const testRoutes = [
 // 文件处理路由
 const fileRoutes = [
   {
-    path: '/file',
-    name: 'file',
+    path: '/fei_utils_file',
+    name: 'fei_utils_file',
     meta: {
       title: "文件处理"
     },
-    component: () => import('@/views/zTest/fileIndex.vue'),
+    component: () => import('@/views/fUtils/fFileIndex.vue'),
   },
 ]
 
@@ -114,6 +114,14 @@ const utilsRoutes = [
       title: "日历2"
     },
     component: () => import('@/views/fUtils/fCalendar2.vue')
+  },
+  {
+    path: '/fei_utils_screen',
+    name: 'fei_utils_screen',
+    meta: {
+      title: "全屏"
+    },
+    component: () => import('@/views/fUtils/fScreen.vue')
   },
 ]
 

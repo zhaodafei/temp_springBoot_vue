@@ -46,6 +46,8 @@
       // orient: 'horizontal',
       // x: 'center',
       // y: '90px'
+      // 是否显示
+      // show: true
     },
     tooltip: {
       trigger: 'item'
@@ -58,6 +60,11 @@
       // orient: 'horizontal',
       // x: 'center',
       // y: '90px'
+      textStyle: {
+        // 铭文, 的字体样式
+        color: 'red',
+        fontSize: 14
+      }
     },
     series: [
       {

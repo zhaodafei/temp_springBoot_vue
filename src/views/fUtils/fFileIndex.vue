@@ -37,12 +37,19 @@
     <div class="file-item" style="display: flex;justify-content: space-between;width: 150px">
       <button @click="fileDownload">下载222</button>
     </div>
+
+    <div class="file-item" style="display: flex;justify-content: space-between;width: 150px">
+      <el-button type="primary" @click="handlePreview">文件预览 img/pdf/word</el-button>
+
+      <FilePreview ref="previewRef"  />
+    </div>
   </div>
 </template>
 
 <script setup>
 import {getCurrentInstance, onMounted, reactive, ref} from "vue";
 import {comDownload} from "@/utils/comUtilsCore";
+import FilePreview from './components/FilePreview.vue'
 
 const app = getCurrentInstance().appContext.config.globalProperties;
 
@@ -106,6 +113,23 @@ const fileDownload = () => {
   app.$fPost("file/download", {fileId: 222}).then(res => {
     comDownload(res);
   })
+}
+
+// 文件预览
+const previewRef = ref();
+const handlePreview = () => {
+
+  // 服务器要开启可以访问预览权限
+  const row = {
+    // fileName:'1111111111',
+    // fileSuffix:'.docx',
+    fileAllName: "aaaa.docx",
+    // fileUrl:'http://baidu.com/123/aaaa.docx'
+    // fileUrl:'http://baidu.com/123/aaaa.jpeg'
+    fileUrl:'http://baidu.com/123/aaaa.pdf'
+  }
+
+  previewRef.value.handlePreview(row, 'fileUrl')
 }
 
 </script>
