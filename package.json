@@ -20,6 +20,8 @@
     "@fullcalendar/resource-timeline": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
     "@fullcalendar/vue3": "^6.1.10",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "crypto-js": "^4.1.1",
