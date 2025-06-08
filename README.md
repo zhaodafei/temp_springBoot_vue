@@ -88,4 +88,12 @@ Use a v-bind binding combined with a v-on listener that emits update:x event ins
 
 11. `wangeditor`富文本编辑器
 
+    > 富文本编辑器 ` tinymce-editor`
+
+12. 图片浏览`v-viewer`
+
+13. xxx
+
+14. xxx
+
 4. xxx
