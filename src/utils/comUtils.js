@@ -92,6 +92,29 @@ export function toNumber(num) {
   return isNaN(num * 1) ? 0 : num * 1
 }
 
+// 校验传为空
+export function validEmpty(val) {
+  // 在此处，-1被认定为无效值
+  if (
+    val === null ||
+    val === -1 ||
+    typeof val === 'undefined' ||
+    (typeof val === 'string' && val === '' && val !== 'undefined')
+  ) {
+    return false
+  }
+  return true
+}
+
+// 校验大于零数字
+export function isPositiveInteger(value) {
+  // 将输入值转换为数字
+  const num = Number(value)
+  // 检查是否为数字且大于0
+  let flag = !isNaN(num) && num > 0 && Math.floor(num) === num
+  return flag
+}
+
 // 金额逗号分隔
 export function formatAmount(str) {
   return str && str.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
